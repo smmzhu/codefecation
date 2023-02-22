@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
-import SlidingPanel from "./components/SlidingPanel.jsx";
+import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 // import MapView from 'react-native-maps';
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
