@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
+import SlidingPanel from "./components/SlidingPanel.jsx";
 // import MapView from 'react-native-maps';
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
@@ -15,6 +16,8 @@ export default function App() {
       <Map />
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
+      <SlidingPanel color = 'blue'>
+      </SlidingPanel>
     </SafeAreaView>
   );
 }
