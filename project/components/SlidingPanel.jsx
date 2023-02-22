@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 // import useWindowDimensions from '../hooks/getWindowDims.jsx';
 import { useWindowDimensions } from 'react-native';
+import SearchBar from './SearchBar';
 
 export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
@@ -10,6 +11,7 @@ export default function SlidingPanel(props) {
     return (
         <SlidingUpPanel height = {height} draggableRange = {{top: height, bottom: 100}} backgroundColor='blue'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
+                <SearchBar/>
                 <Text>oh hey you found the stupid ass panel</Text>
                 <StatusBar style="auto" />
             </View>
