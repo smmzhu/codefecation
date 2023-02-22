@@ -1,42 +1,66 @@
-import React from 'react'
-import GoogleMapReact from 'google-map-react'
-//import './map.css'
+import React, {useState, useEffect} from 'react';
+import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import * as Location from 'expo-location';
 
-//import 'key.env'
-// import { Icon } from '@iconify/react'
-// import locationIcon from '@iconify/icons-mdi/map-marker'
 
-const location = {
-    address: 'Lagoon Rd, Isla Vista, California',
-    lat: 34.404834,
-    lng: -119.844177,
+export default function Map() {
+  const [mapRegion, setMapRegion] = useState({
+    latitude: 34.404834,
+    longitude: -119.844177,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+const userLocation = async () => {
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== 'granted') {
+    setErrorMsg('Permission to access location was denied');
+    return;
+  }
+  let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+  setMapRegion({
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+  console.log(location.coords.latitude, location.coords.longitude);
 }
 
-const Map = ({ location, zoomLevel }) => (
-    <div className="map">
-        <h2 className="map-h2">Come Visit Us At Our Campus</h2>
-  
-    <div className="google-map">
-        <GoogleMapReact
-            bootstrapURLKeys={{ key: (key.env.REACT_APP_GOOGLE_MAPS_API_KEY) }}
-            defaultCenter={location}
-            defaultZoom={zoomLevel}
-        >
-            <LocationPin
-                lat={location.lat}
-                lng={location.lng}
-                text={location.address}
-            />
-        </GoogleMapReact>
-        </div>
-    </div>
-)
+useEffect(() => {
+  userLocation();
+}, []);
+  return (
+    <View style={styles.container}>
+      <MapView style={styles.map} 
+        region={mapRegion}
+      >
+        <Marker 
+          coordinate={mapRegion} 
+          title='User' 
+          onPress={console.log("user marker")}/>
+        <Marker 
+          coordinate={{latitude: 34.404834, longitude: -119.844177}} 
+          title='Achilly' 
+          onPress={console.log("no dates b4 finalz")}/>
+        <Button 
+          title='butt'
+          coordinate={mapRegion}
+          onPress={console.log("butt")}
+        />
+      </MapView>
+      {/* <Button title='Get Location' onPress={userLocation}/> */}
+    </View>
+  );
+}
 
-// const LocationPin = ({ text }) => (
-//     <div className="pin">
-//       <Icon icon={locationIcon} className="pin-icon" />
-//       <p className="pin-text">{text}</p>
-//     </div>
-// )
-
-export default Map
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+});
