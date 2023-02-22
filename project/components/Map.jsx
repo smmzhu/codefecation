@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
 import * as Location from 'expo-location';
-
+import { Image } from 'react-native';
 
 export default function Map() {
-  const [mapRegion, setMapRegion] = useState({
+    const [mapRegion, setMapRegion] = useState({
     latitude: 34.404834,
     longitude: -119.844177,
     latitudeDelta: 0.0922,
@@ -36,21 +36,23 @@ useEffect(() => {
       <MapView style={styles.map} 
         region={mapRegion}
       >
-        <Marker 
-          coordinate={mapRegion} 
-          title='User' 
-          onPress={console.log("user marker")}/>
+        <Marker coordinate={mapRegion} title='User'>
+            <View style={styles.Marker}>
+                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+            </View>
+        </Marker>
+        
         <Marker 
           coordinate={{latitude: 34.404834, longitude: -119.844177}} 
-          title='Achilly' 
-          onPress={console.log("no dates b4 finalz")}/>
-        <Button 
-          title='butt'
-          coordinate={mapRegion}
-          onPress={console.log("butt")}
-        />
+          title='Achilly'>
+            <View style={styles.Marker}>
+                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+                <Button title='achilly' onPress={console.log("no dates b4 finalz")}/>
+            </View>
+          </Marker>
+            
       </MapView>
-      {/* <Button title='Get Location' onPress={userLocation}/> */}
+      <Button title='Get Location' onPress={userLocation}/>
     </View>
   );
 }
@@ -61,6 +63,9 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '100%',
+    height: '95%',
   },
+  Marker: { 
+  }
+
 });

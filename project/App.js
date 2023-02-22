@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button, SafeAreaView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
 // import MapView from 'react-native-maps';
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
@@ -14,6 +13,7 @@ export default function App() {
       onPress={() => Alert.alert('Simple Button pressed')}
       />
       <Map />
+      <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  marker: {
+    width: 50,
+    height: 50,
+  }
 });
 
 // const styles = StyleSheet.create({
