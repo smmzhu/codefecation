@@ -36,7 +36,7 @@ useEffect(() => {
       <MapView style={styles.map} 
         region={mapRegion}
       >
-        <Marker coordinate={mapRegion} title='User'>
+        <Marker coordinate={mapRegion} title='User' onPress={()=>{console.log("chris: im kickin out yall cuz rpt--")}}>
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
             </View>
@@ -44,10 +44,10 @@ useEffect(() => {
         
         <Marker 
           coordinate={{latitude: 34.404834, longitude: -119.844177}} 
-          title='Achilly'>
+          title='Achilly' onPress={()=>{console.log("no dates b4 finalz")}}>
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-                <Button title='achilly' onPress={console.log("no dates b4 finalz")}/>
+                {/* <Button title='achilly' /> */}
             </View>
           </Marker>
             
