@@ -52,7 +52,7 @@ useEffect(() => {
           </Marker>
             
       </MapView>
-      <Button title='Get Location' onPress={userLocation}/>
+      {/* <Button title='Get Location' onPress={userLocation}/> */}
     </View>
   );
 }
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '95%',
+    height: '100%',
   },
   Marker: { 
   }
