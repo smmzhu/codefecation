@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
 
-export default function Map() {
+export default function Map(props) {
+  var mapPts = props.mapPts
     const [mapRegion, setMapRegion] = useState({
     latitude: 34.404834,
     longitude: -119.844177,
@@ -50,6 +51,17 @@ useEffect(() => {
                 {/* <Button title='achilly' /> */}
             </View>
           </Marker>
+        {mapPts.map((marker) => (
+          <Marker
+            key={marker.id}
+            coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
+            title={marker.name}
+          >
+            <View style={styles.Marker}>
+                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+            </View>
+          </Marker>
+        ))}
             
       </MapView>
       {/* <Button title='Get Location' onPress={userLocation}/> */}

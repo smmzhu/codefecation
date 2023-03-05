@@ -7,13 +7,14 @@ import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding
 import Map from './components/Map.jsx';
 
 export default function App() {
+  var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public urination tub"}]
   return (
     <SafeAreaView style={styles.container}>
       <Button 
       title="Codefecation"
       onPress={() => Alert.alert('Simple Button pressed')}
       />
-      <Map />
+      <Map mapPts = {mapPts}/>
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
       <SlidingPanel color = 'blue'>
