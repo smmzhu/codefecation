@@ -5,6 +5,16 @@ import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
 import Map from './components/Map.jsx';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import LoginScreen from './screens/LoginScreen';
+// import HomeScreen from './screens/HomeScreen';
+import LoginScreen2 from './screens/LoginScreen.jsx';
+import RegistrationScreen from './screens/RegistrationScreen.jsx';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   // <Marker 
@@ -20,7 +30,7 @@ export default function App() {
                 {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
                 {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B"}]
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={stylesMap.container}>
       <Button 
       title="Codefecation"
       onPress={() => Alert.alert('Simple Button pressed')}
@@ -35,6 +45,29 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   map: {
+//     width: '100%',
+//     height: '100%',
+//   },
+//   marker: {
+//     width: 50,
+//     height: 50,
+//   }
+// });
+
+const stylesMap = StyleSheet.create({
   container: {
     flex: 1,
   },
