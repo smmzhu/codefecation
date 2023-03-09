@@ -12,7 +12,7 @@ const ToiletCard = (props) => {
     return (
         <View style={styles.container}   >
             <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-            <Button title={props.toilet.name} onPress={() => console.log(props.toilet.name)}/>
+            <Button title={props.toilet.name} color={'#79443b'} onPress={() => console.log(props.toilet.name) }/>
             <Text>{props.toilet.location.latitude}</Text>
             <Text>{props.toilet.location.longitude}</Text>
             <Text>{props.toilet.rating}</Text>
@@ -24,9 +24,10 @@ const ToiletCard = (props) => {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        backgroundColor: 'green',
-        borderColor: 'green',
+        backgroundColor: '#cdb79e',
+        borderColor: 'black',
         borderWidth: 10,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         height: 200,

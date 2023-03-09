@@ -17,7 +17,7 @@ export default function App() {
       <Map mapPts = {mapPts}/>
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
-      <SlidingPanel color = 'blue'>
+      <SlidingPanel color = '#9f8170'>
       </SlidingPanel>
     </SafeAreaView>
   );

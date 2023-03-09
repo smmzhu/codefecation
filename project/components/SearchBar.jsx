@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   textInput: {
     width: '150%',
     height: '5%',
-    backgroundColor: 'brown',
-    borderColor: 'brown',
+    backgroundColor: 'white',
+    borderColor: '#79443b',
     borderWidth: 10,
     borderRadius: 10,
     textAlign: 'center',
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
   flatList: { 
     width: '150%',
     height: '5%',
-    backgroundColor: 'brown',
-    borderColor: 'brown',
+    backgroundColor: '#79443b',
+    borderColor: '#79443b',
     borderWidth: 10,
     borderRadius: 10,
     textAlign: 'center',

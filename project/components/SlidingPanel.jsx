@@ -9,10 +9,9 @@ export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
     // const {height, width} = {height: 1250, width: 1080};
     return (
-        <SlidingUpPanel height = {height} draggableRange = {{top: height, bottom: 100}} backgroundColor='blue'>
+        <SlidingUpPanel height = {height} draggableRange = {{top: height-60, bottom: 100}} backgroundColor='blue'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
                 <SearchBar/>
-                <Text>oh hey you found the stupid ass panel</Text>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>
@@ -22,7 +21,7 @@ export default function SlidingPanel(props) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: 'green',
       alignItems: 'center',
       justifyContent: 'center',
     },
