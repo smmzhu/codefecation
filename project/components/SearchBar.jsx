@@ -4,31 +4,34 @@ import ToiletCard from './ToiletCard';
 
 const TOILETS = [
   {
-    name: "ToiletOne",
-    location: {
+    name: "Engineering Science Building",
+    coords: {
       latitude: 34.404834,
       longitude: -119.844177,
     },
     rating: 4.5,
     id:"1",
+    location: "Santa Barbara",  
   },
   {
-    name: "ToiletTwo",
-    location: {
+    name: "Storke Tower",
+    coords: {
       latitude: 34.404834,
       longitude: -119.844177,
     },
     rating: 4.5,
     id:"2",
+    location: "Santa Barbara",
   },
   {
-    name: "ToiletThree",
-    location: {
+    name: "Arbor ",
+    coords: {
       latitude: 34.404834,
       longitude: -119.844177,
     },
     rating: 4.5,
     id:"3",
+    location: "Santa Barbara",    
   },
 ];
 

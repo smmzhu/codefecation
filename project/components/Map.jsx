@@ -39,7 +39,7 @@ useEffect(() => {
       >
         <Marker coordinate={mapRegion} title='User' onPress={()=>{console.log("chris: im kickin out yall cuz rpt--")}}>
             <View style={styles.Marker}>
-                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+                <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
             </View>
         </Marker>
         
