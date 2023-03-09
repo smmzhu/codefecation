@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image } from 'react-native';
 import ToiletCard from './ToiletCard';
+
 
 const TOILETS = [
   {

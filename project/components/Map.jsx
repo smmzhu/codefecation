@@ -3,9 +3,11 @@ import MapView, {Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
+import MiniInfoBox from './miniInfoBox.jsx';
 
 export default function Map(props) {
   var mapPts = props.mapPts
+  const [currActive, setCurrActive] = useState("none");
     const [mapRegion, setMapRegion] = useState({
     latitude: 34.404834,
     longitude: -119.844177,
@@ -43,23 +45,25 @@ useEffect(() => {
             </View>
         </Marker>
         
-        <Marker 
+        {/* <Marker 
           coordinate={{latitude: 34.404834, longitude: -119.844177}} 
           title='Achilly' onPress={()=>{console.log("no dates b4 finalz")}}>
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-                {/* <Button title='achilly' /> */}
+                // <Button title='achilly' />
             </View>
-          </Marker>
+          </Marker> */}
         {mapPts.map((marker) => (
           <Marker
             key={marker.id}
             coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
             title={marker.name}
+            onPress={()=>{setCurrActive(marker.id); console.log("public clicked")}}
           >
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
             </View>
+            <MiniInfoBox name = {marker.name} isActive = {currActive == marker.id} handleModalChange = {(id)=>setCurrActive(id)}/>
           </Marker>
         ))}
             

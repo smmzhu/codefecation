@@ -1,34 +1,28 @@
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 
-const miniInfoBox = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+const MiniInfoBox = (props) => {
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={props.isActive}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
+          props.handleModalChange("none");
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={() => {props.handleModalChange("none")}}>
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
     </View>
   );
 };
@@ -77,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default miniInfoBox;
+export default MiniInfoBox;

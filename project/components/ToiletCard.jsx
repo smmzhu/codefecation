@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Image, Button, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 
 // assume props is an array of objects with the following structure:
 // {
@@ -8,9 +9,12 @@ import { Image, Button, StyleSheet, Text, View, TextInput, FlatList } from 'reac
 //     rating: "toilet rating",
 // }
 
+
+
 const ToiletCard = (props) => {
+    const {height, width} = useWindowDimensions();
     return (
-        <View style={styles.container}   >
+        <View style={styles.container} width = {width*0.87} height = {(width*0.87)/1.5}   >
             <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
             <Button title={props.toilet.name} color={'#79443b'} onPress={() => console.log(props.toilet.name) }/>
             <Text style={{width: 100}}>Location = {props.toilet.location}</Text>
@@ -18,6 +22,7 @@ const ToiletCard = (props) => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {
@@ -27,9 +32,9 @@ const styles = StyleSheet.create({
         borderWidth: 10,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center',
-        height: 200,
-        width: 300,
+        justifyContent: 'center'
+        // height: (width - 20)/1.5,
+        // width: width - 20,
     },
     location:{
         fontSize: 15,

@@ -7,7 +7,18 @@ import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding
 import Map from './components/Map.jsx';
 
 export default function App() {
-  var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public urination tub"}]
+  // <Marker 
+  //         coordinate={{latitude: 34.404834, longitude: -119.844177}} 
+  //         title='Achilly' onPress={()=>{console.log("no dates b4 finalz")}}>
+  //           <View style={styles.Marker}>
+  //               <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+  //               {/* <Button title='achilly' /> */}
+  //           </View>
+  //         </Marker>
+  var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
+                {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Campus Point"},
+                {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
+                {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B"}]
   return (
     <SafeAreaView style={styles.container}>
       <Button 
