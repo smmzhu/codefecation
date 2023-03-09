@@ -1,81 +1,53 @@
 import React, {Component} from "react";
-import { Text, View, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import ToiletCard from './ToiletCard';
 
-const DATA = [
-    {
-      id: "1",
-      title: "Data Structures",
+const TOILETS = [
+  {
+    name: "ToiletOne",
+    location: {
+      latitude: 34.404834,
+      longitude: -119.844177,
     },
-    {
-      id: "2",
-      title: "STL",
+    rating: 4.5,
+    id:"1",
+  },
+  {
+    name: "ToiletTwo",
+    location: {
+      latitude: 34.404834,
+      longitude: -119.844177,
     },
-    {
-      id: "3",
-      title: "C++",
+    rating: 4.5,
+    id:"2",
+  },
+  {
+    name: "ToiletThree",
+    location: {
+      latitude: 34.404834,
+      longitude: -119.844177,
     },
-    {
-      id: "4",
-      title: "Java",
-    },
-    {
-      id: "5",
-      title: "Python",
-    },
-    {
-      id: "6",
-      title: "CP",
-    },
-    {
-      id: "7",
-      title: "ReactJs",
-    },
-    {
-      id: "8",
-      title: "NodeJs",
-    },
-    {
-      id: "9",
-      title: "MongoDb",
-    },
-    {
-      id: "10",
-      title: "ExpressJs",
-    },
-    {
-      id: "11",
-      title: "PHP",
-    },
-    {
-      id: "12",
-      title: "MySql",
-    },
+    rating: 4.5,
+    id:"3",
+  },
 ];
 
-const Item = ({ title }) => {
-    return (
-      <View>
-        <Text>{title}</Text>
-      </View>
-    );
-};
-
-const renderItem = ({ item }) => <Item title={item.title} />;
+const renderItem = ({ item }) => <ToiletCard toilet={item} />;
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
-      data: DATA,
+      data: TOILETS,
       error: null,
       searchValue: "enter",
     };
-    this.arrayholder = DATA;
+    this.arrayholder = TOILETS;
   }
 
   searchFunction = (text) => {
     const updatedData = this.arrayholder.filter((item) => {
-      const item_data = `${item.title.toUpperCase()})`;
+      const item_data = `${item.name.toUpperCase()})`;
       const text_data = text.toUpperCase();
       return item_data.indexOf(text_data) > -1;
     });
@@ -84,8 +56,9 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
+          style={styles.textInput}
           placeholder="Search Here..."
           lightTheme
           round
@@ -94,6 +67,7 @@ class SearchBar extends Component {
           autoCorrect={false}
         />
         <FlatList
+          style={styles.flatList}
           data={this.state.data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
@@ -102,19 +76,75 @@ class SearchBar extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '5%',
+  },
+  textInput: {
+    width: '150%',
+    height: '5%',
+    backgroundColor: 'brown',
+    borderColor: 'brown',
+    borderWidth: 10,
+    borderRadius: 10,
+    textAlign: 'center',
+  },
+  flatList: { 
+    width: '150%',
+    height: '5%',
+    backgroundColor: 'brown',
+    borderColor: 'brown',
+    borderWidth: 10,
+    borderRadius: 10,
+    textAlign: 'center',
+  }
 
-
-// const SearchBar = ({props}) => {
-//     const [text, onChangeText] = React.useState('Useless Text');
-//     return (
-//         <View>
-//             <TextInput
-//                 onChangeText={onChangeText}
-//                 value={text}
-//             />  
-//             <FlatList data={""} />
-//         </View>
-//     );
-// };
+});
 
 export default SearchBar;
+
+// const renderItem = ({ item }) => <ToiletCard title={item.title} />;
+// class SearchBar extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       loading: false,
+//       data: DATA,
+//       error: null,
+//       searchValue: "enter",
+//     };
+//     this.arrayholder = DATA;
+//   }
+
+//   searchFunction = (text) => {
+//     const updatedData = this.arrayholder.filter((item) => {
+//       const item_data = `${item.title.toUpperCase()})`;
+//       const text_data = text.toUpperCase();
+//       return item_data.indexOf(text_data) > -1;
+//     });
+//     this.setState({ data: updatedData, searchValue: text });
+//   };
+
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <TextInput
+//           style={styles.textInput}
+//           placeholder="Search Here..."
+//           lightTheme
+//           round
+//           value={this.state.searchValue}
+//           onChangeText={(text) => this.searchFunction(text)}
+//           autoCorrect={false}
+//         />
+//         <FlatList
+//           style={styles.flatList}
+//           data={this.state.data}
+//           renderItem={renderItem}
+//           keyExtractor={(item) => item.id}
+//         />
+//       </View>
+//     );
+//   }
+// }
