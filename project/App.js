@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar'; //penis penis
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
 import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 // import MapView from 'react-native-maps';
@@ -21,8 +21,6 @@ import RegistrationScreen from './screens/RegistrationScreen.jsx';
 //yarn add @react-native-firebase/app
 //yarn add react-native-safe-area-context
 //npx expo install react-native-screens react-native-safe-area-context
-//line edit
-
 
 const Stack = createNativeStackNavigator();
 
