@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
 import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
+import React, {useState, useEffect} from 'react';
 // import MapView from 'react-native-maps';
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
@@ -9,10 +10,11 @@ import Map from './components/Map.jsx';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import LoginScreen from './screens/LoginScreen';
+// import LoginScreen from '.git/screens/LoginScreen';
 // import HomeScreen from './screens/HomeScreen';
 import LoginScreen2 from './screens/LoginScreen.jsx';
 import RegistrationScreen from './screens/RegistrationScreen.jsx';
+import MiniInfoBox from './components/miniInfoBox.jsx';
 
 //yarn add @react-navigation/native
 //yarn add @react-navigation/native-stack
@@ -25,6 +27,8 @@ import RegistrationScreen from './screens/RegistrationScreen.jsx';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
+  console.log(currPtInfoActive.name);
   var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
                 {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly"},
                 {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
@@ -35,7 +39,8 @@ export default function App() {
       title="Codefecation"
       onPress={() => Alert.alert('Simple Button pressed')}
       />
-      <Map mapPts = {mapPts}/>
+      <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive}/>
+      <MiniInfoBox name = {currPtInfoActive.name} isActive = {true} setCurrPtInfoActive = {setCurrPtInfoActive}/>
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
       <SlidingPanel color = '#9f8170'>

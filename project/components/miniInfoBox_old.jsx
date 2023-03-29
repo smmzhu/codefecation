@@ -2,20 +2,29 @@ import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 
 const MiniInfoBox = (props) => {
-  console.log(props.name);
-  const [name, setName] = useState(props.name);
-  return (props.isActive ?
-    <View style={styles.fixedView}>
-      <View style={styles.modalView}>
-        <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
-        <Pressable
-          style={[styles.button, styles.buttonClose]}
-          onPress={() => {props.setCurrPtInfoActive("none")}}>
-          <Text style={styles.textStyle}>Hide Modal</Text>
-        </Pressable>
-      </View>
-    </View> : <View/>
-  ); 
+  return (
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={props.isActive}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          props.handleModalChange("none");
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {props.handleModalChange("none")}}>
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -24,13 +33,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
-  },
-  fixedView: {
-    flexDirection: 'row',
-    position: 'absolute',
-    alignSelf: 'center',
-    left:     0,
-    top:      0,
   },
   modalView: {
     margin: 20,

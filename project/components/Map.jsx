@@ -3,7 +3,7 @@ import MapView, {Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
-import MiniInfoBox from './miniInfoBox.jsx';
+
 
 export default function Map(props) {
   var mapPts = props.mapPts
@@ -58,12 +58,11 @@ useEffect(() => {
             key={marker.id}
             coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
             title={marker.name}
-            onPress={()=>{setCurrActive(marker.id); console.log("public clicked")}}
+            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); console.log("public clicked"); console.log(marker);}}
           >
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
             </View>
-            <MiniInfoBox name = {marker.name} isActive = {currActive == marker.id} handleModalChange = {(id)=>setCurrActive(id)}/>
           </Marker>
         ))}
             
