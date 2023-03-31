@@ -1,20 +1,43 @@
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {useEffect, useRef} from 'react';
+import {Animated} from "react-native";
 
 const MiniInfoBox = (props) => {
-  console.log(props.name);
-  const [name, setName] = useState(props.name);
+  const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 0})).current); //disp = displacement
+  flyOutToBottom = () => {
+    Animated.timing(disp.y, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+  }
+  flyInFromBottom = () => {
+    disp[y].setValue(1);
+    Animated.timing(disp.y, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+  }
+
   return (props.isActive ?
-    <View style={styles.fixedView}>
-      <View style={styles.modalView}>
-        <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
-        <Pressable
-          style={[styles.button, styles.buttonClose]}
-          onPress={() => {props.setCurrPtInfoActive("none")}}>
-          <Text style={styles.textStyle}>Hide Modal</Text>
-        </Pressable>
-      </View>
-    </View> : <View/>
+    <Animated.View style={{
+      transform: [{
+        translateY: disp.y.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 600]})
+        }
+      ],
+      ...styles.modalView
+    }}>
+      <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
+      <Pressable
+        style={[styles.button, styles.buttonClose]}
+        onPress={() => {/*props.setCurrPtInfoActive("none")*/ flyOutToBottom()}}>
+        <Text style={styles.textStyle}>Hide Modal</Text>
+      </Pressable>
+    </Animated.View>: <View/>
   ); 
 };
 
@@ -25,15 +48,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
-  fixedView: {
-    flexDirection: 'row',
-    position: 'absolute',
-    alignSelf: 'center',
-    left:     0,
-    top:      0,
-  },
   modalView: {
-    margin: 20,
+    marginLeft: '20%',
+    marginBottom: '2.5%',
+    position: 'absolute',
+    height: '30%',
+    alignSelf: 'center',
+    bottom:     100,
+    width: '100%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,

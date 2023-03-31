@@ -28,7 +28,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
-  console.log(currPtInfoActive.name);
   var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
                 {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly"},
                 {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
@@ -40,7 +39,7 @@ export default function App() {
       onPress={() => Alert.alert('Simple Button pressed')}
       />
       <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive}/>
-      <MiniInfoBox name = {currPtInfoActive.name} isActive = {true} setCurrPtInfoActive = {setCurrPtInfoActive}/>
+      <MiniInfoBox name = {currPtInfoActive.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive}/>
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
       <SlidingPanel color = '#9f8170'>
