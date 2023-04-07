@@ -6,6 +6,7 @@ import {Animated} from "react-native";
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 0})).current); //disp = displacement
   flyOutToBottom = () => {
+    disp.y.setValue(0);
     Animated.timing(disp.y, {
       toValue: 1,
       duration: 1000,
@@ -13,15 +14,17 @@ const MiniInfoBox = (props) => {
     }).start();
   }
   flyInFromBottom = () => {
-    disp[y].setValue(1);
+    disp.y.setValue(1);
     Animated.timing(disp.y, {
       toValue: 0,
       duration: 1000,
       useNativeDriver: true
     }).start();
   }
-
-  return (props.isActive ?
+  console.log("miniInfoBox: " + props.name + " " + props.isActive)
+  console.log(disp.y)
+  if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
+  return (
     <Animated.View style={{
       transform: [{
         translateY: disp.y.interpolate({
@@ -34,10 +37,10 @@ const MiniInfoBox = (props) => {
       <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
       <Pressable
         style={[styles.button, styles.buttonClose]}
-        onPress={() => {/*props.setCurrPtInfoActive("none")*/ flyOutToBottom()}}>
+        onPress={() => {flyOutToBottom(); props.setCurrPtInfoActive("none")}}>
         <Text style={styles.textStyle}>Hide Modal</Text>
       </Pressable>
-    </Animated.View>: <View/>
+    </Animated.View>
   ); 
 };
 

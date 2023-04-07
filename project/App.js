@@ -28,6 +28,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
+  const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
   var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
                 {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly"},
                 {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
@@ -38,8 +39,8 @@ export default function App() {
       title="Codefecation"
       onPress={() => Alert.alert('Simple Button pressed')}
       />
-      <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive}/>
-      <MiniInfoBox name = {currPtInfoActive.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive}/>
+      <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive} setActiveFlag = {setActiveFlag}/>
+      <MiniInfoBox name = {currPtInfoActive.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag}/>
       <Image source={require('./assets/marker.png')} style={{width: 50, height: 50}}/>
       <StatusBar style="auto" />
       <SlidingPanel color = '#9f8170'>

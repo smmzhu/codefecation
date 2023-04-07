@@ -6,7 +6,7 @@ import { Image } from 'react-native';
 
 
 export default function Map(props) {
-  var mapPts = props.mapPts
+  var mapPts = props.mapPts;
   const [currActive, setCurrActive] = useState("none");
     const [mapRegion, setMapRegion] = useState({
     latitude: 34.404834,
@@ -58,7 +58,7 @@ useEffect(() => {
             key={marker.id}
             coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
             title={marker.name}
-            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); console.log("public clicked"); console.log(marker);}}
+            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); props.setActiveFlag(true); console.log("public clicked"); console.log(marker);}}
           >
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
