@@ -80,21 +80,14 @@ class SearchBar extends Component {
           onChangeText={(text) => this.searchFunction(text)}
           autoCorrect={false}
         />
-        {/* <FlatList
+        <FlatList
               nestedScrollEnabled={true}
               style={styles.flatList}
               data={this.state.data}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
-        /> */}
-        <ScrollView persistentScrollbar={true}>
-          {/* <FlatList
-            nestedScrollEnabled={true}
-            style={styles.flatList}
-            data={this.state.data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          /> */}
+        />
+        {/* <ScrollView keyboardShouldPersistTaps='always' persistentScrollbar={true} nestedScrollEnabled={true}>
           <View style={styles.flatList}>
             <FlatList
             nestedScrollEnabled={true}
@@ -106,7 +99,7 @@ class SearchBar extends Component {
 
             </FlatList>
           </View>
-        </ScrollView>
+        </ScrollView> */}
         
       </View>
     );
@@ -130,8 +123,8 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#79443b',
     borderColor: '#79443b',
-    borderWidth: 10,
-    borderRadius: 10,
+    borderWidth: 0,
+    borderRadius: 0,
     textAlign: 'center',
   }
 
