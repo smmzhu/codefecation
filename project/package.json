@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "expo": "^47.0.13",
-    "expo-location": "^15.0.1",
+    "expo-location": "~15.0.1",
     "expo-maps": "0.0.0",
     "expo-status-bar": "~1.4.2",
     "google-map-react": "^2.2.0",

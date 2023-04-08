@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image } from 'react-native';
-import ToiletCard from './ToiletCard';
+import ToiletCard from './ToiletCard.jsx';
 
 
 const TOILETS = [
@@ -34,6 +34,16 @@ const TOILETS = [
     id:"3",
     location: "Santa Barbara",    
   },
+  {
+    name: "Ocean",
+    coords: {
+      latitude: 34.404834,
+      longitude: -119.844177,
+    },
+    rating: 4.5,
+    id:"4",
+    location: "Santa Barbara",
+},
 ];
 
 const renderItem = ({ item }) => <ToiletCard toilet={item} />;
@@ -60,7 +70,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <TextInput
           style={styles.textInput}
           placeholder="Search Here..."
@@ -70,23 +80,44 @@ class SearchBar extends Component {
           onChangeText={(text) => this.searchFunction(text)}
           autoCorrect={false}
         />
-        <FlatList
-          style={styles.flatList}
-          data={this.state.data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+        {/* <FlatList
+              nestedScrollEnabled={true}
+              style={styles.flatList}
+              data={this.state.data}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+        /> */}
+        <ScrollView persistentScrollbar={true}>
+          {/* <FlatList
+            nestedScrollEnabled={true}
+            style={styles.flatList}
+            data={this.state.data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          /> */}
+          <View style={styles.flatList}>
+            <FlatList
+            nestedScrollEnabled={true}
+            style={styles.flatList}
+            data={this.state.data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            >
+
+            </FlatList>
+          </View>
+        </ScrollView>
+        
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: {
+  inputBar: {
     flex: 1,
-    height: '5%',
   },
   textInput: {
-    width: '150%',
+    width: '100%',
     height: '5%',
     backgroundColor: 'white',
     borderColor: '#79443b',
@@ -95,8 +126,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   flatList: { 
-    width: '150%',
-    height: '5%',
+    width: '100%',
+    height: '100%',
     backgroundColor: '#79443b',
     borderColor: '#79443b',
     borderWidth: 10,
