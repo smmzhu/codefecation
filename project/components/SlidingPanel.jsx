@@ -8,10 +8,19 @@ import SearchBar from './SearchBar';
 export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
     // const {height, width} = {height: 1250, width: 1080};
+    var rating1 = 5;
+
     return (
-        <SlidingUpPanel height = {height} draggableRange = {{top: height-60, bottom: 100}} backgroundColor='blue'>
+        <SlidingUpPanel height = {height} draggableRange = {{top: height-60, bottom: 100}} backgroundColor='white'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
+              <SearchBar/>
+              {/* <View style={styles2.container}>
+                <Rating Rating = {rating1}/>
+              </View>
+              <View style={styles2.container}>
                 <SearchBar/>
+              </View> */}
+
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>
@@ -21,17 +30,27 @@ export default function SlidingPanel(props) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
   });
   
   const styles2 = StyleSheet.create({
+    // container: {
+    //   flex: 1,
+    //   //backgroundColor: '#f00',
+    //   alignItems: 'center',
+    //   justifyContent: 'center',
     container: {
-      flex: 1,
-      //backgroundColor: '#f00',
+      // flex: 1,
+      // //backgroundColor: '#f00',
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      justifyContent: 'center',
+      width: '75%',
+      height: '30%',
     },
   });

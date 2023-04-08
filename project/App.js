@@ -5,22 +5,32 @@ import SlidingPanel from "./components/SlidingPanel.jsx"; // yarn add rn-sliding
 // import Map2 from './components/Map2.jsx';
 // <MapSection location={location} zoomLevel={17} /> {}
 import Map from './components/Map.jsx';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import LoginScreen from './screens/LoginScreen';
+// import HomeScreen from './screens/HomeScreen';
+import LoginScreen2 from './screens/LoginScreen.jsx';
+import RegistrationScreen from './screens/RegistrationScreen.jsx';
+
+//yarn add @react-navigation/native
+//yarn add @react-navigation/native-stack
+//yarn add react-native-keyboard-aware-scroll-view
+//yarn add firebase
+//yarn add @react-native-firebase/app
+//yarn add react-native-safe-area-context
+//npx expo install react-native-screens react-native-safe-area-context
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // <Marker 
-  //         coordinate={{latitude: 34.404834, longitude: -119.844177}} 
-  //         title='Achilly' onPress={()=>{console.log("no dates b4 finalz")}}>
-  //           <View style={styles.Marker}>
-  //               <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-  //               {/* <Button title='achilly' /> */}
-  //           </View>
-  //         </Marker>
   var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
-                {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Campus Point"},
+                {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly"},
                 {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
                 {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B"}]
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={stylesMap.container}>
       <Button 
       title="Codefecation"
       onPress={() => Alert.alert('Simple Button pressed')}
@@ -35,6 +45,29 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   map: {
+//     width: '100%',
+//     height: '100%',
+//   },
+//   marker: {
+//     width: 50,
+//     height: 50,
+//   }
+// });
+
+const stylesMap = StyleSheet.create({
   container: {
     flex: 1,
   },
