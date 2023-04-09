@@ -58,7 +58,10 @@ useEffect(() => {
             key={marker.id}
             coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
             title={marker.name}
-            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); props.setActiveFlag(true); console.log("public clicked"); console.log(marker);}}
+            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
+                          if (props.activeFlag == false){props.setActiveFlag(true);} 
+                          console.log("public clicked"); 
+                          console.log(marker);}}
           >
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>

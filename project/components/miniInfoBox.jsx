@@ -2,27 +2,28 @@ import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {Animated} from "react-native";
+import {LogBox} from 'react-native';
 
 const MiniInfoBox = (props) => {
-  const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 0})).current); //disp = displacement
+  const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
   flyOutToBottom = () => {
-    disp.y.setValue(0);
+    //disp.y.setValue(0);
     Animated.timing(disp.y, {
       toValue: 1,
-      duration: 1000,
+      duration: 300,
       useNativeDriver: true
     }).start();
   }
   flyInFromBottom = () => {
-    disp.y.setValue(1);
+    //disp.y.setValue(1);
     Animated.timing(disp.y, {
       toValue: 0,
-      duration: 1000,
+      duration: 300,
       useNativeDriver: true
     }).start();
   }
-  console.log("miniInfoBox: " + props.name + " " + props.isActive)
-  console.log(disp.y)
+  console.log("miniInfoBox: " + props.name + " " + props.isActive);
+  LogBox.ignoreLogs(["Cannot update a component (`App`) while rendering a different component (`MiniInfoBox`)."]);
   if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   return (
     <Animated.View style={{
