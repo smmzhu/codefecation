@@ -41,6 +41,11 @@ const MiniInfoBox = (props) => {
         onPress={() => {flyOutToBottom(); props.setCurrPtInfoActive("none")}}>
         <Text style={styles.textStyle}>Hide Modal</Text>
       </Pressable>
+      <Pressable
+        style={[styles.button, styles.buttonClose]} //TODO: make button bottom right corner + styling
+        onPress={() => props.navigation.navigate('Bathroom')}>
+        <Text style={styles.textStyle}>Extra Info</Text>
+      </Pressable>
     </Animated.View>
   ); 
 };
