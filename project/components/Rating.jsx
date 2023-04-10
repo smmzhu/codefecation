@@ -37,6 +37,7 @@ export default function Rating(props) {
   
     return (
       <SafeAreaView style={styles.container}>
+        {/* ALLOW USERS TO RATE BATHROOM DONT DELETE I WILL FINISH THIS SOON*/}
         {/* <Text style={styles.textStyle}> Please Rate us</Text> */}
         <CustomRatingBar /> 
         {/* <Text style={styles.textStyle}>

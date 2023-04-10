@@ -1,52 +1,56 @@
-import { useNavigation } from '@react-navigation/core'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase/config'
+import * as React from 'react';
+import {useState, useEffect} from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
+import MiniInfoBox from '../components/miniInfoBox.jsx';
+import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
+import Map from '../components/Map.jsx';
 
-const HomeScreen = () => {
-  const navigation = useNavigation()
-
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login")
-      })
-      .catch(error => alert(error.message))
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
-    </View>
-  )
+function HomeScreen2({ navigation }) {
+    const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
+    const [lastPtInfo, setLastPtInfo] = useState("none");
+    const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
+    var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub"},
+                  {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly"},
+                  {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A"},
+                  {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B"}]
+    return (
+      <SafeAreaView style={stylesMap.container}>
+        <Button 
+        title="Codefecation"
+        onPress={() => Alert.alert('Simple Button pressed')}
+        />
+        <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
+        <MiniInfoBox name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+        <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+        <StatusBar style="auto" />
+        <SlidingPanel color = '#9f8170'>
+        </SlidingPanel>
+      </SafeAreaView>
+    );
 }
 
-export default HomeScreen
+export default HomeScreen2;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-   button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-})
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+
+const stylesMap = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    map: {
+      width: '100%',
+      height: '100%',
+    },
+    marker: {
+      width: 50,
+      height: 50,
+    }
+  });

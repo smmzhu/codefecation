@@ -44,15 +44,6 @@ useEffect(() => {
                 <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
             </View>
         </Marker>
-        
-        {/* <Marker 
-          coordinate={{latitude: 34.404834, longitude: -119.844177}} 
-          title='Achilly' onPress={()=>{console.log("no dates b4 finalz")}}>
-            <View style={styles.Marker}>
-                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-                // <Button title='achilly' />
-            </View>
-          </Marker> */}
         {mapPts.map((marker) => (
           <Marker
             key={marker.id}
@@ -70,7 +61,7 @@ useEffect(() => {
         ))}
             
       </MapView>
-      {/* <Button title='Get Location' onPress={userLocation}/> */}
+      {/* <Button title='Get Location' onPress={userLocation}/> SAVING THIS FOR ADDING A RELOAD SWIPE*/} 
     </View>
   );
 }

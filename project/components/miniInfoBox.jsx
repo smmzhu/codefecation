@@ -7,7 +7,6 @@ import {LogBox} from 'react-native';
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
   flyOutToBottom = () => {
-    //disp.y.setValue(0);
     Animated.timing(disp.y, {
       toValue: 1,
       duration: 300,
@@ -15,7 +14,6 @@ const MiniInfoBox = (props) => {
     }).start();
   }
   flyInFromBottom = () => {
-    //disp.y.setValue(1);
     Animated.timing(disp.y, {
       toValue: 0,
       duration: 300,

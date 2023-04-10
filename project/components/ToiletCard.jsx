@@ -10,8 +10,6 @@ import Rating from './Rating';
 //     rating: "toilet rating",
 // }
 
-
-
 const ToiletCard = (props) => {
     const {height, width} = useWindowDimensions();
     return (
