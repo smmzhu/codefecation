@@ -1,10 +1,9 @@
 // components/login.js
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 
 export default class Login extends Component {
-  
   constructor() {
     super();
     this.state = { 
@@ -36,9 +35,18 @@ export default class Login extends Component {
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Dashboard')
+        this.props.navigation.navigate('Home')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => {
+        this.setState({ errorMessage: error.message }); 
+        this.updateInputVal(false, 'isLoading'); 
+        if (error.message == "[FirebaseError: Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).]")
+          Alert.alert('The password is invalid or the user does not have a password.');
+        else if (error.message == "[FirebaseError: Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found).]")
+          Alert.alert('There is no user record corresponding to this identifier. The user may have been deleted.');
+        else
+          Alert.alert(error.message);
+      })
     }
   }
   render() {
@@ -50,7 +58,7 @@ export default class Login extends Component {
       )
     }    
     return (
-      <View style={styles.container}>  
+      <Pressable onPress={Keyboard.dismiss} style={styles.container}>
         <TextInput
           style={styles.inputStyle}
           placeholder="Email"
@@ -75,7 +83,7 @@ export default class Login extends Component {
           onPress={() => this.props.navigation.navigate('Signup')}>
           Don't have account? Click here to signup
         </Text>                          
-      </View>
+      </Pressable>
     );
   }
 }

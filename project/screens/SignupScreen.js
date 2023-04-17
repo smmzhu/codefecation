@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 
 export default class Signup extends Component {
@@ -9,6 +9,7 @@ export default class Signup extends Component {
       displayName: '',
       email: '', 
       password: '',
+      rePassword: '',
       isLoading: false
     }
   }
@@ -18,9 +19,22 @@ export default class Signup extends Component {
     this.setState(state);
   }
   registerUser = () => {
-    if(this.state.email === '' && this.state.password === '') {
+    if(this.state.displayName === '' || this.state.email === '' || this.state.password === '' || this.state.rePassword === '') {
       Alert.alert('Enter details to signup!')
-    } else {
+    } 
+    else if (this.state.password !== this.state.rePassword) {
+      Alert.alert('Passwords do not match!')
+    }
+    else if (this.state.password.length < 6) {
+      Alert.alert('Password should be at least 6 characters.')
+    }
+    else if (this.state.displayName.length < 4) {
+      Alert.alert('Name should be at least 4 characters.')
+    }
+    else if (this.state.displayName.length > 25) {
+      Alert.alert('Name should be at most 25 characters.')
+    }
+    else {
       this.setState({
         isLoading: true,
       })
@@ -36,11 +50,23 @@ export default class Signup extends Component {
           isLoading: false,
           displayName: '',
           email: '', 
-          password: ''
+          password: '',
+          rePassword: ''
         })
         this.props.navigation.navigate('Login')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))      
+      .catch(error => {
+        this.setState({ errorMessage: error.message }); 
+        this.updateInputVal(false, 'isLoading'); 
+        if (error.message == "Firebase: The email address is badly formatted. (auth/invalid-email).")
+          Alert.alert('Please enter a valid email address.');
+        else if (error.message == "Firebase: The email address is already in use by another account. (auth/email-already-in-use).")
+          Alert.alert('The email address is already in use by another account.');
+        else if (error.message == "Firebase: Password should be at least 6 characters (auth/weak-password).")
+          Alert.alert('Password should be at least 6 characters.');
+        else
+          Alert.alert(error.message);
+      })
     }
   }
   render() {
@@ -52,7 +78,7 @@ export default class Signup extends Component {
       )
     }    
     return (
-      <View style={styles.container}>  
+      <Pressable onPress={Keyboard.dismiss} style={styles.container}>
         <TextInput
           style={styles.inputStyle}
           placeholder="Name"
@@ -73,6 +99,14 @@ export default class Signup extends Component {
           maxLength={15}
           secureTextEntry={true}
         />   
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Retype Password"
+          value={this.state.rePassword}
+          onChangeText={(val) => this.updateInputVal(val, 'rePassword')}
+          maxLength={15}
+          secureTextEntry={true}
+        />   
         <Button
           color="#3740FE"
           title="Signup"
@@ -82,8 +116,8 @@ export default class Signup extends Component {
           style={styles.loginText}
           onPress={() => this.props.navigation.navigate('Login')}>
           Already Registered? Click here to login
-        </Text>                          
-      </View>
+        </Text>        
+      </Pressable>                
     );
   }
 }
