@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image, Button } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
 
 
@@ -10,7 +10,7 @@ const TOILETS = [
       latitude: 34.404834,
       longitude: -119.844177,
     },
-    rating: 4.5,
+    rating: 1.5,
     id:"1",
     location: "Santa Barbara",  
   },
@@ -20,7 +20,7 @@ const TOILETS = [
       latitude: 34.404834,
       longitude: -119.844177,
     },
-    rating: 4.5,
+    rating: 2.5,
     id:"2",
     location: "Santa Barbara",
   },
@@ -30,7 +30,7 @@ const TOILETS = [
       latitude: 34.404834,
       longitude: -119.844177,
     },
-    rating: 4.5,
+    rating: 3.5,
     id:"3",
     location: "Santa Barbara",    
   },
@@ -46,7 +46,7 @@ const TOILETS = [
 },
 ];
 
-const renderItem = ({ item }) => <ToiletCard toilet={item} />;
+const renderItem = ({item, navigation}) => <ToiletCard toilet={item} navigation = {navigation}/>;
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class SearchBar extends Component {
       loading: false,
       data: TOILETS,
       error: null,
-      searchValue: "enter",
+      searchValue: "",
     };
     this.arrayholder = TOILETS;
   }
@@ -84,7 +84,7 @@ class SearchBar extends Component {
               nestedScrollEnabled={true}
               style={styles.flatList}
               data={this.state.data}
-              renderItem={renderItem}
+              renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
               keyExtractor={(item) => item.id}
         />
         {/* <ScrollView keyboardShouldPersistTaps='always' persistentScrollbar={true} nestedScrollEnabled={true}>

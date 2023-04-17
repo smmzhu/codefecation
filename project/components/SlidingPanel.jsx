@@ -10,7 +10,7 @@ export default function SlidingPanel(props) {
     return (
         <SlidingUpPanel height = {height} draggableRange = {{top: height-60, bottom: 100}} backgroundColor='white'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
-              <SearchBar/>
+              <SearchBar navigation = {props.navigation}/>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>

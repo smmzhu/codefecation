@@ -15,7 +15,14 @@ const ToiletCard = (props) => {
     return (
         <View style={styles.container} width = {width*0.87} height = {(width*0.87)/1.5}   >
             <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-            <Button title={props.toilet.name} color={'#79443b'} onPress={() => console.log(props.toilet.name) }/>
+            <Button 
+                title={props.toilet.name}
+                color={'#79443b'}
+                onPress={() => props.navigation.navigate('Bathroom', {
+                    bathroomName: props.toilet.name,
+                    bathroomRating: props.toilet.rating
+                })}/>
+            {/* onPress={() => console.log(props.toilet.name) } */}
             <Text style={{width: 100}}>Location = {props.toilet.location}</Text>
             {/* <Text style={{width: 100}}>Rating = {props.toilet.rating}</Text>    */}
             <Rating Rating = {props.toilet.rating}/>
