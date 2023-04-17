@@ -10,10 +10,10 @@ import * as React from 'react';
 import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-//screen imports
-import TestBathroomScreen from './screens/TestBathroomScreen.js';
+import BathroomScreen from './screens/BathroomScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
+import BathroomRequest from './screens/BathroomRequest.js';
+import BathroomReviewScreen from './screens/RateBathroom.js';
 import LoginScreen from './screens/LoginScreen.js';
 import SignupScreen from './screens/SignupScreen.js';
 import Dashboard from './screens/Dashboard.js';
@@ -32,7 +32,9 @@ function App() {
         <Stack.Screen name="Login" component={LoginScreen} options={{title: 'Login', headerLeft: null}}/>
         <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard', headerLeft: null}}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Bathroom" component={TestBathroomScreen}/>
+        <Stack.Screen name="Bathroom" component={BathroomScreen}/>
+        <Stack.Screen name="BathroomRequest" component={BathroomRequest}/>
+        <Stack.Screen name="RateBathroom" component={BathroomReviewScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

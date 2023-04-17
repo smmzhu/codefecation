@@ -17,7 +17,7 @@ export default function Rating(props) {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 key={item}
-                                onPress={() => setDefaultRating(item)}
+                                // onPress={() => setDefaultRating(item)}
                             >
                                 <Image
                                     style={styles.starImageStyle}
@@ -37,19 +37,7 @@ export default function Rating(props) {
   
     return (
       <SafeAreaView style={styles.container}>
-        {/* ALLOW USERS TO RATE BATHROOM DONT DELETE I WILL FINISH THIS SOON*/}
-        {/* <Text style={styles.textStyle}> Please Rate us</Text> */}
         <CustomRatingBar /> 
-        {/* <Text style={styles.textStyle}>
-            {defaultRating + ' / ' + maxRating.length}
-        </Text> */}
-        {/* <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.buttonStyle}
-          onPress={() => alert(defaultRating)}
-        >
-          <Text>Get Selected Value</Text>
-        </TouchableOpacity> */}
       </SafeAreaView>
     );
 }

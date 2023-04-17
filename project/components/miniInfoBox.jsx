@@ -40,8 +40,15 @@ const MiniInfoBox = (props) => {
         <Text style={styles.textStyle}>Hide Modal</Text>
       </Pressable>
       <Pressable
-        style={[styles.button, styles.buttonClose]} //TODO: make button bottom right corner + styling
-        onPress={() => props.navigation.navigate('Bathroom')}>
+        style={[styles.button, styles.buttonClose, {
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+        },]}
+        onPress={() => props.navigation.navigate('Bathroom', {
+          bathroomName: props.name,
+          bathroomRating: props.rating
+        })}>
         <Text style={styles.textStyle}>Extra Info</Text>
       </Pressable>
     </Animated.View>
