@@ -10,10 +10,20 @@ function HomeScreen2({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
-    var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub", rating: 5},
-                  {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly", rating: 1},
-                  {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A", rating: 3},
-                  {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B", rating: 2}]
+    var mapPts = [{id: 0, coordinates:{lat: 30, long: -119.848945}, name : "Public Urination Tub"},
+                  {id: 1, coordinates:{lat: 31, long: -121.844177}, name : "Achilly"},
+                  {id: 2, coordinates:{lat: 32, long: -122.846123}, name : "Random Point A"},
+                  {id: 3, coordinates:{lat: 33, long: -123.842153}, name : "Random Point B"},
+                  {id: 4, coordinates:{lat: 34, long: -124.848945}, name : "Public Urination Tub"},
+                  {id: 5, coordinates:{lat: 35, long: -125.844177}, name : "Achilly"},
+                  {id: 6, coordinates:{lat: 30, long: -126.846123}, name : "Random Point A"},
+                  {id: 7, coordinates:{lat: 30, long: -127.842153}, name : "Random Point B"},
+                  {id: 8, coordinates:{lat: 30, long: -128.848945}, name : "Public Urination Tub"},
+                  {id: 9, coordinates:{lat: 30, long: -129.844177}, name : "Achilly"},
+                  {id: 10, coordinates:{lat: 30, long: -130.846123}, name : "Random Point A"},
+                  {id: 11, coordinates:{lat: 30, long: -131.842153}, name : "Random Point B"},
+                  {id: 12, coordinates:{lat: 30, long: -132.848945}, name : "Public Urination Tub"},
+                  {id: 13, coordinates:{lat: 4, long: -100}, name : "BOMBERS"},]
     return (
       <SafeAreaView style={stylesMap.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
