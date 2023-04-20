@@ -113,11 +113,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 2,
+        backgroundColor: '#F5A623'
      },
      buttonText: {
         color: 'black',
         fontSize: 15,
-        },
+      },
       body: {
         flex: 1,
         padding: 20,

@@ -3,6 +3,8 @@ import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {Animated} from "react-native";
 import {LogBox} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import Rating from './Rating';
 
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
@@ -33,12 +35,23 @@ const MiniInfoBox = (props) => {
       ],
       ...styles.modalView
     }}>
-      <Text style={styles.modalText}>{"Modal for " + props.name}</Text>
+      <Text style={styles.modalText}>{props.name}</Text>
       <Pressable
-        style={[styles.button, styles.buttonClose]}
+        style={[styles.button, styles.buttonClose, {position: 'absolute', top: 10, right: 10,}]}
         onPress={() => {flyOutToBottom(); props.setCurrPtInfoActive("none")}}>
-        <Text style={styles.textStyle}>Hide Modal</Text>
+        {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
+        <FontAwesome name='times' size={24} color='white' />
       </Pressable>
+      <Rating rating={props.rating} style={{marginTop: 5, marginBottom: 5}} />
+      <View style={styles.tagsContainer}>
+        <Text style={styles.tagsTitle}>Tags:</Text>
+        <View style={styles.tags}>
+          <Text style={styles.tag}>Male</Text>
+          <Text style={styles.tag}>Female</Text>
+          <Text style={styles.tag}>AChilly</Text>
+        </View>
+      </View>
+      <Text style={styles.location}>Location: </Text>
       <Pressable
         style={[styles.button, styles.buttonClose, {
           position: 'absolute',
@@ -100,9 +113,41 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 0,
   },
+  tagsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  tagsTitle: {
+    marginRight: 5,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  tags: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: '#2196F3',
+    borderRadius: 15,
+    padding: 5,
+    margin: 5,
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  location: {
+    marginTop: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
+    justifyContent: 'left',
+  }
 });
 
 export default MiniInfoBox;
