@@ -21,8 +21,8 @@ function HomeScreen2({ navigation }) {
                   {id: 8, coordinates:{lat: 30, long: -128.848945}, name : "Public Urination Tub"},
                   {id: 9, coordinates:{lat: 30, long: -129.844177}, name : "Achilly"},
                   {id: 10, coordinates:{lat: 30, long: -130.846123}, name : "Random Point A"},
-                  {id: 11, coordinates:{lat: 30, long: -131.842153}, name : "Random Point B"},
-                  {id: 12, coordinates:{lat: 30, long: -132.848945}, name : "Public Urination Tub"},
+                  {id: 11, coordinates:{lat: 34.4106143, long: -119.8473165}, name : "this is id 11 but should show"},
+                  {id: 12, coordinates:{lat: 3, long: -132.848945}, name : "Public Urination Tub"},
                   {id: 13, coordinates:{lat: 4, long: -100}, name : "BOMBERS"},]
     return (
       <SafeAreaView style={stylesMap.container}>

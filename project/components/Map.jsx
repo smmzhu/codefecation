@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
-
 
 export default function Map(props) {
   var mapPts = props.mapPts;
@@ -31,21 +30,16 @@ const userLocation = async () => {
   console.log(location.coords.latitude, location.coords.longitude);
 }
 
-// compare points to mapRegion.latitude and mapRegion.longitude
-// show ten closest points
-// how to access lat and long of points in mapPts
-
 var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude]);
-// console.log(tenClosest);
 
-function tenClosestCoordinates(coordinates, constantPoint) {
-  const sortedCoordinates = coordinates.sort((a, b) => {
-    const distanceA = getDistanceFromLatLonInKm(a[1], a[0], constantPoint[1], constantPoint[0]);
-    const distanceB = getDistanceFromLatLonInKm(b[1], b[0], constantPoint[1], constantPoint[0]);
+function tenClosestCoordinates(listOfPoints, constantPoint) {
+  const sortedListOfPoints = listOfPoints.sort((a, b) => {
+    const distanceA = getDistanceFromLatLonInKm(a.coordinates.lat, a.coordinates.long, constantPoint[0], constantPoint[1]);
+    const distanceB = getDistanceFromLatLonInKm(b.coordinates.lat, b.coordinates.long, constantPoint[0], constantPoint[1]);
     return distanceA - distanceB;
   }); // sort the list of coordinates based on distance from the constant point
 
-  return sortedCoordinates.slice(0, 10); // return the first 10 elements of the sorted list
+  return sortedListOfPoints.slice(0, 10); // return the first 10 elements of the sorted list
 }
 
 // Helper function to calculate distance between two sets of coordinates using the Haversine formula
@@ -72,6 +66,13 @@ useEffect(() => {
   return (
     <View style={styles.container}>
       {/* <Button title='Get Location' onPress={userLocation}/> */}
+      
+      <TouchableOpacity 
+        style={styles.RefreshButton}
+        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude])}>
+        <Text style={styles.text}>{"Refresh!"}</Text>
+      </TouchableOpacity>
+
       <MapView style={styles.map} 
         region={mapRegion}
       >
@@ -112,6 +113,20 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   Marker: { 
+  },
+  RefreshButton:{
+    backgroundColor: 'red',
+    width: '20%',
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    // position: 'fixed', 
+    // top: 0 , // Position at the top
+    // left: 0, // Position at the left
+  },
+  tests: {
+    justifyContent: 'center',
   }
 
 });
