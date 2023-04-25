@@ -86,21 +86,7 @@ class SearchBar extends Component {
               data={this.state.data}
               renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
               keyExtractor={(item) => item.id}
-        />
-        {/* <ScrollView keyboardShouldPersistTaps='always' persistentScrollbar={true} nestedScrollEnabled={true}>
-          <View style={styles.flatList}>
-            <FlatList
-            nestedScrollEnabled={true}
-            style={styles.flatList}
-            data={this.state.data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            >
-
-            </FlatList>
-          </View>
-        </ScrollView> */}
-        
+        />        
       </View>
     );
   }
@@ -132,47 +118,3 @@ const styles = StyleSheet.create({
 
 export default SearchBar;
 
-// const renderItem = ({ item }) => <ToiletCard title={item.title} />;
-// class SearchBar extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       loading: false,
-//       data: DATA,
-//       error: null,
-//       searchValue: "enter",
-//     };
-//     this.arrayholder = DATA;
-//   }
-
-//   searchFunction = (text) => {
-//     const updatedData = this.arrayholder.filter((item) => {
-//       const item_data = `${item.title.toUpperCase()})`;
-//       const text_data = text.toUpperCase();
-//       return item_data.indexOf(text_data) > -1;
-//     });
-//     this.setState({ data: updatedData, searchValue: text });
-//   };
-
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <TextInput
-//           style={styles.textInput}
-//           placeholder="Search Here..."
-//           lightTheme
-//           round
-//           value={this.state.searchValue}
-//           onChangeText={(text) => this.searchFunction(text)}
-//           autoCorrect={false}
-//         />
-//         <FlatList
-//           style={styles.flatList}
-//           data={this.state.data}
-//           renderItem={renderItem}
-//           keyExtractor={(item) => item.id}
-//         />
-//       </View>
-//     );
-//   }
-// }

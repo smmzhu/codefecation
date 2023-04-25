@@ -9,11 +9,11 @@ import Map from '../components/Map.jsx';
 function HomeScreen2({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
-    const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
+    const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currPt goes from none to something, then it goes back to false
     var mapPts = [{id: 0, coordinates:{lat: 34.414425, long: -119.848945}, name : "Public Urination Tub", rating: 5},
                   {id: 1, coordinates:{lat: 34.404834, long: -119.844177}, name : "Achilly", rating: 1},
                   {id: 2, coordinates:{lat: 34.409038, long: -119.846123}, name : "Random Point A", rating: 3},
-                  {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B", rating: 2}]
+                  {id: 3, coordinates:{lat: 34.418058, long: -119.842153}, name : "Random Point B", rating: 2}];
     return (
       <SafeAreaView style={stylesMap.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
