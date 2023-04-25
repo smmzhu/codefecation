@@ -2,6 +2,17 @@
 import React, { Component } from 'react';
 import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
+import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
+
+// async function main(){
+//   var db = await firebase.firestore();
+//   var bathroom = await getBathroomFromDB(db, "bathroomID"); //test get bathroom from db
+//   console.log("func1 bathroomInfo.address:", getBathroomFeature(bathroom, "address")); //test get bathroom feature
+//   updateBathroomFeature(bathroom, "address", "4321 fake st"); //test update bathroom feature
+//   await setBathroomToDB(db, toilet);
+//   console.log(await setBathroomToDB(db, bathroom)); //test set bathroom to db
+// }
+// main();
 
 export default class Login extends Component {
   constructor() {

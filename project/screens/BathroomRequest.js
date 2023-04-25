@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 const CreateBathroomPage = ({navigation}) => {
   const [name, setName] = useState('');

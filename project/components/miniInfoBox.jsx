@@ -25,6 +25,7 @@ const MiniInfoBox = (props) => {
   }
   console.log("miniInfoBox: " + props.name + " " + props.isActive);
   LogBox.ignoreLogs(["Cannot update a component (`App`) while rendering a different component (`MiniInfoBox`)."]);
+  LogBox.ignoreLogs(["Cannot update a component (`HomeScreen`) while rendering a different component (`MiniInfoBox`)."]);
   if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   return (
     <Animated.View style={{

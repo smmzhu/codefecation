@@ -6,7 +6,7 @@ import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
 
-function HomeScreen2({ navigation }) {
+function HomeScreen({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
@@ -47,7 +47,7 @@ function HomeScreen2({ navigation }) {
     );
 }
 
-export default HomeScreen2;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
