@@ -4,9 +4,10 @@ import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Tag from '../components/Tag.jsx';
 
 const TestBathroomScreen = ({ route, navigation }) => {
-    const { bathroomName, bathroomRating } = route.params;
+    const { bathroomName, bathroomRating, bathroomTags } = route.params;
 
     return (
     <SafeAreaView>
@@ -29,11 +30,9 @@ const TestBathroomScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.tagsContainer}>
                 <Text style={styles.sectionTitle}>Tags:</Text>
-                {/* {tags.map((tag) => (
-                <View style={styles.tag} key={tag}>
-                    <Text style={styles.tagText}>{tag}</Text>
-                </View>
-                ))} */}
+                {bathroomTags.map((tag) => (
+                  <Tag key={tag} tag={tag} />
+                ))}
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Cleanliness Rating</Text>
@@ -113,11 +112,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 2,
+        backgroundColor: '#F5A623'
      },
      buttonText: {
         color: 'black',
         fontSize: 15,
-        },
+      },
       body: {
         flex: 1,
         padding: 20,
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     tagsContainer: {
+        flexDirection: 'row',
         marginBottom: 20,
       },
     tag: {

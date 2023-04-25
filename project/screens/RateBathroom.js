@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import Rater from '../components/Rater';
+import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
 
 const BathroomReviewScreen = ({navigation}) => {
   const [overallRating, setOverallRating] = useState(0);
   const [cleanlinessRating, setCleanlinessRating] = useState(0);
   const [boujeenessRating, setBoujeenessRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const [showCongratulatoryModal, setShowCongratulatoryModal] = useState(false); // added state variable for showing congratulatory modal
 
   const handleOverallRatingChange = (rating) => {
     setOverallRating(rating);
@@ -26,6 +28,10 @@ const BathroomReviewScreen = ({navigation}) => {
     console.log('Cleanliness Rating:', cleanlinessRating);
     console.log('Boujeeness Rating:', boujeenessRating);
     console.log('Review Text:', reviewText);
+    setShowCongratulatoryModal(true); // show the congratulatory modal
+    // setTimeout(() => {
+    //   navigation.navigate('Home'); // navigate back to the home screen
+    // }, 3000); // wait 3 seconds before navigating back to the home screen
   };
 
   return (
@@ -59,10 +65,11 @@ const BathroomReviewScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.submitButton}
             onPress={submitReview}
-            // disabled={!overallRating || !cleanlinessRating || !boujeenessRating || !reviewText}
+            disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
           >
             <Text style={styles.submitButtonText}>Submit Review</Text>
           </TouchableOpacity>
+          {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
         </View>
         <TouchableOpacity
           style={styles.returnButton}

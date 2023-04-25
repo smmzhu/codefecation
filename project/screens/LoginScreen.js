@@ -4,112 +4,15 @@ import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, A
 import firebase from '../database/firebase';
 import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
 
-const TOILETS = [
-  {
-    "bathroomID": "bathroom_001",
-    "coords": {
-      "lat": 34.404834,
-      "long": -119.844177,
-    },
-    "name": "Public Urination Tub",
-    "address": "123 Main St, New York, NY",
-    "tags": [
-      "Female",
-      "Smells good"
-    ],
-    "ratings": {
-      "overallRating": 4.5,
-      "cleanRating": 5,
-      "boujeeRating": 3.5
-    },
-    "reviews": [
-      {
-        "reviewID": "review_001",
-        "userID": "user_001",
-        "overallRating": 4,
-        "cleanRating": 5,
-        "boujeeRating": 3,
-        "reviewText": "This bathroom was super clean and smelled great! The only downside was that it didn't have any fancy amenities."
-      },
-      {
-        "reviewID": "review_002",
-        "userID": "user_002",
-        "overallRating": 5,
-        "cleanRating": 5,
-        "boujeeRating": 5,
-        "reviewText": "Wow, this bathroom was amazing! It had everything I needed and more. I would definitely come back here again."
-      }
-    ]
-  },
-  {
-    "bathroomID": "bathroom_002",
-    "coords": {
-      "lat": 34.404834,
-      "long": -119.844177
-    },
-    "name": "Campus Point",
-    "address": "456 Elm St, New York, NY",
-    "tags": [
-      "Male",
-      "Non-gendered"
-    ],
-    "ratings": {
-      "overallRating": 3,
-      "cleanRating": 2,
-      "boujeeRating": 4
-    },
-    "reviews": [
-      {
-        "reviewID": "review_003",
-        "userID": "user_003",
-        "overallRating": 3,
-        "cleanRating": 2,
-        "boujeeRating": 4,
-        "reviewText": "This bathroom was just okay. It wasn't very clean and it didn't have any special features."
-      }
-    ]
-  },
-  {
-    "bathroomID": "bathroom_003",
-    "coords": {
-      "lat": 34.404834,
-      "long": -119.844177,
-    },
-    "name": "The Lavatory",
-    "address": "789 Oak St, New York, NY",
-    "tags": [
-      "Female",
-      "Smells good"
-    ],
-    "ratings": {
-      "overallRating": 4,
-      "cleanRating": 4,
-      "boujeeRating": 4
-    },
-    "reviews": [
-      {
-        "reviewID": "review_004",
-        "userID": "user_004",
-        "overallRating": 4,
-        "cleanRating": 4,
-        "boujeeRating": 4,
-        "reviewText": "This bathroom was very nice and clean. I appreciated the attention to detail and the pleasant fragrance."
-      }
-    ]
-  }
-];
-
-async function main(){
-  var db = await firebase.firestore();
-  // var bathroom = await getBathroomFromDB(db, "bathroomID"); //test get bathroom from db
-  // console.log("func1 bathroomInfo.address:", getBathroomFeature(bathroom, "address")); //test get bathroom feature
-  // updateBathroomFeature(bathroom, "address", "4321 fake st"); //test update bathroom feature
-  for (toilet of TOILETS) {
-    await setBathroomToDB(db, toilet);
-  }
-  //console.log(await setBathroomToDB(db, bathroom)); //test set bathroom to db
-}
-main();
+// async function main(){
+//   var db = await firebase.firestore();
+//   var bathroom = await getBathroomFromDB(db, "bathroomID"); //test get bathroom from db
+//   console.log("func1 bathroomInfo.address:", getBathroomFeature(bathroom, "address")); //test get bathroom feature
+//   updateBathroomFeature(bathroom, "address", "4321 fake st"); //test update bathroom feature
+//   await setBathroomToDB(db, toilet);
+//   console.log(await setBathroomToDB(db, bathroom)); //test set bathroom to db
+// }
+// main();
 
 export default class Login extends Component {
   constructor() {

@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image, Button } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
+import Tag from './Tag.jsx';
 
-
+// PASS TOILETS size as a prop back to SLIDING BAR SO THAT THE SIZES CHANGE WHEN THE TOILETS CHANGE
+// TOILETS WILL BE REPLACED BY FIREBASE DATA
 const TOILETS = [
   {
     name: "Engineering Science Building",
@@ -13,6 +15,7 @@ const TOILETS = [
     rating: 1.5,
     id:"1",
     location: "Santa Barbara",  
+    tags: ["a","b","c","d","e"], 
   },
   {
     name: "Storke Tower",
@@ -23,6 +26,7 @@ const TOILETS = [
     rating: 2.5,
     id:"2",
     location: "Santa Barbara",
+    tags: ["a","clean","c"], 
   },
   {
     name: "Arbor ",
@@ -32,7 +36,8 @@ const TOILETS = [
     },
     rating: 3.5,
     id:"3",
-    location: "Santa Barbara",    
+    location: "Santa Barbara",  
+    tags: ["a","digger","c"],  
   },
   {
     name: "Ocean",
@@ -43,6 +48,7 @@ const TOILETS = [
     rating: 4.5,
     id:"4",
     location: "Santa Barbara",
+    tags: ["a","b","c"], 
 },
 ];
 
@@ -61,16 +67,21 @@ class SearchBar extends Component {
 
   searchFunction = (text) => {
     const updatedData = this.arrayholder.filter((item) => {
-      const item_data = `${item.name.toUpperCase()})`;
+      const name_data = `${item.name.toUpperCase()})`;
+      var tag_data;
+      for(let i = 0; i < item.tags.length; i++){
+        tag_data += `${item.tags[i].toUpperCase()})`;
+      }
       const text_data = text.toUpperCase();
-      return item_data.indexOf(text_data) > -1;
+      return (name_data.indexOf(text_data) > -1 || tag_data.indexOf(text_data) > -1 );
     });
+    this.props.toiletListSize(updatedData.length);
     this.setState({ data: updatedData, searchValue: text });
   };
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
           style={styles.textInput}
           placeholder="Search Here..."
@@ -92,12 +103,17 @@ class SearchBar extends Component {
   }
 }
 const styles = StyleSheet.create({
+  container: {
+    alignContent: 'center',
+    flex: 1,
+    width: '90%',
+  },
   inputBar: {
     flex: 1,
   },
   textInput: {
-    width: '100%',
-    height: '5%',
+    width: '50%',
+    height: 80,
     backgroundColor: 'white',
     borderColor: '#79443b',
     borderWidth: 10,
@@ -118,3 +134,47 @@ const styles = StyleSheet.create({
 
 export default SearchBar;
 
+// const renderItem = ({ item }) => <ToiletCard title={item.title} />;
+// class SearchBar extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       loading: false,
+//       data: DATA,
+//       error: null,
+//       searchValue: "enter",
+//     };
+//     this.arrayholder = DATA;
+//   }
+
+//   searchFunction = (text) => {
+//     const updatedData = this.arrayholder.filter((item) => {
+//       const item_data = `${item.title.toUpperCase()})`;
+//       const text_data = text.toUpperCase();
+//       return item_data.indexOf(text_data) > -1;
+//     });
+//     this.setState({ data: updatedData, searchValue: text });
+//   };
+
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <TextInput
+//           style={styles.textInput}
+//           placeholder="Search Here..."
+//           lightTheme
+//           round
+//           value={this.state.searchValue}
+//           onChangeText={(text) => this.searchFunction(text)}
+//           autoCorrect={false}
+//         />
+//         <FlatList
+//           style={styles.flatList}
+//           data={this.state.data}
+//           renderItem={renderItem}
+//           keyExtractor={(item) => item.id}
+//         />
+//       </View>
+//     );
+//   }
+// }

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
-
 
 export default function Map(props) {
   var mapPts = props.mapPts;
@@ -31,11 +30,49 @@ const userLocation = async () => {
   console.log(location.coords.latitude, location.coords.longitude);
 }
 
+var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude]);
+
+function tenClosestCoordinates(listOfPoints, constantPoint) {
+  const sortedListOfPoints = listOfPoints.sort((a, b) => {
+    const distanceA = getDistanceFromLatLonInKm(a.coordinates.lat, a.coordinates.long, constantPoint[0], constantPoint[1]);
+    const distanceB = getDistanceFromLatLonInKm(b.coordinates.lat, b.coordinates.long, constantPoint[0], constantPoint[1]);
+    return distanceA - distanceB;
+  }); // sort the list of coordinates based on distance from the constant point
+
+  return sortedListOfPoints.slice(0, 10); // return the first 10 elements of the sorted list
+}
+
+// Helper function to calculate distance between two sets of coordinates using the Haversine formula
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+
 useEffect(() => {
   userLocation();
 }, []);
   return (
     <View style={styles.container}>
+      {/* <Button title='Get Location' onPress={userLocation}/> */}
+      
+      <TouchableOpacity 
+        style={styles.RefreshButton}
+        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude])}>
+        <Text style={styles.text}>{"Refresh!"}</Text>
+      </TouchableOpacity>
+
       <MapView style={styles.map} 
         region={mapRegion}
       >
@@ -44,7 +81,8 @@ useEffect(() => {
                 <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
             </View>
         </Marker>
-        {mapPts.map((marker) => (
+        {tenClosest.map((marker) => (
+        // {mapPts.map((marker) => (
           <Marker
             key={marker.id}
             coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
@@ -61,7 +99,7 @@ useEffect(() => {
         ))}
             
       </MapView>
-      {/* <Button title='Get Location' onPress={userLocation}/> SAVING THIS FOR ADDING A RELOAD SWIPE*/} 
+      {/* <Button title='Get Location' onPress={userLocation}/> SAVING THIS FOR ADDING A RELOAD SWIPE*/}
     </View>
   );
 }
@@ -75,6 +113,20 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   Marker: { 
+  },
+  RefreshButton:{
+    backgroundColor: 'red',
+    width: '20%',
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    // position: 'fixed', 
+    // top: 0 , // Position at the top
+    // left: 0, // Position at the left
+  },
+  tests: {
+    justifyContent: 'center',
   }
 
 });
