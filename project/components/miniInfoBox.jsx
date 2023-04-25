@@ -5,6 +5,7 @@ import {Animated} from "react-native";
 import {LogBox} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Rating from './Rating';
+import Tag from './Tag';
 
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
@@ -45,11 +46,9 @@ const MiniInfoBox = (props) => {
       <Rating rating={props.rating} style={{marginTop: 5, marginBottom: 5}} />
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
-        <View style={styles.tags}>
-          <Text style={styles.tag}>Male</Text>
-          <Text style={styles.tag}>Female</Text>
-          <Text style={styles.tag}>AChilly</Text>
-        </View>
+        {props.tags && props.tags.map((tag) => (
+          <Tag tag={tag} key={tag}/>
+        ))}
       </View>
       <Text style={styles.location}>Location: </Text>
       <Pressable
@@ -60,7 +59,8 @@ const MiniInfoBox = (props) => {
         },]}
         onPress={() => props.navigation.navigate('Bathroom', {
           bathroomName: props.name,
-          bathroomRating: props.rating
+          bathroomRating: props.rating,
+          bathroomTags: props.tags,
         })}>
         <Text style={styles.textStyle}>Extra Info</Text>
       </Pressable>
