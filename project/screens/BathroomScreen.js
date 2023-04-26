@@ -6,6 +6,8 @@ import Rating from '../components/Rating.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Review from '../components/Review.jsx';
 import ShowMap from '../components/ShowMap.jsx';
+import Tag from '../components/Tag.jsx';
+
 
 const BathroomScreen = ({ route, navigation }) => {
     const {coords, name, tags, ratings, reviews} = route.params; //assume that bathroom ratings is a json
@@ -33,11 +35,9 @@ const BathroomScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.tagsContainer}>
                 <Text style={styles.sectionTitle}>Tags:</Text>
-                {/* {tags.map((tag) => (
-                <View style={styles.tag} key={tag}>
-                    <Text style={styles.tagText}>{tag}</Text>
-                </View>
-                ))} */}
+                {bathroomTags.map((tag) => (
+                  <Tag key={tag} tag={tag} />
+                ))}
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Cleanliness Rating</Text>
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     tagsContainer: {
+        flexDirection: 'row',
         marginBottom: 20,
       },
     tag: {

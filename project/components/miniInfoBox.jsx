@@ -5,6 +5,7 @@ import {Animated} from "react-native";
 import {LogBox} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Rating from './Rating';
+import Tag from './Tag';
 
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
@@ -24,6 +25,7 @@ const MiniInfoBox = (props) => {
   }
   console.log("miniInfoBox: " + props.toilet.name + " " + props.isActive);
   LogBox.ignoreLogs(["Cannot update a component (`App`) while rendering a different component (`MiniInfoBox`)."]);
+  LogBox.ignoreLogs(["Cannot update a component (`HomeScreen`) while rendering a different component (`MiniInfoBox`)."]);
   if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   return (
     <Animated.View style={{
@@ -46,11 +48,9 @@ const MiniInfoBox = (props) => {
       {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
-        <View style={styles.tags}>
-          <Text style={styles.tag}>Male</Text>
-          <Text style={styles.tag}>Female</Text>
-          <Text style={styles.tag}>AChilly</Text>
-        </View>
+        {props.tags && props.tags.map((tag) => (
+          <Tag tag={tag} key={tag}/>
+        ))}
       </View>
       <Text style={styles.location}>Location: </Text>
       <Pressable

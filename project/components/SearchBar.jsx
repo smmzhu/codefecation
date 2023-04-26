@@ -1,54 +1,8 @@
 import React, {Component} from "react";
 import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image, Button } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
+import Tag from './Tag.jsx';
 
-// const TOILETS = [
-//   {
-//     bathroomID: "1",
-//     name: "Engineering Science Building",
-//     coords: {
-//       latitude: 34.404834,
-//       longitude: -119.844177,
-//     },
-//     allReviews: {
-//       overallRating: 3.5,
-//       cleanRating: 3.5,
-//       boujeeRating: 3.5,
-//     },
-//     id:"1",
-//     location: "Santa Barbara",  
-//   },
-//   {
-//     name: "Storke Tower",
-//     coords: {
-//       latitude: 34.404834,
-//       longitude: -119.844177,
-//     },
-//     rating: 2.5,
-//     id:"2",
-//     location: "Santa Barbara",
-//   },
-//   {
-//     name: "Arbor ",
-//     coords: {
-//       latitude: 34.404834,
-//       longitude: -119.844177,
-//     },
-//     rating: 3.5,
-//     id:"3",
-//     location: "Santa Barbara",    
-//   },
-//   {
-//     name: "Ocean",
-//     coords: {
-//       latitude: 34.404834,
-//       longitude: -119.844177,
-//     },
-//     rating: 4.5,
-//     id:"4",
-//     location: "Santa Barbara",
-// },
-// ];
 const TOILETS = [
     {
       "bathroomID": "bathroom_001",
@@ -159,17 +113,21 @@ class SearchBar extends Component {
 
   searchFunction = (text) => {
     const updatedData = this.arrayholder.filter((item) => {
-      // const item_data = `${item.name.toUpperCase()})`;
-      const item_data = item.name.toUpperCase();
+      const name_data = `${item.name.toUpperCase()})`;
+      var tag_data;
+      for(let i = 0; i < item.tags.length; i++){
+        tag_data += `${item.tags[i].toUpperCase()})`;
+      }
       const text_data = text.toUpperCase();
-      return item_data.indexOf(text_data) > -1;
+      return (name_data.indexOf(text_data) > -1 || tag_data.indexOf(text_data) > -1 );
     });
+    this.props.toiletListSize(updatedData.length);
     this.setState({ data: updatedData, searchValue: text });
   };
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
           style={styles.textInput}
           placeholder="Search Here..."
@@ -186,31 +144,22 @@ class SearchBar extends Component {
               renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
               keyExtractor={(item) => item.bathroomID}
         />
-        {/* <ScrollView keyboardShouldPersistTaps='always' persistentScrollbar={true} nestedScrollEnabled={true}>
-          <View style={styles.flatList}>
-            <FlatList
-            nestedScrollEnabled={true}
-            style={styles.flatList}
-            data={this.state.data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            >
-
-            </FlatList>
-          </View>
-        </ScrollView> */}
-        
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  container: {
+    alignContent: 'center',
+    flex: 1,
+    width: '90%',
+  },
   inputBar: {
     flex: 1,
   },
   textInput: {
-    width: '100%',
-    height: '5%',
+    width: '50%',
+    height: 80,
     backgroundColor: 'white',
     borderColor: '#79443b',
     borderWidth: 10,
