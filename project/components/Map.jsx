@@ -8,8 +8,8 @@ export default function Map(props) {
   var mapPts = props.mapPts;
   const [currActive, setCurrActive] = useState("none");
     const [mapRegion, setMapRegion] = useState({
-    latitude: 34.404834,
-    longitude: -119.844177,
+    latitude: props.userLoc.latitude,
+    longitude: props.userLoc.longitude,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });

@@ -5,11 +5,13 @@ import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'reac
 import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
+import userLocation from '../hooks/getUserPos.jsx';
 
 function HomeScreen({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
+    const [userLoc, setUserLoc] = useState({latitude: 34.404834, longitude: -119.844177,})
     const mapPts = [
       {
         "bathroomID": "bathroom_001",
@@ -104,6 +106,13 @@ function HomeScreen({ navigation }) {
         ]
       }
     ]
+    useEffect(
+      () => {(async () => {
+        const pos = await userLocation();
+        console.log("wee", pos);
+        await setUserLoc(userLocation());
+      })()}
+    , []);
     return (
       <SafeAreaView style={stylesMap.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
@@ -116,7 +125,7 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('BathroomRequest', {navigation: navigation})}
         />
         </View>
-        <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
+        <Map mapPts = {mapPts} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
         <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
         <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
         {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
