@@ -18,6 +18,8 @@ import LoginScreen from './screens/LoginScreen.js';
 import SignupScreen from './screens/SignupScreen.js';
 import Dashboard from './screens/Dashboard.js';
 
+console.log("hi, but conflict");
+
 const Stack = createNativeStackNavigator();
 
 function App() {
