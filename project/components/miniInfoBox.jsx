@@ -23,10 +23,10 @@ const MiniInfoBox = (props) => {
       useNativeDriver: true
     }).start();
   }
-  // console.log("miniInfoBox: " + props.toilet.name + " " + props.isActive);
-  LogBox.ignoreLogs(["Cannot update a component (`App`) while rendering a different component (`MiniInfoBox`)."]);
-  LogBox.ignoreLogs(["Cannot update a component (`HomeScreen`) while rendering a different component (`MiniInfoBox`)."]);
-  if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
+  useEffect(() => {
+    if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
+  }, [props.activeFlag, props.toilet]);
+  
   return (
     <Animated.View style={{
       transform: [{
@@ -45,7 +45,7 @@ const MiniInfoBox = (props) => {
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
       {/* THIS NEEDS FIXING URGENTLY PLEASE DADDY */}
-      <Rating Rating={props.ratings} style={{marginTop: 5, marginBottom: 5}} /> 
+      <Rating Rating={props.ratings} toilet = {props.toilet} style={{marginTop: 5, marginBottom: 5}} /> 
       {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
