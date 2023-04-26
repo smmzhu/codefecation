@@ -1,102 +1,132 @@
-import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, Pressable } from 'react-native';
-import ConfettiCannon from 'react-native-confetti-cannon';
+import React, {useState, useEffect} from 'react';
+import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from 'react-native';
+import * as Location from 'expo-location';
+import { Image } from 'react-native';
 
-const CongratulatoryModal = ({navigation}) => {
-  const [modalVisible, setModalVisible] = useState(true);
+export default function Map(props) {
+  const mapPts = props.mapPts;
+  const [currActive, setCurrActive] = useState("none");
+  const [mapRegion, setMapRegion] = useState({
+    latitude: 34.404834,
+    longitude: -119.844177,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
 
-//   const handlePress = () => {
-//     setModalVisible(true);
-//   };
+const userLocation = async () => {
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== 'granted') {
+    setErrorMsg('Permission to access location was denied');
+    return;
+  }
+  let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+  setMapRegion({
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+  console.log(location.coords.latitude, location.coords.longitude);
+}
 
-  const handleConfettiComplete = () => {
-    setModalVisible(false);
-    navigation.goBack();
-  };
+var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.lat, mapRegion.long]);
 
+function tenClosestCoordinates(listOfPoints, constantPoint) {
+  const sortedListOfPoints = listOfPoints.sort((a, b) => {
+    const distanceA = getDistanceFromLatLonInKm(a.coords.lat, a.coords.long, constantPoint[0], constantPoint[1]);
+    const distanceB = getDistanceFromLatLonInKm(b.coords.lat, b.coords.long, constantPoint[0], constantPoint[1]);
+    return distanceA - distanceB;
+  }); // sort the list of coordinates based on distance from the constant point
+
+  return sortedListOfPoints.slice(0, 10); // return the first 10 elements of the sorted list
+}
+
+// Helper function to calculate distance between two sets of coordinates using the Haversine formula
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+
+useEffect(() => {
+  userLocation();
+}, []);
   return (
     <View style={styles.container}>
-      {/* <Pressable onPress={handlePress} style={styles.button}>
-        <Text style={styles.buttonText}>Congratulations!</Text>
-      </Pressable> */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
+      {/* <Button title='Get Location' onPress={userLocation}/> */}
+      
+      <TouchableOpacity 
+        style={styles.RefreshButton}
+        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.lat, mapRegion.long])}>
+        <Text style={styles.text}>{"Refresh!"}</Text>
+      </TouchableOpacity>
+
+      <MapView style={styles.map} 
+        region={mapRegion}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Thanks for plooping with us!</Text>
-            <ConfettiCannon
-              count={200}
-              origin={{ x: -10, y: 0 }}
-              explosionSpeed={500}
-              fallSpeed={2000}
-              autoStart={true}
-              onAnimationEnd={handleConfettiComplete}
-            />
-            {/* <Pressable
-              onPress={() => {
-                setModalVisible(false);
-              }}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </Pressable> */}
-          </View>
-        </View>
-      </Modal>
+        <Marker coordinate={mapRegion} title='User' onPress={()=>{console.log("chris: im kickin out yall cuz rpt--")}}>
+            <View style={styles.Marker}>
+                <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
+            </View>
+        </Marker>
+        {tenClosest.map((marker) => (
+        // {mapPts.map((marker) => (
+          <Marker
+            key={marker.bathroomID}
+            coordinate={{latitude: marker.coords.lat, longitude: marker.coords.long}}
+            title={marker.name}
+            onPress={()=>{setCurrActive(marker.bathroomID); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
+                          if (props.activeFlag == false){props.setActiveFlag(true);} 
+                          console.log("public clicked"); 
+                          console.log(marker);}}
+          >
+            <View style={styles.Marker}>
+                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+            </View>
+          </Marker>
+        ))}
+            
+      </MapView>
+      {/* <Button title='Get Location' onPress={userLocation}/> SAVING THIS FOR ADDING A RELOAD SWIPE*/}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  button: {
-    backgroundColor: 'green',
-    padding: 20,
-    borderRadius: 10,
+  map: {
+    width: '100%',
+    height: '100%',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+  Marker: { 
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  closeButton: {
+  RefreshButton:{
     backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
+    width: '20%',
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    // position: 'fixed', 
+    // top: 0 , // Position at the top
+    // left: 0, // Position at the left
   },
-  closeButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
+  tests: {
+    justifyContent: 'center',
+  }
 
-export default CongratulatoryModal;
+});
