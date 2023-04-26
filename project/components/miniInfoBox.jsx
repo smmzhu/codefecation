@@ -8,6 +8,7 @@ import Rating from './Rating';
 import Tag from './Tag';
 
 const MiniInfoBox = (props) => {
+
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
   flyOutToBottom = () => {
     Animated.timing(disp.y, {
@@ -44,15 +45,16 @@ const MiniInfoBox = (props) => {
         {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
-      <Rating Rating={props.ratings} style={{marginTop: 5, marginBottom: 5}} /> 
-      {/* props.toilet.ratings.overallRating */}
+      <Rating Rating={props.toilet == "none" ? 3 : props.toilet.ratings.overallRating} style={{marginTop: 5, marginBottom: 5}} /> 
+      {console.log(props.toilet == "none" ? 0 : props.toilet.ratings.overallRating)}
+      
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
-        {props.tags && props.tags.map((tag) => (
+        {props.toilet.tags && props.toilet.tags.map((tag) => (
           <Tag tag={tag} key={tag}/>
         ))}
       </View>
-      <Text style={styles.location}>Location: </Text>
+      <Text style={styles.location}>Location: {props.toilet.address}</Text>
       <Pressable
         style={[styles.button, styles.buttonClose, {
           position: 'absolute',

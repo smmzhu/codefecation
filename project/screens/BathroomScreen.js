@@ -35,7 +35,7 @@ const BathroomScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.tagsContainer}>
                 <Text style={styles.sectionTitle}>Tags:</Text>
-                {bathroomTags.map((tag) => (
+                {tags.map((tag) => (
                   <Tag key={tag} tag={tag} />
                 ))}
             </View>
