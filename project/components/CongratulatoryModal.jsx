@@ -29,7 +29,7 @@ const CongratulatoryModal = ({navigation}) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Thanks for codefecating with us!</Text>
+            <Text style={styles.modalText}>Thanks for plooping with us!</Text>
             <ConfettiCannon
               count={200}
               origin={{ x: -10, y: 0 }}
