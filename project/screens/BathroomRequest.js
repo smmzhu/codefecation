@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
-import MapChoose from '../components/MapChoose';
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -123,9 +122,7 @@ const CreateBathroomPage = ({navigation}) => {
       />
       <View style={styles.inputContainer}>
         {/* CHANGE IT TO A MAP THAT THE USER CAN DRAG A POINT ON TOP OF INSTEAD */}
-        <Text style={styles.tagLabel}>Choose your location:</Text>
-        <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude}/>
-        {/* <TextInput
+        <TextInput
           style={[styles.input, styles.inputHalf]}
           placeholder="Longitude (Optional)"
           onChangeText={handleLongitudeChange}
@@ -136,7 +133,7 @@ const CreateBathroomPage = ({navigation}) => {
           placeholder="Latitude (Optional)"
           onChangeText={handleLatitudeChange}
           value={latitude}
-        /> */}
+        />
       </View>
       <Text style={styles.tagLabel}>Tags:</Text>
       <View style={styles.tagContainer}>
@@ -211,8 +208,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
     // alignItems: 'left',
     // justifyContent: 'center',
-    flex: 1,
-    height: '100%',
   },
   container: {
     flex: 1,
@@ -223,14 +218,12 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   title: {
-    flex: 1,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     // alignItems: 'center',
   },
   subTitle: {
-    flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -238,7 +231,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   input: {
-    flex: 1,
     height: 40,
     width: '100%',
     marginVertical: 10,
@@ -252,21 +244,18 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
   inputContainer: {
-    flex: 1,
-    marginBottom: 20,
-    height : '70%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   inputHalf: {
-    flex: 1,
     width: '45%',
   },
   tagLabel: {
-    flex: 0,
     fontWeight: 'bold',
     marginBottom: 5,
   },
   tagButton: {
-    flex: 0,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -277,43 +266,36 @@ const styles = StyleSheet.create({
     maxWidth: 100, // set a max width for the tag button
   },
   tagContainer: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 10,
     color: 'black',
     justifyContent: 'flex-start', // align the tags to the left
+    alignItems: 'center', // vertically center the tags
   },
   tagButtonSelected: {
-    flex: 0,
     backgroundColor: '#007aff',
     borderColor: '#007aff',
     },
   tagText: {
-    flex: 0,
     fontSize: 12,
   },
   tagTextSelected: {
-    flex: 0,
     color: '#fff',
   },
   tagButtonFirst: {
-    flex: 0,
     marginLeft: 10,
   },
   ratingContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
   },
   ratingLabel: {
-    flex: 1,
     fontSize: 16,
     marginRight: 10,
   },
   reviewInput: {
-    flex: 1,
     backgroundColor: 'white',
     padding: 10,
     marginBottom: 20,
@@ -326,7 +308,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   submitButton: {
-    flex: 1,
     backgroundColor: '#F5A623',
     padding: 10,
     alignItems: 'center',
@@ -334,13 +315,11 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   submitButtonText: {
-    flex: 1,
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
   },
   returnButton: {
-    flex: 1,
     marginTop: 20,
     alignSelf: 'center',
     paddingVertical: 10,
@@ -350,7 +329,6 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   returnButtonText: {
-    flex: 1,
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,

@@ -4,25 +4,20 @@ import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Review from '../components/Review.jsx';
-import ShowMap from '../components/ShowMap.jsx';
 import Tag from '../components/Tag.jsx';
 
-
-const BathroomScreen = ({ route, navigation }) => {
-    const {coords, name, tags, ratings, reviews} = route.params; //assume that bathroom ratings is a json
-    // ratings = ratings.json();
-    // reviews = reviews.json();
+const TestBathroomScreen = ({ route, navigation }) => {
+    const { bathroomName, bathroomRating, bathroomTags } = route.params;
 
     return (
     <SafeAreaView>
     <ScrollView>
     <View style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.title}>{bathroomName}</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
-                    onPress={() => navigation.navigate('RateBathroom', {name: name, ratings: ratings})}
+                    onPress={() => navigation.navigate('RateBathroom', {bathroomName: bathroomName, bathroomRating: bathroomRating})}
                     style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>{"Leave a Review!"}</Text>
                 </TouchableOpacity>
@@ -31,7 +26,7 @@ const BathroomScreen = ({ route, navigation }) => {
         <View style={styles.body}>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Overall Rating</Text>
-                <Rating Rating = {ratings.overallRating}/>
+                <Rating Rating = {bathroomRating}/>
             </View>
             <View style={styles.tagsContainer}>
                 <Text style={styles.sectionTitle}>Tags:</Text>
@@ -42,25 +37,32 @@ const BathroomScreen = ({ route, navigation }) => {
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Cleanliness Rating</Text>
                 {/* REPLACE WITH REAL CLEANLINESS RATING */}
-                <Rating Rating = {ratings.cleanRating}/>
+                <Rating Rating = {bathroomRating}/>
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Boujeeness Rating</Text>
                 {/* REPLACE WITH REAL BOUJEE RATING */}
-                <Rating Rating = {ratings.boujeeRating}/>
+                <Rating Rating = {bathroomRating}/>
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Reviews</Text>
                 <Text style={styles.text}>
-                  <View style = {{padding: 10}}>
-                    {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
-                  </View>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempor
+            mi non ipsum dictum pharetra. Proin vitae turpis ex. Integer varius
+            arcu id augue congue hendrerit. Morbi sollicitudin elit sit amet
+            lacus ullamcorper malesuada. Nam aliquam, sapien eu malesuada
+            interdum, purus dolor consectetur purus, eget fringilla tortor massa
+            vel nulla. Pellentesque a velit eu massa placerat venenatis eget eu
+            mauris. Nulla ornare euismod mauris ac feugiat. Fusce lobortis sem
+            vel augue imperdiet lobortis. Nunc id magna id velit consequat
+            malesuada. Sed pulvinar venenatis ante, sed convallis sapien
+            ullamcorper nec.
                 </Text>
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Map</Text>
                 <View style={styles.map}>
-                  <ShowMap longitude={coords.long} latitude={coords.lat} />
+                    {/* Map component goes here */}
                 </View>
             </View>
         </View>
@@ -74,9 +76,9 @@ const BathroomScreen = ({ route, navigation }) => {
       </ScrollView>
       </SafeAreaView>
     // <View style={styles.container}>
-    //   <Text style={styles.text}>{name}</Text>
+    //   <Text style={styles.text}>{bathroomName}</Text>
     //     <View style={styles.rater}>
-    //         <Rater Rating = {ratings}/>
+    //         <Rater Rating = {bathroomRating}/>
     //     </View>
     //     <View style={{marginTop: 10}}>
     //         <Button title="Go back" onPress={() => navigation.goBack()} />
@@ -85,7 +87,7 @@ const BathroomScreen = ({ route, navigation }) => {
   );
 };
 
-export default BathroomScreen;
+export default TestBathroomScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     // view: {
     //     padding: 50,
     // },
-    ratings: {
+    rating: {
         marginTop: 20,
     },
     tagsContainer: {

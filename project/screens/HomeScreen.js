@@ -10,100 +10,20 @@ function HomeScreen({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
-    const mapPts = [
-      {
-        "bathroomID": "bathroom_001",
-        "coords": {
-          "lat": 34.414425,
-          "long": -119.848945,
-        },
-        "name": "Engineering Science Building",
-        "address": "123 Main St, New York, NY",
-        "tags": [
-          "Female",
-          "Smells good"
-        ],
-        "ratings": {
-          "overallRating": 4.5,
-          "cleanRating": 5,
-          "boujeeRating": 3.5
-        },
-        "reviews": [
-          {
-            "reviewID": "review_001",
-            "userID": "user_001",
-            "overallRating": 4,
-            "cleanRating": 5,
-            "boujeeRating": 3,
-            "reviewText": "This bathroom was super clean and smelled great! The only downside was that it didn't have any fancy amenities."
-          },
-          {
-            "reviewID": "review_002",
-            "userID": "user_002",
-            "overallRating": 5,
-            "cleanRating": 5,
-            "boujeeRating": 5,
-            "reviewText": "Wow, this bathroom was amazing! It had everything I needed and more. I would definitely come back here again."
-          }
-        ]
-      },
-      {
-        "bathroomID": "bathroom_002",
-        "coords": {
-          "lat": 34.404834,
-          "long": -119.844177
-        },
-        "name": "The Comfort Zone",
-        "address": "456 Elm St, New York, NY",
-        "tags": [
-          "Male",
-          "Non-gendered"
-        ],
-        "ratings": {
-          "overallRating": 3,
-          "cleanRating": 2,
-          "boujeeRating": 4
-        },
-        "reviews": [
-          {
-            "reviewID": "review_003",
-            "userID": "user_003",
-            "overallRating": 3,
-            "cleanRating": 2,
-            "boujeeRating": 4,
-            "reviewText": "This bathroom was just okay. It wasn't very clean and it didn't have any special features."
-          }
-        ]
-      },
-      {
-        "bathroomID": "bathroom_003",
-        "coords": {
-          "lat": 34.409038,
-          "long": -119.846123,
-        },
-        "name": "The Lavatory",
-        "address": "789 Oak St, New York, NY",
-        "tags": [
-          "Female",
-          "Smells good"
-        ],
-        "ratings": {
-          "overallRating": 4,
-          "cleanRating": 4,
-          "boujeeRating": 4
-        },
-        "reviews": [
-          {
-            "reviewID": "review_004",
-            "userID": "user_004",
-            "overallRating": 4,
-            "cleanRating": 4,
-            "boujeeRating": 4,
-            "reviewText": "This bathroom was very nice and clean. I appreciated the attention to detail and the pleasant fragrance."
-          }
-        ]
-      }
-    ]
+    var mapPts = [{id: 0, coordinates:{lat: 30, long: -119.848945}, name : "Public Urination Tub", tags: ["a", "b", "c"]},
+                  {id: 1, coordinates:{lat: 31, long: -121.844177}, name : "Achilly", tags: ["a", "b", "c"]},
+                  {id: 2, coordinates:{lat: 32, long: -122.846123}, name : "Random Point A", tags: ["a", "b", "c"]},
+                  {id: 3, coordinates:{lat: 33, long: -123.842153}, name : "Random Point B", tags: ["a", "b", "c"]},
+                  {id: 4, coordinates:{lat: 34, long: -124.848945}, name : "Public Urination Tub", tags: ["a", "b", "c"]},
+                  {id: 5, coordinates:{lat: 35, long: -125.844177}, name : "Achilly", tags: ["a", "b", "c"]},
+                  {id: 6, coordinates:{lat: 30, long: -126.846123}, name : "Random Point A", tags: ["a", "b", "c"]},
+                  {id: 7, coordinates:{lat: 30, long: -127.842153}, name : "Random Point B", tags: ["a", "b", "c"]},
+                  {id: 8, coordinates:{lat: 30, long: -128.848945}, name : "Public Urination Tub", tags: ["a", "b", "c"]},
+                  {id: 9, coordinates:{lat: 30, long: -129.844177}, name : "Achilly", tags: ["a", "b", "c"]},
+                  {id: 10, coordinates:{lat: 30, long: -130.846123}, name : "Random Point A", tags: ["a", "b", "c"]},
+                  {id: 11, coordinates:{lat: 34.4106143, long: -119.8473165}, name : "this is id 11 but should show", tags: ["achillyy", "cherbear", "acherry"]},
+                  {id: 12, coordinates:{lat: 3, long: -132.848945}, name : "Public Urination Tub", tags: ["a", "b", "c"]},
+                  {id: 13, coordinates:{lat: 4, long: -100}, name : "BOMBERS", tags: ["a", "b", "c"]},]
     return (
       <SafeAreaView style={stylesMap.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
@@ -117,9 +37,9 @@ function HomeScreen({ navigation }) {
         />
         </View>
         <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
-        <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
-        <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-        {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
+        {/* <MiniInfoBox  name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/> */}
+        <MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+
         <StatusBar style="auto" />
         <SlidingPanel color = '#9f8170' navigation = {navigation}>
         </SlidingPanel>
