@@ -5,9 +5,9 @@ import * as Location from 'expo-location';
 import { Image } from 'react-native';
 
 export default function Map(props) {
-  var mapPts = props.mapPts;
+  const mapPts = props.mapPts;
   const [currActive, setCurrActive] = useState("none");
-    const [mapRegion, setMapRegion] = useState({
+  const [mapRegion, setMapRegion] = useState({
     latitude: 34.404834,
     longitude: -119.844177,
     latitudeDelta: 0.0922,
@@ -30,12 +30,12 @@ const userLocation = async () => {
   console.log(location.coords.latitude, location.coords.longitude);
 }
 
-var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude]);
+var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.lat, mapRegion.long]);
 
 function tenClosestCoordinates(listOfPoints, constantPoint) {
   const sortedListOfPoints = listOfPoints.sort((a, b) => {
-    const distanceA = getDistanceFromLatLonInKm(a.coordinates.lat, a.coordinates.long, constantPoint[0], constantPoint[1]);
-    const distanceB = getDistanceFromLatLonInKm(b.coordinates.lat, b.coordinates.long, constantPoint[0], constantPoint[1]);
+    const distanceA = getDistanceFromLatLonInKm(a.coords.lat, a.coords.long, constantPoint[0], constantPoint[1]);
+    const distanceB = getDistanceFromLatLonInKm(b.coords.lat, b.coords.long, constantPoint[0], constantPoint[1]);
     return distanceA - distanceB;
   }); // sort the list of coordinates based on distance from the constant point
 
@@ -69,7 +69,7 @@ useEffect(() => {
       
       <TouchableOpacity 
         style={styles.RefreshButton}
-        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude])}>
+        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.lat, mapRegion.long])}>
         <Text style={styles.text}>{"Refresh!"}</Text>
       </TouchableOpacity>
 
@@ -84,10 +84,10 @@ useEffect(() => {
         {tenClosest.map((marker) => (
         // {mapPts.map((marker) => (
           <Marker
-            key={marker.id}
-            coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
+            key={marker.bathroomID}
+            coordinate={{latitude: marker.coords.lat, longitude: marker.coords.long}}
             title={marker.name}
-            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
+            onPress={()=>{setCurrActive(marker.bathroomID); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
                           if (props.activeFlag == false){props.setActiveFlag(true);} 
                           console.log("public clicked"); 
                           console.log(marker);}}

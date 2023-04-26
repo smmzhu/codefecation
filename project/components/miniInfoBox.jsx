@@ -22,7 +22,7 @@ const MiniInfoBox = (props) => {
       useNativeDriver: true
     }).start();
   }
-  console.log("miniInfoBox: " + props.name + " " + props.isActive);
+  console.log("miniInfoBox: " + props.toilet.name + " " + props.isActive);
   LogBox.ignoreLogs(["Cannot update a component (`App`) while rendering a different component (`MiniInfoBox`)."]);
   if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   return (
@@ -35,14 +35,15 @@ const MiniInfoBox = (props) => {
       ],
       ...styles.modalView
     }}>
-      <Text style={styles.modalText}>{props.name}</Text>
+      <Text style={styles.modalText}>{props.toilet.name}</Text>
       <Pressable
         style={[styles.button, styles.buttonClose, {position: 'absolute', top: 10, right: 10,}]}
         onPress={() => {flyOutToBottom(); props.setCurrPtInfoActive("none")}}>
         {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
-      <Rating rating={props.rating} style={{marginTop: 5, marginBottom: 5}} />
+      <Rating Rating={props.ratings} style={{marginTop: 5, marginBottom: 5}} /> 
+      {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
         <View style={styles.tags}>
@@ -59,8 +60,11 @@ const MiniInfoBox = (props) => {
           right: 10,
         },]}
         onPress={() => props.navigation.navigate('Bathroom', {
-          bathroomName: props.name,
-          bathroomRating: props.rating
+          coords: props.toilet.coords,
+          name: props.toilet.name,
+          tags: props.toilet.tags,
+          ratings: props.toilet.ratings,
+          reviews: props.toilet.reviews,
         })}>
         <Text style={styles.textStyle}>Extra Info</Text>
       </Pressable>

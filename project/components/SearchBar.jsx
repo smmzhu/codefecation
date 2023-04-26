@@ -2,51 +2,149 @@ import React, {Component} from "react";
 import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image, Button } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
 
-
+// const TOILETS = [
+//   {
+//     bathroomID: "1",
+//     name: "Engineering Science Building",
+//     coords: {
+//       latitude: 34.404834,
+//       longitude: -119.844177,
+//     },
+//     allReviews: {
+//       overallRating: 3.5,
+//       cleanRating: 3.5,
+//       boujeeRating: 3.5,
+//     },
+//     id:"1",
+//     location: "Santa Barbara",  
+//   },
+//   {
+//     name: "Storke Tower",
+//     coords: {
+//       latitude: 34.404834,
+//       longitude: -119.844177,
+//     },
+//     rating: 2.5,
+//     id:"2",
+//     location: "Santa Barbara",
+//   },
+//   {
+//     name: "Arbor ",
+//     coords: {
+//       latitude: 34.404834,
+//       longitude: -119.844177,
+//     },
+//     rating: 3.5,
+//     id:"3",
+//     location: "Santa Barbara",    
+//   },
+//   {
+//     name: "Ocean",
+//     coords: {
+//       latitude: 34.404834,
+//       longitude: -119.844177,
+//     },
+//     rating: 4.5,
+//     id:"4",
+//     location: "Santa Barbara",
+// },
+// ];
 const TOILETS = [
-  {
-    name: "Engineering Science Building",
-    coords: {
-      latitude: 34.404834,
-      longitude: -119.844177,
+    {
+      "bathroomID": "bathroom_001",
+      "coords": {
+        "lat": 34.404834,
+        "long": -119.844177,
+      },
+      "name": "Public Urination Tub",
+      "address": "123 Main St, New York, NY",
+      "tags": [
+        "Female",
+        "Smells good"
+      ],
+      "ratings": {
+        "overallRating": 4.5,
+        "cleanRating": 5,
+        "boujeeRating": 3.5
+      },
+      "reviews": [
+        {
+          "reviewID": "review_001",
+          "userID": "user_001",
+          "overallRating": 4,
+          "cleanRating": 5,
+          "boujeeRating": 3,
+          "reviewText": "This bathroom was super clean and smelled great! The only downside was that it didn't have any fancy amenities."
+        },
+        {
+          "reviewID": "review_002",
+          "userID": "user_002",
+          "overallRating": 5,
+          "cleanRating": 5,
+          "boujeeRating": 5,
+          "reviewText": "Wow, this bathroom was amazing! It had everything I needed and more. I would definitely come back here again."
+        }
+      ]
     },
-    rating: 1.5,
-    id:"1",
-    location: "Santa Barbara",  
-  },
-  {
-    name: "Storke Tower",
-    coords: {
-      latitude: 34.404834,
-      longitude: -119.844177,
+    {
+      "bathroomID": "bathroom_002",
+      "coords": {
+        "lat": 34.404834,
+        "long": -119.844177
+      },
+      "name": "Campus Point",
+      "address": "456 Elm St, New York, NY",
+      "tags": [
+        "Male",
+        "Non-gendered"
+      ],
+      "ratings": {
+        "overallRating": 3,
+        "cleanRating": 2,
+        "boujeeRating": 4
+      },
+      "reviews": [
+        {
+          "reviewID": "review_003",
+          "userID": "user_003",
+          "overallRating": 3,
+          "cleanRating": 2,
+          "boujeeRating": 4,
+          "reviewText": "This bathroom was just okay. It wasn't very clean and it didn't have any special features."
+        }
+      ]
     },
-    rating: 2.5,
-    id:"2",
-    location: "Santa Barbara",
-  },
-  {
-    name: "Arbor ",
-    coords: {
-      latitude: 34.404834,
-      longitude: -119.844177,
-    },
-    rating: 3.5,
-    id:"3",
-    location: "Santa Barbara",    
-  },
-  {
-    name: "Ocean",
-    coords: {
-      latitude: 34.404834,
-      longitude: -119.844177,
-    },
-    rating: 4.5,
-    id:"4",
-    location: "Santa Barbara",
-},
+    {
+      "bathroomID": "bathroom_003",
+      "coords": {
+        "lat": 34.404834,
+        "long": -119.844177,
+      },
+      "name": "The Lavatory",
+      "address": "789 Oak St, New York, NY",
+      "tags": [
+        "Female",
+        "Smells good"
+      ],
+      "ratings": {
+        "overallRating": 4,
+        "cleanRating": 4,
+        "boujeeRating": 4
+      },
+      "reviews": [
+        {
+          "reviewID": "review_004",
+          "userID": "user_004",
+          "overallRating": 4,
+          "cleanRating": 4,
+          "boujeeRating": 4,
+          "reviewText": "This bathroom was very nice and clean. I appreciated the attention to detail and the pleasant fragrance."
+        }
+      ]
+    }
 ];
 
-const renderItem = ({item, navigation}) => <ToiletCard toilet={item} navigation = {navigation}/>;
+const renderItem = ({item, navigation}) => <ToiletCard key = {item.bathroomID} toilet={item} navigation = {navigation}/>;
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +159,8 @@ class SearchBar extends Component {
 
   searchFunction = (text) => {
     const updatedData = this.arrayholder.filter((item) => {
-      const item_data = `${item.name.toUpperCase()})`;
+      // const item_data = `${item.name.toUpperCase()})`;
+      const item_data = item.name.toUpperCase();
       const text_data = text.toUpperCase();
       return item_data.indexOf(text_data) > -1;
     });
@@ -85,7 +184,7 @@ class SearchBar extends Component {
               style={styles.flatList}
               data={this.state.data}
               renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.bathroomID}
         />
         {/* <ScrollView keyboardShouldPersistTaps='always' persistentScrollbar={true} nestedScrollEnabled={true}>
           <View style={styles.flatList}>
