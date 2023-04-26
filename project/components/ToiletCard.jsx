@@ -13,23 +13,16 @@ const ToiletCard = (props) => {
                 title={props.toilet.name}
                 color={'#79443b'}
                 onPress={() => props.navigation.navigate('Bathroom', {
-                    coords: props.toilet.coords,
-                    name: props.toilet.name,
-                    tags: props.toilet.tags,
-                    ratings: props.toilet.ratings,
-                    reviews: props.toilet.reviews,
+                    bathroomName: props.toilet.name,
+                    bathroomRating: props.toilet.rating
                 })}/>
-
             <View style={styles.tagContainer}>
                 {props.toilet.tags.map((tag) => (
                     <Tag tag={tag} key={tag}/>
                     ))}
             </View>
-            {/* onPress={() => console.log(props.toilet.name) } */}
-            <Text style={{width: 100}}>Location = {props.toilet.address}</Text>
-            {/* <Text style={{width: 100}}>Rating = {props.toilet.rating}</Text>    */}
-            <Rating Rating = {props.toilet.ratings.overallRating}/>
-            {/*FIX THIS^*/}
+            <Text style={{width: 100}}>Location = {props.toilet.location}</Text>
+            <Rating Rating = {props.toilet.rating}/>
         </View>
     );
 };
