@@ -1,49 +1,43 @@
 import React, {useState} from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 
-export default function Rater(props) {
+export default function Rating(props) {
     const [defaultRating, setDefaultRating] = useState(props.Rating);
     const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
   
     const starImageFilled = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
     const starImageCorner = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
   
-    const CustomRaterBar = () => {
-        return(
-          <View style={styles.customRatingBarStyle}>
-            {maxRating.map((item, key) => {
-              return (
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  key={item}
-                  onPress={() => {setDefaultRating(item); props.onRatingChange(item);}}>
-                  <Image
-                    style={styles.starImageStyle}
-                    source={
-                      item <= defaultRating
-                        ? {uri: starImageFilled}
-                        : {uri: starImageCorner}}/>
-                </TouchableOpacity>
-              );
-            })}
+    const CustomRatingBar = () => {
+        return (
+            <View style={styles.customRatingBarStyle}>
+                {
+                    maxRating.map((item, key) => {
+                        return (
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                key={item}
+                                // onPress={() => setDefaultRating(item)}
+                            >
+                                <Image
+                                    style={styles.starImageStyle}
+                                    source={
+                                        item <= defaultRating
+                                            ? {uri: starImageFilled}
+                                            : {uri: starImageCorner}
+                                    }
+                                />
+                            </TouchableOpacity>
+                        );
+                    })
+                }
             </View>
         );
     };
   
     return (
       <SafeAreaView style={styles.container}>
-        {/* <Text style={styles.textStyle}> Please Rate Us!</Text> */}
-        <CustomRaterBar /> 
-        {/* <Text style={styles.textStyle}>
-            {defaultRating + ' / ' + maxRating.length}
-        </Text> */}
-        {/* <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.buttonStyle}
-          onPress={() => alert(defaultRating)}
-        >
-          <Text>Get Selected Value</Text>
-        </TouchableOpacity> */}
+        <CustomRatingBar /> 
       </SafeAreaView>
     );
 }
@@ -51,21 +45,19 @@ export default function Rater(props) {
 const styles = StyleSheet.create({
     container: {
       // flex: 1,
-      padding: 20,
-      // marginHorizontal: 50,
-      // marginVertical: 50,
-      justifyContent: 'center',
-      // alignItems: 'center',
+      padding: 10,
+      marginTop: 10,
+      justifyContent: 'center'
     },
     textStyle: {
       textAlign: 'center',
       fontSize: 23,
-      marginTop: 20, // 20
+      marginTop: 20,
     },
     customRatingBarStyle: {
       justifyContent: 'center',
       flexDirection: 'row',
-      marginTop: 30, // was 30
+      marginTop: 0, // was 30
     },
     starImageStyle: {
       width: 40,
@@ -78,6 +70,5 @@ const styles = StyleSheet.create({
       marginTop: 30,
       padding: 15,
       backgroundColor: 'green',
-      borderRadius: 10,
     }
 });
