@@ -1,9 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 
 export default function Rating(props) {
-    const [defaultRating, setDefaultRating] = useState(props.Rating);
-    const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
+  const [defaultRating, setDefaultRating] = useState(0);
+  const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
+  useEffect(() =>{
+    if (props.toilet != "none" && props.toilet != undefined){
+      setDefaultRating(props.toilet.ratings.overallRating);
+    }
+  },[props.toilet]);
   
     const starImageFilled = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
     const starImageCorner = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';

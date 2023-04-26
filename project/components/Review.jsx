@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Rating from './Rating.jsx';
 
-const Review = ({ review }) => {
+const Review = ({review}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>

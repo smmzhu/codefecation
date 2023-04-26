@@ -90,7 +90,7 @@ useEffect(() => {
             onPress={()=>{setCurrActive(marker.bathroomID); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
                           if (props.activeFlag == false){props.setActiveFlag(true);} 
                           console.log("public clicked"); 
-                          console.log(marker);}}
+                          }}
           >
             <View style={styles.Marker}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
