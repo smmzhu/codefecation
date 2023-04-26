@@ -11,6 +11,7 @@ import Tag from '../components/Tag.jsx';
 
 const BathroomScreen = ({ route, navigation }) => {
     const {coords, name, tags, ratings, reviews} = route.params; //assume that bathroom ratings is a json
+    console.log(reviews);
     // ratings = ratings.json();
     // reviews = reviews.json();
 
@@ -35,7 +36,7 @@ const BathroomScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.tagsContainer}>
                 <Text style={styles.sectionTitle}>Tags:</Text>
-                {bathroomTags.map((tag) => (
+                {tags.map((tag) => (
                   <Tag key={tag} tag={tag} />
                 ))}
             </View>

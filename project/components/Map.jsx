@@ -34,11 +34,11 @@ var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.lo
 
 function tenClosestCoordinates(listOfPoints, constantPoint) {
   const sortedListOfPoints = listOfPoints.sort((a, b) => {
-    const distanceA = getDistanceFromLatLonInKm(a.coordinates.lat, a.coordinates.long, constantPoint[0], constantPoint[1]);
-    const distanceB = getDistanceFromLatLonInKm(b.coordinates.lat, b.coordinates.long, constantPoint[0], constantPoint[1]);
+    const distanceA = getDistanceFromLatLonInKm(a.coords.lat, a.coords.long, constantPoint[0], constantPoint[1]);
+    const distanceB = getDistanceFromLatLonInKm(b.coords.lat, b.coords.long, constantPoint[0], constantPoint[1]);
     return distanceA - distanceB;
   }); // sort the list of coordinates based on distance from the constant point
-
+  
   return sortedListOfPoints.slice(0, 10); // return the first 10 elements of the sorted list
 }
 
@@ -84,10 +84,10 @@ useEffect(() => {
         {tenClosest.map((marker) => (
         // {mapPts.map((marker) => (
           <Marker
-            key={marker.id}
-            coordinate={{latitude: marker.coordinates.lat, longitude: marker.coordinates.long}}
+            key={marker.bathroomID}
+            coordinate={{latitude: marker.coords.lat, longitude: marker.coords.long}}
             title={marker.name}
-            onPress={()=>{setCurrActive(marker.id); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
+            onPress={()=>{setCurrActive(marker.bathroomID); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
                           if (props.activeFlag == false){props.setActiveFlag(true);} 
                           console.log("public clicked"); 
                           console.log(marker);}}

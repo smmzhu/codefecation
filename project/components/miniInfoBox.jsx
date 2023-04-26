@@ -44,15 +44,16 @@ const MiniInfoBox = (props) => {
         {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
+      {/* THIS NEEDS FIXING URGENTLY PLEASE DADDY */}
       <Rating Rating={props.ratings} style={{marginTop: 5, marginBottom: 5}} /> 
       {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
-        {props.tags && props.tags.map((tag) => (
+        {props.toilet.tags && props.toilet.tags.map((tag) => (
           <Tag tag={tag} key={tag}/>
         ))}
       </View>
-      <Text style={styles.location}>Location: </Text>
+      <Text style={styles.location}>Location: {props.toilet.address}</Text>
       <Pressable
         style={[styles.button, styles.buttonClose, {
           position: 'absolute',
