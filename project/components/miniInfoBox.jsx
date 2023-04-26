@@ -45,9 +45,10 @@ const MiniInfoBox = (props) => {
         {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
+
       <Rating Rating={props.toilet == "none" ? 3 : props.toilet.ratings.overallRating} style={{marginTop: 5, marginBottom: 5}} /> 
       {console.log(props.toilet == "none" ? 0 : props.toilet.ratings.overallRating)}
-      
+
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
         {props.toilet.tags && props.toilet.tags.map((tag) => (
