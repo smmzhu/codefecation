@@ -108,9 +108,8 @@ function HomeScreen({ navigation }) {
     ]
     useEffect(
       () => {(async () => {
-        const pos = await userLocation();
-        console.log("wee", pos);
-        await setUserLoc(userLocation());
+        const locObj = await userLocation();
+        setUserLoc({latitude: locObj.latitude, longitude: locObj.longitude});
       })()}
     , []);
     return (
@@ -122,7 +121,7 @@ function HomeScreen({ navigation }) {
         />
         <Button 
         title="Can't Find a Bathroom?"
-        onPress={() => navigation.navigate('BathroomRequest', {navigation: navigation})}
+        onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc});console.log(userLoc)}}
         />
         </View>
         <Map mapPts = {mapPts} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>

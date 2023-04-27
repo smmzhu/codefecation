@@ -9,7 +9,9 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 
-const CreateBathroomPage = ({navigation}) => {
+const CreateBathroomPage = ({navigation, route}) => {
+  const userLoc = route.params.userLoc;
+  console.log(userLoc);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -124,7 +126,7 @@ const CreateBathroomPage = ({navigation}) => {
       <View style={styles.inputContainer}>
         {/* CHANGE IT TO A MAP THAT THE USER CAN DRAG A POINT ON TOP OF INSTEAD */}
         <Text style={styles.tagLabel}>Choose your location:</Text>
-        <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude}/>
+        <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
         {/* <TextInput
           style={[styles.input, styles.inputHalf]}
           placeholder="Longitude (Optional)"

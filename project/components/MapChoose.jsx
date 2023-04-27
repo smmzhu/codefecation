@@ -4,8 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import {Dimensions} from 'react-native';
 
 const MapChoose = (props) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);  
-
+  const [selectedLocation, setSelectedLocation] = useState(props.defaultPos);  
 
   const handleMapPress = (event) => {
     setSelectedLocation({
