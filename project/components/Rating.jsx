@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 
 export default function Rating(props) {
-  console.log(props.Rating);
   const [defaultRating, setDefaultRating] = useState(0);
   const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
   useEffect(() =>{

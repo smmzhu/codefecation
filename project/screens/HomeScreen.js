@@ -121,7 +121,7 @@ function HomeScreen({ navigation }) {
         />
         <Button 
         title="Can't Find a Bathroom?"
-        onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc});console.log(userLoc)}}
+        onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}}
         />
         </View>
         <Map mapPts = {mapPts} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
