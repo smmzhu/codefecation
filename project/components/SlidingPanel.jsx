@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
@@ -7,13 +7,13 @@ import SearchBar from './SearchBar';
 
 export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
+    const [topp, setTopp] = useState(height*0.12);
+    
+    let amtToilets=props.bathroomList.length;
+    if (amtToilets<1) {
+      amtToilets=10; //Decided upon initial card list size.
+    }
 
-    let numToilet = props.bathroomList.length;
-    console.log("numToilet: " + numToilet);
-    console.log("width: " + width*0.7);
-    console.log("test", (width * 0.7 * numToilet) + (10 * 40) + 90); //3220
-
-    const [topp, setTopp] = useState(width * 0.7 * 10 + 10 * 40 + 90);
     const getNumToiletCards = (num) => {
       if(num>0){
         const newTopp = width * 0.7 * num + num * 20 + 90;
@@ -22,18 +22,14 @@ export default function SlidingPanel(props) {
       }
     }
 
-    const onLayout=(event)=> {
-      const {x, y, height, width} = event.nativeEvent.layout; 
-      console.log("x", x);
-      console.log("y", y);
-      console.log("height", height);
-      console.log("width", width);
-    }
+    useEffect(() => {
+      console.log(amtToilets);
+      getNumToiletCards(amtToilets);
+    }, []);
 
     return (
-      // <View onLayout={onLayout}>
         <SlidingUpPanel 
-          height = {topp} //+ 130 
+          height = {topp}
           width = {width}
           draggableRange = {{top:topp,bottom:height*0.12}}
           backgroundColor='white'
@@ -48,7 +44,6 @@ export default function SlidingPanel(props) {
                         </View>
                         <StatusBar style="auto" />
         </SlidingUpPanel>
-      // </View>
     );
 }   
 
