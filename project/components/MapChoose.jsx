@@ -48,6 +48,7 @@ const MapChoose = (props) => {
           <TouchableOpacity
           style={styles.returnButton}
           onPress={handleConfirmLocation}
+          disabled={!selectedLocation}
           >
           <Text style={styles.returnButtonText}>Confirm Location</Text>
         </TouchableOpacity>

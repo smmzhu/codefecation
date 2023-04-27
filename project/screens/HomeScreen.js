@@ -106,19 +106,32 @@ function HomeScreen({ navigation }) {
         ]
       }
     ]
+
     useEffect(
       () => {(async () => {
         const locObj = await userLocation();
         setUserLoc({latitude: locObj.latitude, longitude: locObj.longitude});
       })()}
     , []);
+
+    const createTwoButtonAlert = () =>
+    Alert.alert('Are you sure to logout?', '', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {text: 'Yes', 
+      onPress: () => logOut()},
+    ]);
+
+    const logOut = () => {
+      navigation.navigate('Login');
+    }
+
     return (
       <SafeAreaView style={stylesMap.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
-        <Button 
-        title="Sign Out"
-        onPress={() => Alert.alert('Haha, you wish! You\'re stuck here forever!')}
-        />
+        <Button title={'Sign Out'} onPress={createTwoButtonAlert} />
         <Button 
         title="Can't Find a Bathroom?"
         onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}}
