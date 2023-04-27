@@ -45,7 +45,7 @@ const MiniInfoBox = (props) => {
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
       {/* THIS NEEDS FIXING URGENTLY PLEASE DADDY */}
-      <Rating Rating={props.ratings} toilet = {props.toilet} style={{marginTop: 5, marginBottom: 5}} /> 
+      <Rating Rating={0} toilet = {props.toilet} style={{marginTop: 5, marginBottom: 5}} /> 
       {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
