@@ -1,6 +1,6 @@
 import firebase from '../database/firebase';
 const getBathroomFromDB = async (db, bathroomID) => { //type signature: {db: DB object, bathroomID: string} => bathroomObject
-    return await db.collection("bathrooms").doc("bathroomID").get()
+    return await db.collection("bathrooms").doc(bathroomID).get()
         .then(async (doc) => {return doc.data(); })
         .catch((error) => {console.log("Error getting document:", error);});
 }
