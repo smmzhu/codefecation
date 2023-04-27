@@ -1,8 +1,9 @@
 // components/login.js
 import React, { Component } from 'react';
-import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator, Image } from 'react-native';
 import firebase from '../database/firebase';
 import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
+import ploopLogo from '../assets/ploopIcon.png'
 
 // async function main(){
 //   var db = await firebase.firestore();
@@ -68,6 +69,8 @@ export default class Login extends Component {
       )
     }    
     return (
+      <View style={styles.containerView}>
+      <Image source={ploopLogo} style={styles.logoView}/>
       <Pressable onPress={Keyboard.dismiss} style={styles.container}>
         <TextInput
           style={styles.inputStyle}
@@ -94,16 +97,33 @@ export default class Login extends Component {
           Don't have account? Click here to signup
         </Text>                          
       </Pressable>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  containerView: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: 25,
+    backgroundColor: '#fff'
+  }, 
+  logoView: {
+    width: 150,
+    height: 150,
+    marginBottom: 0,
+    marginTop: 150,
+    alignSelf: "center",
+    resizeMode: 'contain',
+  },
   container: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    padding: 35,
+    padding: 25,
     backgroundColor: '#fff'
   },
   inputStyle: {
