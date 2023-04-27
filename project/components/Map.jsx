@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import { Image } from 'react-native';
 
 export default function Map(props) {
-  var mapPts = props.mapPts;
+  var bathroomList = props.bathroomList;
   const [currActive, setCurrActive] = useState("none");
     const [mapRegion, setMapRegion] = useState({
     latitude: props.userLoc.latitude,
@@ -30,7 +30,7 @@ const userLocation = async () => {
   console.log(location.coords.latitude, location.coords.longitude);
 }
 
-var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude]);
+var tenClosest = tenClosestCoordinates(bathroomList, [mapRegion.latitude, mapRegion.longitude]);
 
 function tenClosestCoordinates(listOfPoints, constantPoint) {
   const sortedListOfPoints = listOfPoints.sort((a, b) => {
@@ -69,7 +69,7 @@ useEffect(() => {
       
       <TouchableOpacity 
         style={styles.RefreshButton}
-        onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude])}>
+        onPress={() => tenClosest = tenClosestCoordinates(bathroomList, [mapRegion.latitude, mapRegion.longitude])}>
         <Text style={styles.text}>{"Refresh!"}</Text>
       </TouchableOpacity>
 
@@ -82,7 +82,7 @@ useEffect(() => {
             </View>
         </Marker>
         {tenClosest.map((marker) => (
-        // {mapPts.map((marker) => (
+        // {bathroomList.map((marker) => (
           <Marker
             key={marker.bathroomID}
             coordinate={{latitude: marker.coords.lat, longitude: marker.coords.long}}
