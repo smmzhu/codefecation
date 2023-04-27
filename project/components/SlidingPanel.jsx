@@ -13,7 +13,7 @@ export default function SlidingPanel(props) {
     console.log("width: " + width*0.7);
     console.log("test", (width * 0.7 * numToilet) + (10 * 40) + 90); //3220
 
-    const [topp, setTopp] = useState(width * 0.7 * 4 + 4 * 40 + 90);
+    const [topp, setTopp] = useState(width * 0.7 * 10 + 10 * 40 + 90);
     const getNumToiletCards = (num) => {
       if(num>0){
         const newTopp = width * 0.7 * num + num * 20 + 90;
@@ -31,15 +31,14 @@ export default function SlidingPanel(props) {
     }
 
     return (
+      // <View onLayout={onLayout}>
         <SlidingUpPanel 
           height = {topp} //+ 130 
           width = {width}
           draggableRange = {{top:topp,bottom:height*0.12}}
           backgroundColor='white'
-          // onBottomReached={getNumToiletCards}
           >
                     <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
-                      <View onLayout={onLayout}>
                       <SearchBar 
                         navigation = {props.navigation} 
                         style={styles.searchBar} 
@@ -48,8 +47,8 @@ export default function SlidingPanel(props) {
                         />
                         </View>
                         <StatusBar style="auto" />
-                    </View>
         </SlidingUpPanel>
+      // </View>
     );
 }   
 
