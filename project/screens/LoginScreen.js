@@ -5,7 +5,7 @@ import firebase from '../database/firebase';
 import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
 import ploopLogo from '../assets/ploopIcon.png'
 import * as geofire from 'geofire-common';
-import geoquery from '../database/geoquerying';
+import kNearestToilets from '../database/geoquerying';
 
 // async function main(){ //populates geohash field in database
 //   const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010"];
@@ -19,12 +19,13 @@ import geoquery from '../database/geoquerying';
 // }
 // main();
 
-async function main(){
-  const db = firebase.firestore();
-  await geoquery(db);
-  console.log("geoquery ran");
-}
-main();
+// async function main(){
+//   const db = await firebase.firestore()
+//   const result = await kNearestToilets(db, 5, [34.404834, -119.834200], 5 * 1000);
+//   console.log(result.map((doc) => {return doc.name}));
+//   console.log("geoquery ran");
+// }
+// main();
 
 
 export default class Login extends Component {
