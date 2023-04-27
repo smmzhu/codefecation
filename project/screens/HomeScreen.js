@@ -1,12 +1,19 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
+import { StyleSheet,TouchableOpacity, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
 import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
 
 function HomeScreen({ navigation }) {
+  const [refreshFlag, setRefreshFlag] = React.useState(false);
+
+  const handleRefresh = () => {
+    // console.log("Refresh button pressed");
+    // Update the refresh flag to trigger a re-render of the component
+    setRefreshFlag(!refreshFlag);
+  };
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
@@ -111,16 +118,22 @@ function HomeScreen({ navigation }) {
         title="Sign Out"
         onPress={() => Alert.alert('Haha, you wish! You\'re stuck here forever!')}
         />
+        <TouchableOpacity 
+        style={styles.RefreshButton}
+        onPress={handleRefresh}
+        //</View>onPress={() => this.forceUpdate(0)}
+        >
+          <Image source={require('../assets/ploopIcon.png')} style={styles.logoView}/>
+          <Text>Refresh Map</Text>
+        </TouchableOpacity>
         <Button 
         title="Can't Find a Bathroom?"
         onPress={() => navigation.navigate('BathroomRequest', {navigation: navigation})}
         />
         </View>
-        <Map mapPts = {mapPts} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
+        <Map mapPts = {mapPts} refreshFlag={refreshFlag} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
         <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
-        <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-        {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
-        <StatusBar style="auto" />
+        <StatusBar refreshFlag={refreshFlag} style="auto" />
         <SlidingPanel color = '#9f8170' navigation = {navigation}>
         </SlidingPanel>
       </SafeAreaView>
@@ -136,6 +149,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    logoView: {
+      width: 50,
+      height: 50,
+      marginBottom: 0,
+      marginTop: 0,
+      resizeMode: 'contain',
+     },
+    RefreshButton: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      backgroundColor: '#9f8170',
+      borderRadius: 10,
+      borderColor: '#000',
+    },
   });
 
 const stylesMap = StyleSheet.create({
@@ -149,5 +176,5 @@ const stylesMap = StyleSheet.create({
     marker: {
       width: 50,
       height: 50,
-    }
+    },
   });
