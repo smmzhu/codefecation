@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, TextInput, FlatList, ScrollView, Image, Button } from 'react-native';
+import { StyleSheet,KeyboardAvoidingView, Text, View, TextInput, FlatList, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
 import Tag from './Tag.jsx';
+import TagSearchSelector from "./TagSearchSelector.jsx";
 
 const TOILETS = [
     {
@@ -107,38 +108,71 @@ class SearchBar extends Component {
       data: TOILETS,
       error: null,
       searchValue: "",
+      tagList: [],
     };
     this.arrayholder = TOILETS;
   }
+  getTagList = (taglist) => {
+    // console.log(taglist);
+    this.setState({tagList: taglist})
+  }
 
-  searchFunction = (text) => {
+  // changes search value to text input
+  updateSearchValue = (text) => {
+    this.setState({searchValue: text});
+  }
+
+  searchFunction = (text, tags) => {
+
+    // filter all without text in name, 
+
     const updatedData = this.arrayholder.filter((item) => {
       const name_data = `${item.name.toUpperCase()})`;
-      var tag_data;
-      for(let i = 0; i < item.tags.length; i++){
-        tag_data += `${item.tags[i].toUpperCase()})`;
-      }
       const text_data = text.toUpperCase();
-      return (name_data.indexOf(text_data) > -1 || tag_data.indexOf(text_data) > -1 );
+      return (name_data.indexOf(text_data) > -1 );
     });
-    this.props.toiletListSize(updatedData.length);
-    this.setState({ data: updatedData, searchValue: text });
+    const finalData =[];
+    // filter all without tags
+    updatedData.filter((item) => {
+      var temp = true;
+      for(let i = 0; i < tags.length; i++){
+        if(!(item.tags.includes(tags[i]))){
+          temp=false;
+        }
+      }
+      if(temp){
+        finalData.push(item);
+      }
+    })
+
+    this.props.toiletListSize(finalData.length);
+    this.setState({ data: finalData });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Search Here..."
-          lightTheme
-          round
-          value={this.state.searchValue}
-          onChangeText={(text) => this.searchFunction(text)}
-          autoCorrect={false}
-        />
+        <View style={styles.inputBar}>
+            <KeyboardAvoidingView behavior="position" style={styles.container}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Search Here..."
+                lightTheme
+                round
+                value={this.state.searchValue}
+                //onChangeText={(text) => this.searchFunction(text)}
+                onChangeText={(text)=>this.updateSearchValue(text)}
+                autoCorrect={false}
+              />
+            </KeyboardAvoidingView>
+            <TagSearchSelector getTagList={this.getTagList}/>
+
+            <TouchableOpacity style={styles.button} onPress={() =>this.searchFunction(this.state.searchValue,this.state.tagList)}>
+              <Text>Search</Text>
+            </TouchableOpacity>
+
+          </View>
         <FlatList
-              nestedScrollEnabled={true}
               style={styles.flatList}
               data={this.state.data}
               renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
@@ -155,7 +189,8 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   inputBar: {
-    flex: 1,
+    flexDirection: 'row',
+    height: 80,
   },
   textInput: {
     width: '50%',
@@ -174,53 +209,18 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 0,
     textAlign: 'center',
-  }
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#79443b',
+    width: '20%',
+    height: '100%',
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 10,
+},
 
 });
 
 export default SearchBar;
-
-// const renderItem = ({ item }) => <ToiletCard title={item.title} />;
-// class SearchBar extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       loading: false,
-//       data: DATA,
-//       error: null,
-//       searchValue: "enter",
-//     };
-//     this.arrayholder = DATA;
-//   }
-
-//   searchFunction = (text) => {
-//     const updatedData = this.arrayholder.filter((item) => {
-//       const item_data = `${item.title.toUpperCase()})`;
-//       const text_data = text.toUpperCase();
-//       return item_data.indexOf(text_data) > -1;
-//     });
-//     this.setState({ data: updatedData, searchValue: text });
-//   };
-
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <TextInput
-//           style={styles.textInput}
-//           placeholder="Search Here..."
-//           lightTheme
-//           round
-//           value={this.state.searchValue}
-//           onChangeText={(text) => this.searchFunction(text)}
-//           autoCorrect={false}
-//         />
-//         <FlatList
-//           style={styles.flatList}
-//           data={this.state.data}
-//           renderItem={renderItem}
-//           keyExtractor={(item) => item.id}
-//         />
-//       </View>
-//     );
-//   }
-// }

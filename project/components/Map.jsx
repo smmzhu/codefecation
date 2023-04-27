@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { Image } from 'react-native';
 
 export default function Map(props) {
+  // console.log("rerendered");
   var mapPts = props.mapPts;
   const [currActive, setCurrActive] = useState("none");
     const [mapRegion, setMapRegion] = useState({
@@ -13,7 +14,6 @@ export default function Map(props) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
-
 const userLocation = async () => {
   let { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') {
@@ -33,6 +33,7 @@ const userLocation = async () => {
 var tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude]);
 
 function tenClosestCoordinates(listOfPoints, constantPoint) {
+  // console.log("tenClosestCoordinates");
   const sortedListOfPoints = listOfPoints.sort((a, b) => {
     const distanceA = getDistanceFromLatLonInKm(a.coords.lat, a.coords.long, constantPoint[0], constantPoint[1]);
     const distanceB = getDistanceFromLatLonInKm(b.coords.lat, b.coords.long, constantPoint[0], constantPoint[1]);
@@ -67,11 +68,11 @@ useEffect(() => {
     <View style={styles.container}>
       {/* <Button title='Get Location' onPress={userLocation}/> */}
       
-      <TouchableOpacity 
+      {/* <TouchableOpacity 
         style={styles.RefreshButton}
         onPress={() => tenClosest = tenClosestCoordinates(mapPts, [mapRegion.latitude, mapRegion.longitude])}>
         <Text style={styles.text}>{"Refresh!"}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <MapView style={styles.map} 
         region={mapRegion}

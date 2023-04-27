@@ -23,6 +23,7 @@ const MiniInfoBox = (props) => {
       useNativeDriver: true
     }).start();
   }
+  
   useEffect(() => {
     if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   }, [props.activeFlag, props.toilet]);
