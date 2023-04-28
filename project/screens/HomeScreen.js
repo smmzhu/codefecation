@@ -8,6 +8,7 @@ import Map from '../components/Map.jsx';
 import userLocation from '../hooks/getUserPos.jsx';
 import firebase from '../database/firebase';
 import {getBathroomFromDB} from '../database/databaseFuncs';
+import kNearestToilets from '../database/geoquerying.js';
 
 function HomeScreen({ navigation }) {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
@@ -21,29 +22,17 @@ function HomeScreen({ navigation }) {
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
     const [userLoc, setUserLoc] = useState({latitude: 34.404834, longitude: -119.844177,})
-    const [bathroomList, setBathroomList] = useState([]);
 
-    useEffect(() => {
-      async function dbFunc() {
-        const db = await firebase.firestore();
-        // const bathroom = await getBathroomFromDB(db, "bathroom_001"); //test get bathroom from db
-        const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010"]; //replace with like closest 10 bathrooms
-        for (bathroomID of bathroomIDs) {
-          let bathroomObj = await getBathroomFromDB(db, bathroomID);
-          bathroomList.push(bathroomObj);
-          console.log(bathroomID);
-        }
-        // console.log(bathroom);
-        setBathroomList(bathroomList);
-        // console.log(bathroomList);
-      };
-      dbFunc().then(() => console.log("dbFunc() ran")).catch((err)=>{console.log(err)});
-  },[bathroomList]);
+    const [bathroomList, setBathroomList] = useState([]);
       
     useEffect(
       () => {(async () => {
         const locObj = await userLocation();
         setUserLoc({latitude: locObj.latitude, longitude: locObj.longitude});
+        const db = await firebase.firestore();
+        await kNearestToilets(db, 7, [locObj.latitude, locObj.longitude], 5*1000).then((res) => {
+          setBathroomList(res);
+        });
       })()}
     , []);
 
@@ -82,6 +71,7 @@ function HomeScreen({ navigation }) {
         </View>
         <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
         <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+
         {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
         <StatusBar style="auto" />
         {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}

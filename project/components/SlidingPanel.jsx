@@ -9,17 +9,19 @@ export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
     const [topp, setTopp] = useState(width * 0.7 * 3 + 3 * 40+30);
     const [heightt, setHeightt] = useState(height);
+    const [toilets, setToilets] = useState(props.bathroomList);
     const getNumToiletCards = (num) => {
       if(num>0){
         const newTopp = width * 0.7 * num + num * 20 + 30;
         setTopp(newTopp);
-        console.log("newTopp", newTopp);
       }
     }
 
     useEffect(() => {
-      console.log("useEffect");
-      console.log(heightt);
+      setToilets(props.bathroomList);
+    }, [props.bathroomList]);
+
+    useEffect(() => {
       setHeightt(heightt);
     }, [heightt]);
     
@@ -31,7 +33,7 @@ export default function SlidingPanel(props) {
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
-              <SearchBar refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
+              <SearchBar bathroomList = {props.bathroomList} refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>

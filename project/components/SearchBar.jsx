@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useEffect} from "react";
 import { StyleSheet,KeyboardAvoidingView, Text, View, TextInput, FlatList, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
 import Tag from './Tag.jsx';
@@ -105,13 +105,14 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       loading: false,
-      data: props.bathroomList ? props.bathroomList : [],
+      data: this.props.bathroomList,
       error: null,
       searchValue: "",
       tagList: [],
       height: 420,
     };
-    this.arrayholder = props.bathroomList;
+
+    this.arrayholder = this.props.bathroomList;
   }
   getTagList = (taglist) => {
     // console.log(taglist);
@@ -156,6 +157,9 @@ class SearchBar extends Component {
   }
 
   render() {
+    if (this.props.bathroomList != this.state.data){
+      this.state.data = this.props.bathroomList;
+    }
     return (
       <View style={styles.container}>
         <View onLayout = {this.onLayout}>
@@ -179,7 +183,8 @@ class SearchBar extends Component {
               </TouchableOpacity>
 
             </View>
-            {this.state.data.map((item) => {return <ToiletCard key = {item.bathroomID} toilet={item} navigation = {this.props.navigation}/>})}
+            {console.log(this.state.data)}
+            {this.state.data.map((item) => {return item ? <ToiletCard key = {item.bathroomID} toilet={item} navigation = {this.props.navigation}/> : null})}
           </View>
       </View>
     );
