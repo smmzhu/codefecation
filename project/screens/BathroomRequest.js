@@ -5,7 +5,10 @@ import CongratulatoryModal from '../components/CongratulatoryModal';
 import MapChoose from '../components/MapChoose';
 import { LogBox } from 'react-native';
 import firebase from '../database/firebase';
-import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
+import {setBathroomToDB} from '../database/databaseFuncs';
+import * as geofire from 'geofire-common';
+import { getAuth } from "firebase/auth";
+import uuid from 'react-native-uuid';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -74,11 +77,22 @@ const CreateBathroomPage = ({navigation, route}) => {
 
   async function dbFunc() {
     const db = await firebase.firestore();
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    let email = "";
+    if (user !== null) {
+      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
+      email = user.email;
+    }
+    email = email.substring(0, email.indexOf('@'));
+
     const bathroom = {
-      bathroomID: "test",
+      bathroomID: uuid.v4(),
       coords: {
+        geohash: geofire.geohashForLocation([latitude, longitude]),
         lat: latitude,
-        long: longitude
+        long: longitude,
       },
       name: name,
       address: address,
@@ -89,8 +103,8 @@ const CreateBathroomPage = ({navigation, route}) => {
         boujeeRating: boujeenessRating
       },
       reviews: [{
-        reviewID: "test", // REMEMBER TO GENERATE A NEW ONE
-        userID: "test", // FILL IN WITH CORRECT USER ID
+        reviewID: uuid.v4(),
+        userID: email,
         overallRating: overallRating,
         cleanRating: cleanlinessRating,
         boujeeRating: boujeenessRating,

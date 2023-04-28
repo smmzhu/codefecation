@@ -27,7 +27,7 @@ function HomeScreen({ navigation }) {
       async function dbFunc() {
         const db = await firebase.firestore();
         // const bathroom = await getBathroomFromDB(db, "bathroom_001"); //test get bathroom from db
-        const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010"]; //replace with like closest 10 bathrooms
+        const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010", "test"]; //replace with like closest 10 bathrooms
         for (bathroomID of bathroomIDs) {
           let bathroomObj = await getBathroomFromDB(db, bathroomID);
           bathroomList.push(bathroomObj);

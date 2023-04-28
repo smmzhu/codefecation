@@ -7,10 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Review from '../components/Review.jsx';
 import ShowMap from '../components/ShowMap.jsx';
 import Tag from '../components/Tag.jsx';
+import BathroomVerif from '../components/BathroomVerif.jsx';
 
 
 const BathroomScreen = ({ route, navigation }) => {
-    const {coords, name, tags, ratings, reviews} = route.params; //assume that bathroom ratings is a json
+    const {coords, name, tags, ratings, reviews, status} = route.params; //assume that bathroom ratings is a json
     console.log(reviews);
     // ratings = ratings.json();
     // reviews = reviews.json();
@@ -31,6 +32,7 @@ const BathroomScreen = ({ route, navigation }) => {
         </View>
         <View style={styles.body}>
             <View style={styles.section}>
+                {status.validBathroom ? null : <BathroomVerif/>}
                 <Text style={styles.sectionTitle}>Overall Rating</Text>
                 <Rating Rating = {ratings.overallRating}/>
             </View>
