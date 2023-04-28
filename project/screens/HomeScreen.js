@@ -6,6 +6,8 @@ import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
 import userLocation from '../hooks/getUserPos.jsx';
+import kNearestToilets from '../database/geoquerying.js';
+import firebase from '../database/firebase.js';
 
 function HomeScreen({ navigation }) {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
@@ -19,7 +21,7 @@ function HomeScreen({ navigation }) {
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
     const [userLoc, setUserLoc] = useState({latitude: 34.404834, longitude: -119.844177,})
-    const mapPts = [
+    const oldMapPts = [
       {
         "bathroomID": "bathroom_001",
         "coords": {
@@ -113,11 +115,16 @@ function HomeScreen({ navigation }) {
         ]
       }
     ]
+    const [mapPts, setMapPts] = useState(oldMapPts);
 
     useEffect(
       () => {(async () => {
         const locObj = await userLocation();
         setUserLoc({latitude: locObj.latitude, longitude: locObj.longitude});
+        const db = await firebase.firestore();
+        await kNearestToilets(db, 7, [locObj.latitude, locObj.longitude], 5*1000).then((res) => {
+          setMapPts(res);
+        });
       })()}
     , []);
 
@@ -158,7 +165,7 @@ function HomeScreen({ navigation }) {
         <Map mapPts = {mapPts} userLoc = {userLoc} refreshFlag={refreshFlag} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
         <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
         <StatusBar refreshFlag={refreshFlag} style="auto" />
-        <SlidingPanel color = '#9f8170' navigation = {navigation}>
+        <SlidingPanel mapPts = {mapPts} color = '#9f8170' navigation = {navigation}>
         </SlidingPanel>
       </SafeAreaView>
     );

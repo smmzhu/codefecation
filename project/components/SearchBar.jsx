@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useEffect} from "react";
 import { StyleSheet,KeyboardAvoidingView, Text, View, TextInput, FlatList, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
 import ToiletCard from './ToiletCard.jsx';
 import Tag from './Tag.jsx';
@@ -105,13 +105,13 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       loading: false,
-      data: TOILETS,
+      data: this.props.toilets,
       error: null,
       searchValue: "",
       tagList: [],
       height: 420,
     };
-    this.arrayholder = TOILETS;
+    this.arrayholder = this.props.toilets;
   }
   getTagList = (taglist) => {
     // console.log(taglist);
@@ -156,6 +156,9 @@ class SearchBar extends Component {
   }
 
   render() {
+    if (this.props.toilet != this.state.data){
+      this.state.data = this.props.toilets;
+    }
     return (
       <View style={styles.container}>
         <View onLayout = {this.onLayout}>

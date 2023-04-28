@@ -6,9 +6,11 @@ import { useWindowDimensions } from 'react-native';
 import SearchBar from './SearchBar';
 
 export default function SlidingPanel(props) {
+    console.log("slidingpanel", props.mapPts);
     const {height, width} = useWindowDimensions();
     const [topp, setTopp] = useState(width * 0.7 * 3 + 3 * 40+30);
     const [heightt, setHeightt] = useState(height);
+    const [toilets, setToilets] = useState(props.mapPts);
     const getNumToiletCards = (num) => {
       if(num>0){
         const newTopp = width * 0.7 * num + num * 20 + 30;
@@ -17,8 +19,11 @@ export default function SlidingPanel(props) {
     }
 
     useEffect(() => {
-      console.log("useEffect");
-      console.log(heightt);
+      setToilets(props.mapPts);
+      console.log("useffect");
+    }, [props.mapPts]);
+
+    useEffect(() => {
       setHeightt(heightt);
     }, [heightt]);
     
@@ -30,7 +35,8 @@ export default function SlidingPanel(props) {
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
-              <SearchBar refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
+              {console.log("bruh", props.mapPts)}
+              <SearchBar toilets = {props.mapPts} refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>
