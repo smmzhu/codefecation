@@ -99,7 +99,7 @@ const TOILETS = [
     }
 ];
 
-const renderItem = ({item, navigation}) => <ToiletCard key = {item.bathroomID} toilet={item} navigation = {navigation}/>;
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -109,6 +109,7 @@ class SearchBar extends Component {
       error: null,
       searchValue: "",
       tagList: [],
+      height: 420,
     };
     this.arrayholder = TOILETS;
   }
@@ -149,35 +150,38 @@ class SearchBar extends Component {
     this.setState({ data: finalData });
   };
 
+  onLayout = (event)=> {
+    let layout = event.nativeEvent.layout; //btw it spits out x,y,width,height normally
+    console.log(event.nativeEvent.layout);
+    this.props.setHeight(layout.height + 100)
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputBar}>
-            <KeyboardAvoidingView behavior="position" style={styles.container}>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Search Here..."
-                lightTheme
-                round
-                value={this.state.searchValue}
-                //onChangeText={(text) => this.searchFunction(text)}
-                onChangeText={(text)=>this.updateSearchValue(text)}
-                autoCorrect={false}
-              />
-            </KeyboardAvoidingView>
-            <TagSearchSelector getTagList={this.getTagList}/>
+        <View onLayout = {this.onLayout}>
+          <View style={styles.inputBar}>
+              <KeyboardAvoidingView behavior="position" style={styles.container}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Search Here..."
+                  lightTheme
+                  round
+                  value={this.state.searchValue}
+                  //onChangeText={(text) => this.searchFunction(text)}
+                  onChangeText={(text)=>this.updateSearchValue(text)}
+                  autoCorrect={false}
+                />
+              </KeyboardAvoidingView>
+              <TagSearchSelector getTagList={this.getTagList}/>
 
-            <TouchableOpacity style={styles.button} onPress={() =>this.searchFunction(this.state.searchValue,this.state.tagList)}>
-              <Text>Search</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() =>{this.searchFunction(this.state.searchValue,this.state.tagList)}}>
+                <Text>Search</Text>
+              </TouchableOpacity>
 
+            </View>
+            {this.state.data.map((item) => {return <ToiletCard key = {item.bathroomID} toilet={item} navigation = {this.props.navigation}/>})}
           </View>
-        <FlatList
-              style={styles.flatList}
-              data={this.state.data}
-              renderItem={(item) => renderItem({...item, navigation: this.props.navigation})}
-              keyExtractor={(item) => item.bathroomID}
-        />
       </View>
     );
   }
@@ -209,6 +213,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 0,
     textAlign: 'center',
+    flexGrow: 0,
   },
   button: {
     alignItems: 'center',

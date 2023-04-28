@@ -15,14 +15,13 @@ export default function SlidingPanel(props) {
         setTopp(newTopp);
       }
     }
-  
-    const onLayout=(event)=> {
-      let layout = event.nativeEvent.layout; //btw it spits out x,y,width,height normally
-      console.log(event.nativeEvent.layout);
-      setHeightt(layout.height);
-    }
-    
 
+    useEffect(() => {
+      console.log("useEffect");
+      console.log(heightt);
+      setHeightt(heightt);
+    }, [heightt]);
+    
     // fix this so that you can stop in middle and also keep the search bar on the top
     return (
         <SlidingUpPanel 
@@ -30,8 +29,8 @@ export default function SlidingPanel(props) {
           width = {width}
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
-            <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}} onLayout={onLayout}>
-              <SearchBar refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards}/>
+            <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
+              <SearchBar refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>
