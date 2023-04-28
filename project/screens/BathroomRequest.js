@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, Alert, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
 import MapChoose from '../components/MapChoose';
@@ -157,6 +157,38 @@ const CreateBathroomPage = ({navigation, route}) => {
     );
   }
 
+  const check= () => {
+    let output = "";
+    if(!name){
+      output += "Name\n";
+    }
+    if(!address){
+      output += "Address\n";
+    }
+    if(!longitude){
+      output += "Confirm a location on the map\n";
+    }
+    if(!tags){
+      output += "Select at least one tag\n";
+    }
+    if(!overallRating){
+      output += "Overall rating\n";
+    }
+    if(!cleanlinessRating){
+      output += "Cleanliness rating\n";
+    }
+    if(!boujeenessRating){
+      output += "Boujeeness rating\n";
+    }
+    if(output==''){
+      handleSubmit();
+    }else{
+      output = "Please finish the following:\n" + output;
+      output = output.slice(0, output.length-1);
+      Alert.alert(output);
+    }
+  }
+
   return (
     <ScrollView style={styles.container1}>
     <View style={styles.container}>
@@ -239,8 +271,7 @@ const CreateBathroomPage = ({navigation, route}) => {
       />
       <TouchableOpacity
         style={styles.submitButton}
-        onPress={handleSubmit}
-        disabled={!name || !address || !tags || !overallRating || !cleanlinessRating || !boujeenessRating}
+        onPress={check}
       > 
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
