@@ -183,7 +183,6 @@ class SearchBar extends Component {
               </TouchableOpacity>
 
             </View>
-            {console.log(this.state.data)}
             {this.state.data.map((item) => {return item ? <ToiletCard key = {item.bathroomID} toilet={item} navigation = {this.props.navigation}/> : null})}
           </View>
       </View>

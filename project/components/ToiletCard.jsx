@@ -17,6 +17,7 @@ const ToiletCard = (props) => {
                 tags: props.toilet.tags,
                 ratings: props.toilet.ratings,
                 reviews: props.toilet.reviews,
+                status: props.toilet.status,
             })}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
                 <Text>{props.toilet.name}</Text>

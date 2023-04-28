@@ -22,9 +22,8 @@ function HomeScreen({ navigation }) {
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
     const [userLoc, setUserLoc] = useState({latitude: 34.404834, longitude: -119.844177,})
-
     const [bathroomList, setBathroomList] = useState([]);
-      
+
     useEffect(
       () => {(async () => {
         const locObj = await userLocation();

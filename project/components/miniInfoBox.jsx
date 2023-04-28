@@ -67,6 +67,7 @@ const MiniInfoBox = (props) => {
           tags: props.toilet.tags,
           ratings: props.toilet.ratings,
           reviews: props.toilet.reviews,
+          status: props.toilet.status,
         })}>
         <Text style={styles.textStyle}>Extra Info</Text>
       </Pressable>
@@ -149,8 +150,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   location: {
-    marginTop: 10,
-    fontSize: 14,
+    marginTop: 0,
+    fontSize: 12,
     fontWeight: 'bold',
     justifyContent: 'left',
   }
