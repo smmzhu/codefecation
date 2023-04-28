@@ -13,6 +13,7 @@ export default function SlidingPanel(props) {
       if(num>0){
         const newTopp = width * 0.7 * num + num * 20 + 30;
         setTopp(newTopp);
+        console.log("newTopp", newTopp);
       }
     }
 

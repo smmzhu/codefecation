@@ -6,6 +6,8 @@ import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
 import userLocation from '../hooks/getUserPos.jsx';
+import firebase from '../database/firebase';
+import {getBathroomFromDB} from '../database/databaseFuncs';
 
 function HomeScreen({ navigation }) {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
@@ -19,101 +21,25 @@ function HomeScreen({ navigation }) {
     const [lastPtInfo, setLastPtInfo] = useState("none");
     const [activeFlag, setActiveFlag] = useState(false); //this goes up if the currpt goes from none to something, then it goes back to false
     const [userLoc, setUserLoc] = useState({latitude: 34.404834, longitude: -119.844177,})
-    const mapPts = [
-      {
-        "bathroomID": "bathroom_001",
-        "coords": {
-          "lat": 34.414425,
-          "long": -119.848945,
-        },
-        "name": "Engineering Science Building",
-        "address": "123 Main St, New York, NY",
-        "tags": [
-          "Female",
-          "Smells good"
-        ],
-        "ratings": {
-          "overallRating": 4.5,
-          "cleanRating": 5,
-          "boujeeRating": 3.5
-        },
-        "reviews": [
-          {
-            "reviewID": "review_001",
-            "userID": "user_001",
-            "overallRating": 4,
-            "cleanRating": 5,
-            "boujeeRating": 3,
-            "reviewText": "This bathroom was super clean and smelled great! The only downside was that it didn't have any fancy amenities."
-          },
-          {
-            "reviewID": "review_002",
-            "userID": "user_002",
-            "overallRating": 5,
-            "cleanRating": 5,
-            "boujeeRating": 5,
-            "reviewText": "Wow, this bathroom was amazing! It had everything I needed and more. I would definitely come back here again."
-          }
-        ]
-      },
-      {
-        "bathroomID": "bathroom_002",
-        "coords": {
-          "lat": 34.404834,
-          "long": -119.844177
-        },
-        "name": "The Comfort Zone",
-        "address": "456 Elm St, New York, NY",
-        "tags": [
-          "Male",
-          "Non-gendered"
-        ],
-        "ratings": {
-          "overallRating": 3,
-          "cleanRating": 2,
-          "boujeeRating": 4
-        },
-        "reviews": [
-          {
-            "reviewID": "review_003",
-            "userID": "user_003",
-            "overallRating": 3,
-            "cleanRating": 2,
-            "boujeeRating": 4,
-            "reviewText": "This bathroom was just okay. It wasn't very clean and it didn't have any special features."
-          }
-        ]
-      },
-      {
-        "bathroomID": "bathroom_003",
-        "coords": {
-          "lat": 34.409038,
-          "long": -119.846123,
-        },
-        "name": "The Lavatory",
-        "address": "789 Oak St, New York, NY",
-        "tags": [
-          "Female",
-          "Smells good"
-        ],
-        "ratings": {
-          "overallRating": 4,
-          "cleanRating": 4,
-          "boujeeRating": 4
-        },
-        "reviews": [
-          {
-            "reviewID": "review_004",
-            "userID": "user_004",
-            "overallRating": 4,
-            "cleanRating": 4,
-            "boujeeRating": 4,
-            "reviewText": "This bathroom was very nice and clean. I appreciated the attention to detail and the pleasant fragrance."
-          }
-        ]
-      }
-    ]
+    const [bathroomList, setBathroomList] = useState([]);
 
+    useEffect(() => {
+      async function dbFunc() {
+        const db = await firebase.firestore();
+        // const bathroom = await getBathroomFromDB(db, "bathroom_001"); //test get bathroom from db
+        const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010"]; //replace with like closest 10 bathrooms
+        for (bathroomID of bathroomIDs) {
+          let bathroomObj = await getBathroomFromDB(db, bathroomID);
+          bathroomList.push(bathroomObj);
+          console.log(bathroomID);
+        }
+        // console.log(bathroom);
+        setBathroomList(bathroomList);
+        // console.log(bathroomList);
+      };
+      dbFunc().then(() => console.log("dbFunc() ran")).catch((err)=>{console.log(err)});
+  },[bathroomList]);
+      
     useEffect(
       () => {(async () => {
         const locObj = await userLocation();
@@ -154,11 +80,13 @@ function HomeScreen({ navigation }) {
         onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}}
         />
         </View>
-
-        <Map mapPts = {mapPts} userLoc = {userLoc} refreshFlag={refreshFlag} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
+        <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
         <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
-        <StatusBar refreshFlag={refreshFlag} style="auto" />
-        <SlidingPanel color = '#9f8170' navigation = {navigation}>
+        {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
+        <StatusBar style="auto" />
+        {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}
+        <SlidingPanel color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
+
         </SlidingPanel>
       </SafeAreaView>
     );

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
 import MapChoose from '../components/MapChoose';
 import { LogBox } from 'react-native';
+import firebase from '../database/firebase';
+import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -17,7 +19,7 @@ const CreateBathroomPage = ({navigation, route}) => {
   const [longitude, setLongitude] = useState('');
   const [latitude, setLatitude] = useState('');
   const [tags, setTags] = useState([]);
-  const [extraTags, setExtraTags] = useState('');
+  // const [extraTags, setExtraTags] = useState('');
   const [overallRating, setOverallRating] = useState(0);
   const [cleanlinessRating, setCleanlinessRating] = useState(0);
   const [boujeenessRating, setBoujeenessRating] = useState(0);
@@ -50,9 +52,9 @@ const CreateBathroomPage = ({navigation, route}) => {
     }
   }
 
-  const handleExtraTagsChange = (extraTags) => {
-    setExtraTags(extraTags);
-  }
+  // const handleExtraTagsChange = (extraTags) => {
+  //   setExtraTags(extraTags);
+  // }
 
   const handleOverallRatingChange = (rating) => {
     setOverallRating(rating);
@@ -70,19 +72,55 @@ const CreateBathroomPage = ({navigation, route}) => {
     setReview(review);
   }
 
+  async function dbFunc() {
+    const db = await firebase.firestore();
+    const bathroom = {
+      bathroomID: "test",
+      coords: {
+        lat: latitude,
+        long: longitude
+      },
+      name: name,
+      address: address,
+      tags: tags,
+      ratings: {
+        overallRating: overallRating,
+        cleanRating: cleanlinessRating,
+        boujeeRating: boujeenessRating
+      },
+      reviews: [{
+        reviewID: "test", // REMEMBER TO GENERATE A NEW ONE
+        userID: "test", // FILL IN WITH CORRECT USER ID
+        overallRating: overallRating,
+        cleanRating: cleanlinessRating,
+        boujeeRating: boujeenessRating,
+        reviewText: review,
+      }],
+      status: {
+        validBathroom: false,
+        yesCount: 0,
+        noCount: 0,
+      },
+    };
+    console.log(bathroom);
+    setBathroomToDB(db, bathroom).then(console.log("good")).catch((err)=>{console.log(err)});
+  };
+
   const handleSubmit = () => {
-    // Handle form submission here
+    // Handle submitting the form
     console.log('Name:', name);
     console.log('Address:', address);
     console.log('Longitude:', longitude);
     console.log('Latitude:', latitude);
     console.log('Tags:', tags);
-    console.log('Extra Tags:', extraTags);
+    // console.log('Extra Tags:', extraTags);
     console.log('Overall Rating:', overallRating);
     console.log('Cleanliness Rating:', cleanlinessRating);
     console.log('Boujeeness Rating:', boujeenessRating);
     console.log('Review:', review);
     setShowCongratulatoryModal(true); // show the congratulatory modal
+    dbFunc();
+    
   }
   
   const renderTagButton = (tag, index) => {
@@ -154,13 +192,13 @@ const CreateBathroomPage = ({navigation, route}) => {
         {renderTagButton('Portable Bathroom')}
         {renderTagButton('High-Tech')}
       </View>
-      <Text style={styles.ratingLabel}>Don't see a tag?</Text>
+      {/* <Text style={styles.ratingLabel}>Don't see a tag?</Text>
       <TextInput
         style={styles.input}
         placeholder="Add a tag here... (Separate tags with commas)"
         onChangeText={handleExtraTagsChange}
         value={extraTags}
-      />
+      /> */}
       <Text style={styles.subTitle}>Your initial review!</Text>
       <Text style={styles.tagLabel}>Rating:</Text>
       <View style={styles.ratingContainer}>
