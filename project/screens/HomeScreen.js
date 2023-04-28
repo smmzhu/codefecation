@@ -7,7 +7,7 @@ import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-slidin
 import Map from '../components/Map.jsx';
 import userLocation from '../hooks/getUserPos.jsx';
 import firebase from '../database/firebase';
-import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
+import {getBathroomFromDB} from '../database/databaseFuncs';
 
 function HomeScreen({ navigation }) {
     const [currPtInfoActive, setCurrPtInfoActive] = useState("none");
