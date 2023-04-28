@@ -152,7 +152,6 @@ class SearchBar extends Component {
 
   onLayout = (event)=> {
     let layout = event.nativeEvent.layout; //btw it spits out x,y,width,height normally
-    console.log(event.nativeEvent.layout);
     this.props.setHeight(layout.height + 100)
   }
 
