@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Alert, Button, StyleSheet, Pressable, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TextInput, Text, Alert, Button, StyleSheet, Pressable, Keyboard, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
 import MapChoose from '../components/MapChoose';
@@ -9,10 +9,12 @@ import {setBathroomToDB} from '../database/databaseFuncs';
 import * as geofire from 'geofire-common';
 import { getAuth } from "firebase/auth";
 import uuid from 'react-native-uuid';
+import {Dimensions} from 'react-native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
+
 
 const CreateBathroomPage = ({navigation, route}) => {
   const userLoc = route.params.userLoc;
@@ -28,6 +30,7 @@ const CreateBathroomPage = ({navigation, route}) => {
   const [boujeenessRating, setBoujeenessRating] = useState(0);
   const [review, setReview] = useState('');
   const [showCongratulatoryModal, setShowCongratulatoryModal] = useState(false); // added state variable for showing congratulatory modal
+  const [scrollHeight, setScrollHeight] = useState(0);
 
   const handleNameChange = (name) => {
     setName(name);
@@ -188,10 +191,13 @@ const CreateBathroomPage = ({navigation, route}) => {
       Alert.alert(output);
     }
   }
+  const scrollViewRef = useRef();
 
   return (
-    <ScrollView style={styles.container1}>
-    <View style={styles.container}>
+    <>
+    <ScrollView style={styles.container1} ref = {scrollViewRef}>
+    <View style={styles.container} >
+    <Pressable onPress={Keyboard.dismiss}>
       <Text style={styles.title}>Request a Bathroom Page</Text>
       <Text style={styles.tagLabel}>Name:</Text>
       <TextInput
@@ -209,6 +215,7 @@ const CreateBathroomPage = ({navigation, route}) => {
       />
       <View style={styles.inputContainer}>
         {/* CHANGE IT TO A MAP THAT THE USER CAN DRAG A POINT ON TOP OF INSTEAD */}
+        
         <Text style={styles.tagLabel}>Choose your location:</Text>
         <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
         {/* <TextInput
@@ -259,6 +266,7 @@ const CreateBathroomPage = ({navigation, route}) => {
             <Text style={styles.ratingLabel}>Boujeeness Rating:</Text>
             <Rater onRatingChange={handleBoujeenessRatingChange}/>
           </View>
+      
       <Text style={styles.tagLabel}>Review: (optional)</Text>
       <TextInput
         style={styles.reviewInput}
@@ -269,6 +277,7 @@ const CreateBathroomPage = ({navigation, route}) => {
         onChangeText={handleReviewChange}
         value={review}
       />
+      
       <TouchableOpacity
         style={styles.submitButton}
         onPress={check}
@@ -276,6 +285,7 @@ const CreateBathroomPage = ({navigation, route}) => {
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
       {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
+  
       <View style={{marginTop: 10}}>
       <TouchableOpacity
           style={styles.returnButton}
@@ -284,8 +294,13 @@ const CreateBathroomPage = ({navigation, route}) => {
           <Text style={styles.returnButtonText}>Return</Text>
         </TouchableOpacity>
         </View>
+        
+      </Pressable>
     </View>
     </ScrollView>
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
+    </KeyboardAvoidingView>
+    </>
   );
 };
 
