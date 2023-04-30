@@ -58,10 +58,17 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
       const bathroomData = docSnapshot.data();
       console.log("bathroomData:", bathroomData);
       const existingReview = bathroomData.reviews.find(review => review.userID === userID);
+      console.log("existingReview:", existingReview);
       if (existingReview) {
-        console.log("Reviews already exists for this user");
-        Alert.alert("It appears you've already reviewed this restroom!");
-        return;
+        // replace the review
+        const index = bathroomData.reviews.findIndex(review => review.userID === userID);
+        bathroomData.reviews[index] = review;
+        db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false}).then(() => {
+          console.log("Review successfully overwritten!");
+        })
+        .catch((error) => {
+          console.error("Error overwriting review: ", error);
+        });
       } else {
         bathroomData.reviews.push(review);
         db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false})

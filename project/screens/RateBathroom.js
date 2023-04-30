@@ -70,10 +70,6 @@ const BathroomReviewScreen = ({route, navigation}) => {
       email = user.email;
     }
     email = email.substring(0, email.indexOf('@'));
-
-    // const bathroomID = navigation.getParam('bathroomID');
-    console.log(bathroomID);
-
     const review = {
       reviewID: uuid.v4(),
       userID: email,
@@ -82,8 +78,6 @@ const BathroomReviewScreen = ({route, navigation}) => {
       boujeeRating: boujeenessRating,
       reviewText: reviewText,
     }
-    // const reviewsObj = {};
-    // reviewsObj[review.userID] = review;
     addReview(db, email, bathroomID, review).then(console.log("SUPERGOOD")).catch((err)=>{console.log(err)});
   }
 
