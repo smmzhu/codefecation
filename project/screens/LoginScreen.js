@@ -1,31 +1,12 @@
 // components/login.js
 import React, { Component } from 'react';
-import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator, Image } from 'react-native';
+import {Pressable, Keyboard, StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform } from 'react-native';
 import firebase from '../database/firebase';
 import {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature} from '../database/databaseFuncs';
 import ploopLogo from '../assets/ploopIcon.png'
 import * as geofire from 'geofire-common';
 import kNearestToilets from '../database/geoquerying';
-
-// async function main(){ //populates geohash field in database
-//   const bathroomIDs = ["bathroom_001", "bathroom_002", "bathroom_003", "bathroom_004", "bathroom_005", "bathroom_006", "bathroom_007", "bathroom_008", "bathroom_009", "bathroom_010"];
-//   const db = await firebase.firestore();
-//   for (bathroomID of bathroomIDs) {
-//     let bathroom = await getBathroomFromDB(db, bathroomID); //test get bathroom from db
-//     console.log(bathroom.coords.lat, bathroom.coords.long);
-//     bathroom.coords.geohash = geofire.geohashForLocation([bathroom.coords.lat, bathroom.coords.long]); 
-//     await setBathroomToDB(db, bathroom);
-//   }
-// }
-// main();
-
-// async function main(){
-//   const db = await firebase.firestore()
-//   const result = await kNearestToilets(db, 5, [34.404834, -119.834200], 5 * 1000);
-//   console.log(result.map((doc) => {return doc.name}));
-//   console.log("geoquery ran");
-// }
-// main();
+import {Dimensions} from 'react-native';
 
 
 export default class Login extends Component {
@@ -34,8 +15,10 @@ export default class Login extends Component {
     this.state = { 
       email: '', 
       password: '',
-      isLoading: false
+      isLoading: false,
     }
+    this.width = Dimensions.get('window').width;
+    this.height = Dimensions.get('window').height;  
   }
   updateInputVal = (val, prop) => {
     const state = this.state;
@@ -82,35 +65,37 @@ export default class Login extends Component {
       )
     }    
     return (
-      <View style={styles.containerView}>
-      <Image source={ploopLogo} style={styles.logoView}/>
-      <Pressable onPress={Keyboard.dismiss} style={styles.container}>
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />   
-        <Button
-          color="#3740FE"
-          title="Signin"
-          onPress={() => this.userLogin()}
-        />   
-        <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Signup')}>
-          Don't have account? Click here to signup
-        </Text>                          
-      </Pressable>
-      </View>
+          <View style={styles.containerView}>
+          <Pressable onPress={Keyboard.dismiss} style={styles.container}>
+          <Image source={ploopLogo} style={styles.logoView}/>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Email"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />   
+            </KeyboardAvoidingView>
+            <Button
+              color="#3740FE"
+              title="Signin"
+              onPress={() => this.userLogin()}
+            />   
+            <Text 
+              style={styles.loginText}
+              onPress={() => this.props.navigation.navigate('Signup')}>
+              Don't have account? Click here to signup
+            </Text>                          
+          </Pressable>
+          </View>
     );
   }
 }
@@ -126,8 +111,8 @@ const styles = StyleSheet.create({
   logoView: {
     width: 150,
     height: 150,
-    marginBottom: 0,
-    marginTop: 150,
+    marginBottom: Dimensions.get('window').width * 0.2,
+    marginTop: 0,
     alignSelf: "center",
     resizeMode: 'contain',
   },

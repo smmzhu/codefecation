@@ -1,29 +1,29 @@
 Arguments: 
-  /usr/local/Cellar/node/19.6.1/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js add DatePickerIOS
+  /usr/local/Cellar/node/20.0.0/bin/node /usr/local/bin/yarn add Platform
 
 PATH: 
-  /usr/local/bin:/usr/local/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Users/christopher/opt/anaconda3/bin:/Users/christopher/opt/anaconda3/condabin:/usr/local/sbin
+  /Users/shmeelboi/opt/anaconda3/bin:/Users/shmeelboi/opt/anaconda3/condabin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  19.6.1
+  20.0.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/DatePickerIOS: Not found
-      at params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
-      at self.callback (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
-      at Request.emit (node:events:512:28)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
-      at Request.emit (node:events:512:28)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:626:28)
-      at IncomingMessage.emit (node:events:524:35)
-      at endReadableNT (node:internal/streams/readable:1359:12)
+  Error: https://registry.yarnpkg.com/Platform: Not found
+      at params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:511:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:511:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:625:28)
+      at IncomingMessage.emit (node:events:523:35)
+      at endReadableNT (node:internal/streams/readable:1367:12)
       at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
@@ -46,10 +46,13 @@ npm manifest:
       "expo-maps": "0.0.0",
       "expo-status-bar": "~1.4.2",
       "firebase": "^9.20.0",
+      "geofire-common": "^6.0.0",
       "google-map-react": "^2.2.0",
+      "react-native-confetti-cannon": "^1.5.2",
       "react-native-maps": "1.3.2",
       "react-native-safe-area-context": "4.4.1",
       "react-native-screens": "~3.18.0",
+      "react-native-uuid": "^2.0.1",
       "rn-sliding-up-panel": "^2.4.6",
       "yarn": "^1.22.19"
     },
@@ -2517,9 +2520,9 @@ Lockfile:
     integrity sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg==
   
   "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-    version "18.15.12"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.12.tgz#833756634e78c829e1254db006468dadbb0c696b"
-    integrity sha512-Wha1UwsB3CYdqUm2PPzh/1gujGCNtWVUYF0mB00fJFoR4gTyWTDPjSm+zBF787Ahw8vSGgBja90MkgFwvB86Dg==
+    version "18.16.0"
+    resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.0.tgz#4668bc392bb6938637b47e98b1f2ed5426f33316"
+    integrity sha512-BsAaKhB+7X+H4GnSjGhJG9Qi8Tw+inU9nJDwmD5CgOmBLEI6ArdhikpLX7DjbjDRDTbqZzU2LSQNZg8WGPiSZQ==
   
   "@types/yargs-parser@*":
     version "21.0.0"
@@ -4168,6 +4171,11 @@ Lockfile:
     version "1.0.0-beta.2"
     resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
     integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
+  
+  geofire-common@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/geofire-common/-/geofire-common-6.0.0.tgz#54131eff25e32b3084f5ef12237d6cb0e95121bb"
+    integrity sha512-dQ2qKWMtHUEKT41Kw4dmAtMjvEyhWv1XPnHHlK5p5l5+0CgwHYQjhonGE2QcPP60cBYijbJ/XloeKDMU4snUQg==
   
   get-caller-file@^2.0.1, get-caller-file@^2.0.5:
     version "2.0.5"
@@ -6216,6 +6224,11 @@ Lockfile:
       jscodeshift "^0.13.1"
       nullthrows "^1.1.1"
   
+  react-native-confetti-cannon@^1.5.2:
+    version "1.5.2"
+    resolved "https://registry.yarnpkg.com/react-native-confetti-cannon/-/react-native-confetti-cannon-1.5.2.tgz#ca1a05edd2a64b080ea8b6238c49277908e1f123"
+    integrity sha512-IZuWjlW7QsdxEGNnvpD6W+7iKCCQhnd5BvuNvMtirU7Nxm8WS2N6LPGMBz1ZYDuusG+GRZkoXXTNCdoAAGpCTg==
+  
   react-native-gradle-plugin@^0.70.3:
     version "0.70.3"
     resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
@@ -6240,6 +6253,11 @@ Lockfile:
     dependencies:
       react-freeze "^1.0.0"
       warn-once "^0.1.0"
+  
+  react-native-uuid@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+    integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
   
   react-native@^0.70.5:
     version "0.70.5"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet,TouchableOpacity, Text, View, Button, SafeAreaView, Alert, Image } from 'react-native';
+import { StyleSheet,TouchableOpacity, Text, View, Button, SafeAreaView, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import MiniInfoBox from '../components/miniInfoBox.jsx';
 import SlidingPanel from "../components/SlidingPanel.jsx"; // yarn add rn-sliding-up-panel
 import Map from '../components/Map.jsx';
@@ -50,34 +50,36 @@ function HomeScreen({ navigation }) {
     }
 
     return (
-      <SafeAreaView style={stylesMap.container}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
-        <Button title={'Sign Out'} onPress={createTwoButtonAlert} />
+      
+        <SafeAreaView style={stylesMap.container}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 1 }}>
+          <Button title={'Sign Out'} onPress={createTwoButtonAlert} />
 
-        <TouchableOpacity 
-        style={styles.RefreshButton}
-        onPress={handleRefresh}
-        //</View>onPress={() => this.forceUpdate(0)}
-        >
-          <Image source={require('../assets/ploopIcon.png')} style={styles.logoView}/>
-          <Text>Refresh Map</Text>
-        </TouchableOpacity>
+          <TouchableOpacity 
+          style={styles.RefreshButton}
+          onPress={handleRefresh}
+          //</View>onPress={() => this.forceUpdate(0)}
+          >
+            <Image source={require('../assets/ploopIcon.png')} style={styles.logoView}/>
+            <Text>Refresh Map</Text>
+          </TouchableOpacity>
 
-        <Button 
-        title="Can't Find a Bathroom?"
-        onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}}
-        />
-        </View>
-        <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
-        <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+          <Button 
+          title="Can't Find a Bathroom?"
+          onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}}
+          />
+          </View>
+          <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
+          <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
 
-        {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
-        <StatusBar style="auto" />
-        {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}
-        <SlidingPanel color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
+          {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
+          <StatusBar style="auto" />
+          {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}
+          <SlidingPanel color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
 
-        </SlidingPanel>
-      </SafeAreaView>
+          </SlidingPanel>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}/>
+        </SafeAreaView>
     );
 }
 

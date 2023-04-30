@@ -3,6 +3,7 @@ import { StyleSheet,KeyboardAvoidingView, Text, View, TextInput, FlatList, Scrol
 import ToiletCard from './ToiletCard.jsx';
 import Tag from './Tag.jsx';
 import TagSearchSelector from "./TagSearchSelector.jsx";
+import ploopLogo from '../assets/ploopIcon.png';
 
 // const TOILETS = [
 //     {
@@ -99,36 +100,30 @@ import TagSearchSelector from "./TagSearchSelector.jsx";
 //     }
 // ];
 
+export default function SearchBar(props) {
+  const [loading, setLoading] = React.useState(false);
+  const [data, setData] = React.useState(props.bathroomList);
+  const [subData, setSubData] = React.useState([]);
+  const [error, setError] = React.useState(null);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [tagList, setTagList] = React.useState([]);
+  const [height, setHeight] = React.useState(420);
+  const arrayholder = props.bathroomList;
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      data: this.props.bathroomList,
-      error: null,
-      searchValue: "",
-      tagList: [],
-      height: 420,
-    };
-
-    this.arrayholder = this.props.bathroomList;
-  }
-  getTagList = (taglist) => {
-    // console.log(taglist);
-    this.setState({tagList: taglist})
+  const getTagList = (taglist) => {
+    setTagList(taglist);
   }
 
   // changes search value to text input
-  updateSearchValue = (text) => {
-    this.setState({searchValue: text});
+  const updateSearchValue = (text) => {
+    setSearchValue(text);
   }
 
-  searchFunction = (text, tags) => {
+  const searchFunction = (text, tags) => {
 
     // filter all without text in name, 
 
-    const updatedData = this.arrayholder.filter((item) => {
+    const updatedData = arrayholder.filter((item) => {
       const name_data = `${item.name.toUpperCase()})`;
       const text_data = text.toUpperCase();
       return (name_data.indexOf(text_data) > -1 );
@@ -147,22 +142,25 @@ class SearchBar extends Component {
       }
     })
 
-    this.props.toiletListSize(finalData.length);
-    this.setState({ data: finalData });
-  };
+    props.toiletListSize(finalData.length);
+    setSubData(finalData);
+  };    
 
-  onLayout = (event)=> {
+  const onLayout = (event)=> {
     let layout = event.nativeEvent.layout; //btw it spits out x,y,width,height normally
-    this.props.setHeight(layout.height + 100)
+    props.setHeight(layout.height);
   }
+  // if (this.props.bathroomList != this.state.data){
+  //   this.setState({ data: this.props.bathroomList });
+  // }
+  useEffect(() => {
+    setData(props.bathroomList);
+    setSubData(props.bathroomList);
+  }, [props.bathroomList]);
 
-  render() {
-    if (this.props.bathroomList != this.state.data){
-      this.state.data = this.props.bathroomList;
-    }
     return (
       <View style={styles.container}>
-        <View onLayout = {this.onLayout}>
+        <View onLayout = {onLayout}>
           <View style={styles.inputBar}>
               <KeyboardAvoidingView behavior="position" style={styles.container}>
                 <TextInput
@@ -170,25 +168,35 @@ class SearchBar extends Component {
                   placeholder="Search Here..."
                   lightTheme
                   round
-                  value={this.state.searchValue}
+                  value={searchValue}
                   //onChangeText={(text) => this.searchFunction(text)}
-                  onChangeText={(text)=>this.updateSearchValue(text)}
+                  onChangeText={(text)=>updateSearchValue(text)}
                   autoCorrect={false}
                 />
               </KeyboardAvoidingView>
-              <TagSearchSelector getTagList={this.getTagList}/>
+              <TagSearchSelector getTagList={getTagList}/>
 
-              <TouchableOpacity style={styles.button} onPress={() =>{this.searchFunction(this.state.searchValue,this.state.tagList)}}>
+              <TouchableOpacity style={styles.button} onPress={() =>{searchFunction(searchValue,tagList)}}>
                 <Text>Search</Text>
               </TouchableOpacity>
 
             </View>
-            {this.state.data.map((item) => {return item ? <ToiletCard key = {item.bathroomID} toilet={item} navigation = {this.props.navigation}/> : null})}
-          </View>
+            <CardList data = {subData} navigation = {props.navigation}/>            
+          <Image source={ploopLogo} style = {styles.logoView}/>
+        </View>
       </View>
     );
-  }
 }
+
+function CardList(props){
+  return(
+    <View >
+      {props.data.map((item) => {return item ? <ToiletCard key = {item.bathroomID} toilet={item} navigation = {props.navigation}/> : null})}
+    </View>
+  )
+}
+
+
 const styles = StyleSheet.create({
   container: {
     alignContent: 'center',
@@ -198,6 +206,14 @@ const styles = StyleSheet.create({
   inputBar: {
     flexDirection: 'row',
     height: 80,
+  },
+  logoView: {
+    width: 200,
+    height: 200,
+    marginBottom: 75,
+    marginTop: 75,
+    alignSelf: "center",
+    resizeMode: 'stretch',
   },
   textInput: {
     width: '50%',
@@ -230,5 +246,4 @@ const styles = StyleSheet.create({
 },
 
 });
-
-export default SearchBar;
+// export default SearchBar;
