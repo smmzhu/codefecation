@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
 import firebase from '../database/firebase';
@@ -70,6 +70,10 @@ const BathroomReviewScreen = ({route, navigation}) => {
       email = user.email;
     }
     email = email.substring(0, email.indexOf('@'));
+
+    // const bathroomID = navigation.getParam('bathroomID');
+    console.log(bathroomID);
+
     const review = {
       reviewID: uuid.v4(),
       userID: email,
@@ -78,6 +82,8 @@ const BathroomReviewScreen = ({route, navigation}) => {
       boujeeRating: boujeenessRating,
       reviewText: reviewText,
     }
+    // const reviewsObj = {};
+    // reviewsObj[review.userID] = review;
     addReview(db, email, bathroomID, review).then(console.log("SUPERGOOD")).catch((err)=>{console.log(err)});
   }
 
@@ -94,50 +100,52 @@ const BathroomReviewScreen = ({route, navigation}) => {
   return (
     <>
     <View style={styles.container}>
-    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Write a Review</Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Overall Rating:</Text>
-            <Rater onRatingChange={handleOverallRatingChange}/>
+      <Pressable onPress = {Keyboard.dismiss}>
+      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.title}>Write a Review</Text>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingLabel}>Overall Rating:</Text>
+              <Rater onRatingChange={handleOverallRatingChange}/>
+            </View>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingLabel}>Cleanliness Rating:</Text>
+              <Rater onRatingChange={handleCleanlinessRatingChange}/>
+            </View>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingLabel}>Boujeeness Rating:</Text>
+              <Rater onRatingChange={handleBoujeenessRatingChange}/>
+            </View>
+            <Text style={styles.ratingLabel}>Review (optional):</Text>
+            <TextInput
+                editable
+                style={styles.reviewInput}
+                placeholder="Write your review here..."
+                multiline={true}
+                numberOfLines={15}
+                maxLength={500}
+                onChangeText={setReviewText}
+                value={reviewText}
+            />
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={submitReview}
+              disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
+            >
+              <Text style={styles.submitButtonText}>Submit Review</Text>
+            </TouchableOpacity>
+            {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
           </View>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Cleanliness Rating:</Text>
-            <Rater onRatingChange={handleCleanlinessRatingChange}/>
-          </View>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Boujeeness Rating:</Text>
-            <Rater onRatingChange={handleBoujeenessRatingChange}/>
-          </View>
-          <Text style={styles.ratingLabel}>Review (optional):</Text>
-          <TextInput
-              editable
-              style={styles.reviewInput}
-              placeholder="Write your review here..."
-              multiline={true}
-              numberOfLines={15}
-              maxLength={500}
-              onChangeText={setReviewText}
-              value={reviewText}
-          />
           <TouchableOpacity
-            style={styles.submitButton}
-            onPress={submitReview}
-            disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
+            style={styles.returnButton}
+            onPress={() => navigation.goBack()}
           >
-            <Text style={styles.submitButtonText}>Submit Review</Text>
+            <Text style={styles.returnButtonText}>Return</Text>
           </TouchableOpacity>
-          {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
-        </View>
-        <TouchableOpacity
-          style={styles.returnButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.returnButtonText}>Return</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      </Pressable>
     </View>
     </>
   );
