@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert, KeyboardAvoidingView } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
 import firebase from '../database/firebase';
@@ -92,7 +92,9 @@ const BathroomReviewScreen = ({route, navigation}) => {
   };
 
   return (
+    <>
     <View style={styles.container}>
+    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.title}>Write a Review</Text>
@@ -135,7 +137,9 @@ const BathroomReviewScreen = ({route, navigation}) => {
           <Text style={styles.returnButtonText}>Return</Text>
         </TouchableOpacity>
       </ScrollView>
+    </KeyboardAvoidingView>
     </View>
+    </>
   );
 };
 
