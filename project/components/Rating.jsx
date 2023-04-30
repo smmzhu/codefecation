@@ -6,9 +6,9 @@ export default function Rating(props) {
   const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
   useEffect(() =>{
       if (props.toilet != "none" && props.toilet != undefined)
-        setDefaultRating(props.toilet.ratings.overallRating);
+        setDefaultRating(Math.round(props.toilet.ratings.overallRating));
       else
-        setDefaultRating(props.Rating);
+        setDefaultRating(Math.round(props.Rating));
   },[props.toilet]);
   
     const starImageFilled = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';

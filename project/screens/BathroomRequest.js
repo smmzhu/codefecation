@@ -142,8 +142,8 @@ const CreateBathroomPage = ({navigation, route}) => {
       }],
       status: {
         validBathroom: false,
-        yesCount: 0,
-        noCount: 0,
+        yesCount: [],
+        noCount: [],
       },
     };
     // console.log(bathroom);
@@ -156,8 +156,8 @@ const CreateBathroomPage = ({navigation, route}) => {
     // console.log('Address:', address);
     // console.log('Longitude:', longitude);
     // console.log('Latitude:', latitude);
-    let hours = time1+'-'+time2;
-    console.log('Hours:', hours);
+    // let hours = time1+'-'+time2;
+    // console.log('Hours:', hours);
     // console.log('Tags:', tags);
     // console.log('Overall Rating:', overallRating);
     // console.log('Cleanliness Rating:', cleanlinessRating);

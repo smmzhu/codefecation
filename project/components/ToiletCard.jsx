@@ -6,7 +6,6 @@ import Tag from "./Tag.jsx";
 
 const ToiletCard = (props) => {
     const {height, width} = useWindowDimensions();
-    console.log("toilet card", props.toilet.bathroomID);
     return (
             <TouchableOpacity
             style={styles.container}

@@ -98,7 +98,7 @@ const BathroomScreen = ({ route, navigation }) => {
                 )}
             </View>
             <View style={styles.section}>
-                {status.validBathroom ? null : <BathroomVerif/>}
+                {status.validBathroom ?  <Text>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>}
                 <Text style={styles.sectionTitle}>Overall Rating</Text>
                 <Rating Rating = {ratings.overallRating}/>
             </View>
@@ -122,8 +122,6 @@ const BathroomScreen = ({ route, navigation }) => {
                 <Text style={styles.sectionTitle}>Reviews</Text>
                 <Text style={styles.text}>
                   <View style = {{padding: 10}}>
-                    {console.log("reviews", reviews)}
-                    {/* {Object.keys(reviews).map()} */}
                     {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
                   </View>
                 </Text>
