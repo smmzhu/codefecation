@@ -67,6 +67,7 @@ const MiniInfoBox = (props) => {
           ratings: props.toilet.ratings,
           reviews: props.toilet.reviews,
           status: props.toilet.status,
+          hours: props.toilet.hours,
         })}>
         <Text style={styles.textStyle}>Extra Info</Text>
       </Pressable>

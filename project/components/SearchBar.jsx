@@ -131,7 +131,7 @@ export default function SearchBar(props) {
     const finalData =[];
     // filter all without tags
     updatedData.filter((item) => {
-      var temp = true;
+      let temp = true;
       for(let i = 0; i < tags.length; i++){
         if(!(item.tags.includes(tags[i]))){
           temp=false;
