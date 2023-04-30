@@ -47,6 +47,42 @@ const updateBathroomFeature = (bathroomObj, feature, val) => { //type signature:
     return bathroomObj;
 }
 
+const updateRating = async (db, bathroomID, newReview) => {
+  const bathroomRef = db.collection("bathrooms").doc(bathroomID);
+  await bathroomRef.get().then(async (docSnapshot) => {
+    if (docSnapshot.exists) {
+      let bathroomData = docSnapshot.data();
+      const numRatings = bathroomData.reviews.length || 0;
+      const overallRating = bathroomData.ratings.overallRating || 0;
+      const cleanlinessRating = bathroomData.ratings.cleanRating || 0;
+      const boujeenessRating = bathroomData.ratings.boujeeRating || 0;
+
+      const oldNumRatings = numRatings - 1;
+      const newOverallRating = (overallRating*oldNumRatings + newReview.overallRating)/numRatings;
+      const newCleanlinessRating = (cleanlinessRating*oldNumRatings + newReview.cleanRating)/numRatings;
+      const newBoujeenessRating = (boujeenessRating*oldNumRatings + newReview.boujeeRating)/numRatings;
+      console.log(newOverallRating);
+      console.log(newCleanlinessRating);
+      console.log(newBoujeenessRating);
+
+      bathroomData.ratings = {
+        overallRating: newOverallRating,
+        cleanRating: newCleanlinessRating,
+        boujeeRating: newBoujeenessRating,
+      };
+      console.log(overallRating);
+      console.log(cleanlinessRating);
+      console.log(boujeenessRating);
+      await bathroomRef.set(bathroomData, {merge: false});
+      console.log("Ratings updated successfully!");
+    } else {
+      console.error("Bathroom not found!");
+    }
+  }).catch((error) => {
+    console.error("Error updating ratings: ", error);
+  });
+};
+
 const addReview = async (db, userID, bathroomID, review) => { //type signature: {db: DB object, bathroomObj: object} => bathroomObject
   console.log("bathroomID:", bathroomID);
   console.log("userID:", userID);
@@ -56,9 +92,7 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
   bathroomRef.get().then((docSnapshot) => {
     if (docSnapshot.exists) {
       const bathroomData = docSnapshot.data();
-      console.log("bathroomData:", bathroomData);
       const existingReview = bathroomData.reviews.find(review => review.userID === userID);
-      console.log("existingReview:", existingReview);
       if (existingReview) {
         // replace the review
         const index = bathroomData.reviews.findIndex(review => review.userID === userID);
@@ -78,8 +112,66 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
         .catch((error) => {
           console.error("Error writing review: ", error);
         });
+    }
+    updateRating(db, bathroomID, review);
+    }
+  })
+}
+
+const incCount = async (db, bathroomID, userID, feature) => {
+  console.log("userID",userID);
+  console.log("feature",feature);
+  const bathroomRef = db.collection("bathrooms").doc(bathroomID);
+  bathroomRef.get().then((docSnapshot) => {
+    if (docSnapshot.exists) {
+      const bathroomData = docSnapshot.data();
+      if (!bathroomData.status[feature]) {
+        bathroomData.status[feature] = [];
+      }
+      if ((bathroomData.status["yesCount"].includes(userID) && feature === "yesCount") || (bathroomData.status["noCount"].includes(userID) && feature === "noCount")) {
+        Alert.alert("You have already voted on this restroom!");
+      } else if (bathroomData.status["yesCount"].includes(userID) && feature === "noCount") {
+        bathroomData.status["yesCount"].splice(bathroomData.status["yesCount"].indexOf(userID), 1);
+        bathroomData.status["noCount"].push(userID);
+        if (bathroomData.status["noCount"].length > 10) {
+          bathroomData.status.validBathroom = false;
+        }
+        db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false})
+        .then(() => {
+          console.log("User successfully added to count!");
+        })
+        .catch((error) => {
+          console.error("Error adding user to count: ", error);
+        });
+      } else if (bathroomData.status["noCount"].includes(userID) && feature === "yesCount") {
+        bathroomData.status["noCount"].splice(bathroomData.status["noCount"].indexOf(userID), 1);
+        bathroomData.status["yesCount"].push(userID);
+        if (bathroomData.status["yesCount"].length > 10) {
+          bathroomData.status.validBathroom = true;
+        }        
+        db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false})
+        .then(() => {
+          console.log("User successfully added to count!");
+        })
+        .catch((error) => {
+          console.error("Error adding user to count: ", error);
+        });
+      } else {
+        bathroomData.status[feature].push(userID);
+        if (bathroomData.status["yesCount"].length > 10) {
+          bathroomData.status.validBathroom = true;
+        } else if (bathroomData.status["noCount"].length > 10) {
+          bathroomData.status.validBathroom = false;
+        }
+        db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false})
+        .then(() => {
+          console.log("User successfully added to count!");
+        })
+        .catch((error) => {
+          console.error("Error adding user to count: ", error);
+        });
     }}
   })
 }
 
-export {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature, addReview};
+export {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature, addReview, incCount};

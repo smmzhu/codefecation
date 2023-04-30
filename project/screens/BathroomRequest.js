@@ -18,7 +18,7 @@ LogBox.ignoreLogs([
 
 const CreateBathroomPage = ({navigation, route}) => {
   const userLoc = route.params.userLoc;
-  console.log(userLoc);
+  // console.log(userLoc);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -125,16 +125,16 @@ const CreateBathroomPage = ({navigation, route}) => {
 
   const handleSubmit = () => {
     // Handle submitting the form
-    console.log('Name:', name);
-    console.log('Address:', address);
-    console.log('Longitude:', longitude);
-    console.log('Latitude:', latitude);
-    console.log('Tags:', tags);
+    // console.log('Name:', name);
+    // console.log('Address:', address);
+    // console.log('Longitude:', longitude);
+    // console.log('Latitude:', latitude);
+    // console.log('Tags:', tags);
     // console.log('Extra Tags:', extraTags);
-    console.log('Overall Rating:', overallRating);
-    console.log('Cleanliness Rating:', cleanlinessRating);
-    console.log('Boujeeness Rating:', boujeenessRating);
-    console.log('Review:', review);
+    // console.log('Overall Rating:', overallRating);
+    // console.log('Cleanliness Rating:', cleanlinessRating);
+    // console.log('Boujeeness Rating:', boujeenessRating);
+    // console.log('Review:', review);
     setShowCongratulatoryModal(true); // show the congratulatory modal
     dbFunc();
     

@@ -9,8 +9,6 @@ import uuid from 'react-native-uuid';
 
 const BathroomReviewScreen = ({route, navigation}) => {  
   const {bathroomID, name, ratings} = route.params;
-  console.log(bathroomID);
-  console.log(name);
   const [overallRating, setOverallRating] = useState(0);
   const [cleanlinessRating, setCleanlinessRating] = useState(0);
   const [boujeenessRating, setBoujeenessRating] = useState(0);
@@ -78,15 +76,15 @@ const BathroomReviewScreen = ({route, navigation}) => {
       boujeeRating: boujeenessRating,
       reviewText: reviewText,
     }
-    addReview(db, email, bathroomID, review).then(console.log("SUPERGOOD")).catch((err)=>{console.log(err)});
+    addReview(db, email, bathroomID, review).then(console.log("Review Logged.")).catch((err)=>{console.log(err)});
   }
 
   const submitReview = () => {
     // Submit the review to the server or local storage
-    console.log('Overall Rating:', overallRating);
-    console.log('Cleanliness Rating:', cleanlinessRating);
-    console.log('Boujeeness Rating:', boujeenessRating);
-    console.log('Review Text:', reviewText);
+    // console.log('Overall Rating:', overallRating);
+    // console.log('Cleanliness Rating:', cleanlinessRating);
+    // console.log('Boujeeness Rating:', boujeenessRating);
+    // console.log('Review Text:', reviewText);
     dbFunc();
     setShowCongratulatoryModal(true); // show the congratulatory modal
   };
