@@ -1,4 +1,6 @@
 import firebase from '../database/firebase';
+import {Alert} from 'react-native';
+
 const getBathroomFromDB = async (db, bathroomID) => { //type signature: {db: DB object, bathroomID: string} => bathroomObject
     return await db.collection("bathrooms").doc(bathroomID).get()
         .then(async (doc) => {return doc.data(); })
@@ -45,4 +47,32 @@ const updateBathroomFeature = (bathroomObj, feature, val) => { //type signature:
     return bathroomObj;
 }
 
-export {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature};
+const addReview = async (db, userID, bathroomID, review) => { //type signature: {db: DB object, bathroomObj: object} => bathroomObject
+  console.log("bathroomID:", bathroomID);
+  console.log("userID:", userID);
+
+  const bathroomRef = db.collection("bathrooms").doc(bathroomID);
+
+  bathroomRef.get().then((docSnapshot) => {
+    if (docSnapshot.exists) {
+      const bathroomData = docSnapshot.data();
+      console.log("bathroomData:", bathroomData);
+      const existingReview = bathroomData.reviews.find(review => review.userID === userID);
+      if (existingReview) {
+        console.log("Reviews already exists for this user");
+        Alert.alert("It appears you've already reviewed this restroom!");
+        return;
+      } else {
+        bathroomData.reviews.push(review);
+        db.collection("bathrooms").doc(bathroomID).set(bathroomData,{merge: false})
+        .then(() => {
+          console.log("Review successfully written!");
+        })
+        .catch((error) => {
+          console.error("Error writing review: ", error);
+        });
+    }}
+  })
+}
+
+export {getBathroomFromDB, getBathroomFeature, setBathroomToDB, updateBathroomFeature, addReview};

@@ -6,12 +6,14 @@ import Tag from "./Tag.jsx";
 
 const ToiletCard = (props) => {
     const {height, width} = useWindowDimensions();
+    console.log("toilet card", props.toilet.bathroomID);
     return (
             <TouchableOpacity
             style={styles.container}
             width={width*.87}
             height={(width*.7)}
             onPress={() => props.navigation.navigate('Bathroom', {
+                bathroomID: props.toilet.bathroomID,
                 coords: props.toilet.coords,
                 name: props.toilet.name,
                 tags: props.toilet.tags,

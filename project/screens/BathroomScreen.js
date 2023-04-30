@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useEffect} from 'react';
 import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
@@ -9,12 +9,10 @@ import ShowMap from '../components/ShowMap.jsx';
 import Tag from '../components/Tag.jsx';
 import BathroomVerif from '../components/BathroomVerif.jsx';
 
-
 const BathroomScreen = ({ route, navigation }) => {
-    const {coords, name, tags, ratings, reviews, status} = route.params; //assume that bathroom ratings is a json
+    const {bathroomID, coords, name, tags, ratings, reviews, status} = route.params; //assume that bathroom ratings is a json
     // ratings = ratings.json();
     // reviews = reviews.json();
-
     return (
     <SafeAreaView>
     <ScrollView>
@@ -23,7 +21,11 @@ const BathroomScreen = ({ route, navigation }) => {
             <Text style={styles.title}>{name}</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
-                    onPress={() => navigation.navigate('RateBathroom', {name: name, ratings: ratings})}
+                    onPress={() => navigation.navigate('RateBathroom', {
+                      bathroomID: bathroomID,
+                      name: name, 
+                      ratings: ratings, 
+                    })}
                     style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>{"Leave a Review!"}</Text>
                 </TouchableOpacity>
@@ -55,6 +57,8 @@ const BathroomScreen = ({ route, navigation }) => {
                 <Text style={styles.sectionTitle}>Reviews</Text>
                 <Text style={styles.text}>
                   <View style = {{padding: 10}}>
+                    {console.log("reviews", reviews)}
+                    {/* {Object.keys(reviews).map()} */}
                     {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
                   </View>
                 </Text>

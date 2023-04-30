@@ -45,9 +45,7 @@ const MiniInfoBox = (props) => {
         {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
         <FontAwesome name='times' size={24} color='white' />
       </Pressable>
-      {/* THIS NEEDS FIXING URGENTLY PLEASE DADDY */}
       <Rating Rating={0} toilet = {props.toilet} style={{marginTop: 5, marginBottom: 5}} /> 
-      {/* props.toilet.ratings.overallRating */}
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitle}>Tags:</Text>
         {props.toilet.tags && props.toilet.tags.map((tag) => (
@@ -62,6 +60,7 @@ const MiniInfoBox = (props) => {
           right: 10,
         },]}
         onPress={() => props.navigation.navigate('Bathroom', {
+          bathroomID: props.toilet.bathroomID,
           coords: props.toilet.coords,
           name: props.toilet.name,
           tags: props.toilet.tags,

@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
+import firebase from '../database/firebase';
+import {addReview} from '../database/databaseFuncs';
+import { getAuth } from "firebase/auth";
+import uuid from 'react-native-uuid';
 
-const BathroomReviewScreen = ({navigation}) => {
+const BathroomReviewScreen = ({route, navigation}) => {  
+  const {bathroomID, name, ratings} = route.params;
+  console.log(bathroomID);
+  console.log(name);
   const [overallRating, setOverallRating] = useState(0);
   const [cleanlinessRating, setCleanlinessRating] = useState(0);
   const [boujeenessRating, setBoujeenessRating] = useState(0);
@@ -22,16 +29,72 @@ const BathroomReviewScreen = ({navigation}) => {
     setBoujeenessRating(rating);
   };
 
+  const createTwoButtonAlert = () =>
+    Alert.alert('It appears you\'ve already reviewed this restroom. Do you want to overwrite your review?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => navigation.goBack(),
+        style: 'cancel',
+      },
+      {text: 'Yes'}
+  ]);
+
+  useEffect(() => {
+    const db = firebase.firestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    let email = "";
+    if (user !== null) {
+      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
+      email = user.email;
+    }
+    email = email.substring(0, email.indexOf('@'));
+    db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        const bathroomData = docSnapshot.data();
+        const existingReview = bathroomData.reviews.find(review => review.userID === email);
+        if (existingReview) {
+          createTwoButtonAlert();
+          return;
+        }}
+    })
+  }, []);
+
+  async function dbFunc() {
+    const db = await firebase.firestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    let email = "";
+    if (user !== null) {
+      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
+      email = user.email;
+    }
+    email = email.substring(0, email.indexOf('@'));
+
+    // const bathroomID = navigation.getParam('bathroomID');
+    console.log(bathroomID);
+
+    const review = {
+      reviewID: uuid.v4(),
+      userID: email,
+      overallRating: overallRating,
+      cleanRating: cleanlinessRating,
+      boujeeRating: boujeenessRating,
+      reviewText: reviewText,
+    }
+    // const reviewsObj = {};
+    // reviewsObj[review.userID] = review;
+    addReview(db, email, bathroomID, review).then(console.log("SUPERGOOD")).catch((err)=>{console.log(err)});
+  }
+
   const submitReview = () => {
     // Submit the review to the server or local storage
     console.log('Overall Rating:', overallRating);
     console.log('Cleanliness Rating:', cleanlinessRating);
     console.log('Boujeeness Rating:', boujeenessRating);
     console.log('Review Text:', reviewText);
+    dbFunc();
     setShowCongratulatoryModal(true); // show the congratulatory modal
-    // setTimeout(() => {
-    //   navigation.navigate('Home'); // navigate back to the home screen
-    // }, 3000); // wait 3 seconds before navigating back to the home screen
   };
 
   return (
