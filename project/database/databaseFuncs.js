@@ -51,6 +51,11 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
   console.log("bathroomID:", bathroomID);
   console.log("userID:", userID);
 
+  const oldReview = review;
+  //get rid of whitespaces at the beginning, the end, and reduce any duplicate spaces or \n characters in the middle to one
+  review.reviewText = review.reviewText.replace(/(^\s+|\s+$)/g,'').replace(/(\s+|\n+)/g,' ');
+  console.log(review);
+
   const bathroomRef = db.collection("bathrooms").doc(bathroomID);
 
   bathroomRef.get().then((docSnapshot) => {
