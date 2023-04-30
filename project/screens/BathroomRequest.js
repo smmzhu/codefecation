@@ -9,6 +9,7 @@ import {setBathroomToDB} from '../database/databaseFuncs';
 import * as geofire from 'geofire-common';
 import { getAuth } from "firebase/auth";
 import uuid from 'react-native-uuid';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -16,13 +17,16 @@ LogBox.ignoreLogs([
 
 const CreateBathroomPage = ({navigation, route}) => {
   const userLoc = route.params.userLoc;
-  console.log(userLoc);
+  // console.log(userLoc);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [longitude, setLongitude] = useState('');
   const [latitude, setLatitude] = useState('');
+  const [date1, setDate1] = useState(new Date());
+  const [date2, setDate2] = useState( new Date());
+  const [time1, setTime1] = useState('7:00AM');
+  const [time2, setTime2] = useState('7:00PM');
   const [tags, setTags] = useState([]);
-  // const [extraTags, setExtraTags] = useState('');
   const [overallRating, setOverallRating] = useState(0);
   const [cleanlinessRating, setCleanlinessRating] = useState(0);
   const [boujeenessRating, setBoujeenessRating] = useState(0);
@@ -55,10 +59,6 @@ const CreateBathroomPage = ({navigation, route}) => {
     }
   }
 
-  // const handleExtraTagsChange = (extraTags) => {
-  //   setExtraTags(extraTags);
-  // }
-
   const handleOverallRatingChange = (rating) => {
     setOverallRating(rating);
   };
@@ -75,6 +75,32 @@ const CreateBathroomPage = ({navigation, route}) => {
     setReview(review);
   }
 
+  const timeChange1 = (event,selectedDate)=>{
+    const currentDate = selectedDate || date1;
+    setDate1(currentDate);
+    let tempDate = new Date(currentDate);
+    let ftime=formatAMPM(tempDate);
+    setTime1(ftime);
+    // console.log(ftime);
+  }
+  const timeChange2 = (event,selectedDate)=>{
+    const currentDate = selectedDate || date2;
+    setDate2(currentDate);
+    let tempDate = new Date(currentDate);
+    let ftime=formatAMPM(tempDate);
+    setTime2(ftime);
+    // console.log(ftime);
+  }
+  function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ampm;
+    return strTime;
+  }
   async function dbFunc() {
     const db = await firebase.firestore();
 
@@ -86,7 +112,7 @@ const CreateBathroomPage = ({navigation, route}) => {
       email = user.email;
     }
     email = email.substring(0, email.indexOf('@'));
-
+    let hours = time1+' - '+time2;
     const bathroom = {
       bathroomID: uuid.v4(),
       coords: {
@@ -96,6 +122,7 @@ const CreateBathroomPage = ({navigation, route}) => {
       },
       name: name,
       address: address,
+      hours: hours,
       tags: tags,
       ratings: {
         overallRating: overallRating,
@@ -116,22 +143,23 @@ const CreateBathroomPage = ({navigation, route}) => {
         noCount: 0,
       },
     };
-    console.log(bathroom);
-    setBathroomToDB(db, bathroom).then(console.log("good")).catch((err)=>{console.log(err)});
+    // console.log(bathroom);
+    setBathroomToDB(db, bathroom).then(console.log("sucsess")).catch((err)=>{console.log(err)});
   };
 
   const handleSubmit = () => {
     // Handle submitting the form
-    console.log('Name:', name);
-    console.log('Address:', address);
-    console.log('Longitude:', longitude);
-    console.log('Latitude:', latitude);
-    console.log('Tags:', tags);
-    // console.log('Extra Tags:', extraTags);
-    console.log('Overall Rating:', overallRating);
-    console.log('Cleanliness Rating:', cleanlinessRating);
-    console.log('Boujeeness Rating:', boujeenessRating);
-    console.log('Review:', review);
+    // console.log('Name:', name);
+    // console.log('Address:', address);
+    // console.log('Longitude:', longitude);
+    // console.log('Latitude:', latitude);
+    let hours = time1+'-'+time2;
+    console.log('Hours:', hours);
+    // console.log('Tags:', tags);
+    // console.log('Overall Rating:', overallRating);
+    // console.log('Cleanliness Rating:', cleanlinessRating);
+    // console.log('Boujeeness Rating:', boujeenessRating);
+    // console.log('Review:', review);
     setShowCongratulatoryModal(true); // show the congratulatory modal
     dbFunc();
     
@@ -165,9 +193,9 @@ const CreateBathroomPage = ({navigation, route}) => {
     if(!address){
       output += "Address\n";
     }
-    if(!longitude){
-      output += "Confirm a location on the map\n";
-    }
+    // if(!longitude){
+    //   output += "Map Location\n";
+    // }
     if(!tags){
       output += "Select at least one tag\n";
     }
@@ -211,18 +239,26 @@ const CreateBathroomPage = ({navigation, route}) => {
         {/* CHANGE IT TO A MAP THAT THE USER CAN DRAG A POINT ON TOP OF INSTEAD */}
         <Text style={styles.tagLabel}>Choose your location:</Text>
         <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
-        {/* <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Longitude (Optional)"
-          onChangeText={handleLongitudeChange}
-          value={longitude}
-        />
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Latitude (Optional)"
-          onChangeText={handleLatitudeChange}
-          value={latitude}
-        /> */}
+      </View>
+      <Text style={styles.tagLabel}>Choose the hours:</Text>
+      <View style={styles.timeContainer}>
+      <DateTimePicker
+            testID='time1'
+            value={date1}
+            mode='time'
+            is24Hour={false}
+            display='default'
+            onChange={timeChange1}
+      />
+      <Text>to</Text>
+      <DateTimePicker
+            testID='time2'
+            value={date2}
+            mode='time'
+            is24Hour={false}
+            display='default'
+            onChange={timeChange2}
+      />
       </View>
       <Text style={styles.tagLabel}>Tags:</Text>
       <View style={styles.tagContainer}>
@@ -238,13 +274,6 @@ const CreateBathroomPage = ({navigation, route}) => {
         {renderTagButton('Portable Bathroom')}
         {renderTagButton('High-Tech')}
       </View>
-      {/* <Text style={styles.ratingLabel}>Don't see a tag?</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Add a tag here... (Separate tags with commas)"
-        onChangeText={handleExtraTagsChange}
-        value={extraTags}
-      /> */}
       <Text style={styles.subTitle}>Your initial review!</Text>
       <Text style={styles.tagLabel}>Rating:</Text>
       <View style={styles.ratingContainer}>
@@ -439,7 +468,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-  }
+  },
+  timeContainer:{
+    flex:1,
+    alignContent:'center',
+    flexDirection:'row',
+    justifyContent:'center',
+  },
 });
 
 export default CreateBathroomPage;

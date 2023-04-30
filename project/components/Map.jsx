@@ -26,7 +26,7 @@ const userLocation = async () => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
-  console.log(location.coords.latitude, location.coords.longitude);
+  // console.log(location.coords.latitude, location.coords.longitude);
 }
 
 var tenClosest = tenClosestCoordinates(bathroomList, [mapRegion.latitude, mapRegion.longitude]);
@@ -76,7 +76,7 @@ useEffect(() => {
       <MapView style={styles.map} 
         region={mapRegion}
       >
-        <Marker coordinate={mapRegion} title='User' onPress={()=>{console.log("chris: im kickin out yall cuz rpt--")}}>
+        <Marker coordinate={mapRegion} title='User' >
             <View style={styles.Marker}>
                 <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
             </View>
@@ -89,7 +89,7 @@ useEffect(() => {
             title={marker.name}
             onPress={()=>{setCurrActive(marker.bathroomID); props.setCurrPtInfoActive(marker); props.setLastPtInfo(marker); 
                           if (props.activeFlag == false){props.setActiveFlag(true);} 
-                          console.log("public clicked"); 
+                          // console.log("public clicked"); 
                           }}
           >
             <View style={styles.Marker}>

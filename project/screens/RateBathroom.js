@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
 
@@ -21,13 +21,31 @@ const BathroomReviewScreen = ({navigation}) => {
   const handleBoujeenessRatingChange = (rating) => {
     setBoujeenessRating(rating);
   };
-
+  const check= () => {
+    let output = "";
+    if(!overallRating){
+      output += "Overall rating\n";
+    }
+    if(!cleanlinessRating){
+      output += "Cleanliness rating\n";
+    }
+    if(!boujeenessRating){
+      output += "Boujeeness rating\n";
+    }
+    if(output==''){
+      submitReview();
+    }else{
+      output = "Please finish the following:\n" + output;
+      output = output.slice(0, output.length-1);
+      Alert.alert(output);
+    }
+  }
   const submitReview = () => {
     // Submit the review to the server or local storage
-    console.log('Overall Rating:', overallRating);
-    console.log('Cleanliness Rating:', cleanlinessRating);
-    console.log('Boujeeness Rating:', boujeenessRating);
-    console.log('Review Text:', reviewText);
+    // console.log('Overall Rating:', overallRating);
+    // console.log('Cleanliness Rating:', cleanlinessRating);
+    // console.log('Boujeeness Rating:', boujeenessRating);
+    // console.log('Review Text:', reviewText);
     setShowCongratulatoryModal(true); // show the congratulatory modal
     // setTimeout(() => {
     //   navigation.navigate('Home'); // navigate back to the home screen
@@ -64,8 +82,8 @@ const BathroomReviewScreen = ({navigation}) => {
           />
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={submitReview}
-            disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
+            onPress={check}
+            // disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
           >
             <Text style={styles.submitButtonText}>Submit Review</Text>
           </TouchableOpacity>

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {Dimensions} from 'react-native';
 
 const MapChoose = (props) => {
-  const [selectedLocation, setSelectedLocation] = useState(props.defaultPos);  
-
+  const [selectedLocation, setSelectedLocation] = useState({longitude:props.defaultPos.longitude, latitude:props.defaultPos.latitude});  
+  useEffect(() => {
+    handleConfirmLocation();
+  }, []);
   const handleMapPress = (event) => {
     setSelectedLocation({
       longitude: event.nativeEvent.coordinate.longitude,
@@ -16,14 +18,19 @@ const MapChoose = (props) => {
   const handleConfirmLocation = () => {
     props.setLatitude(selectedLocation.latitude);
     props.setLongitude(selectedLocation.longitude);
+    //console.log(selectedLocation);
     // You can pass the selectedLocation to a parent component or make an API call here to update the location in a database
   };
 
+  const sus = (event) => {
+    handleMapPress(event);
+    handleConfirmLocation();
+  }
   return (
     <View style={styles.container}>
       <MapView
         style={{minHeight: Dimensions.get('window').height*0.2,...styles.map}}
-        onPress={handleMapPress}
+        onPress={sus}
         initialRegion={{
           latitude: 34.414425,
           longitude: -119.848945,
@@ -38,26 +45,14 @@ const MapChoose = (props) => {
               longitude: selectedLocation.longitude,
             }}
           >
-            <View style={styles.Marker}>
+            <TouchableOpacity 
+            style={styles.Marker}
+            onPress={handleConfirmLocation}>
                 <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
-            </View>
+            </TouchableOpacity>
           </Marker>
         )}
       </MapView>
-      <View style={styles.buttonContainer}>
-          <TouchableOpacity
-          style={styles.returnButton}
-          onPress={handleConfirmLocation}
-          disabled={!selectedLocation}
-          >
-          <Text style={styles.returnButtonText}>Confirm Location</Text>
-        </TouchableOpacity>
-      </View>
-      {/* {selectedLocation && (
-        <View style={styles.buttonContainer}>
-          <Button title="Confirm Location" onPress={handleConfirmLocation} />
-        </View>
-      )} */}
     </View>
   );
 };
