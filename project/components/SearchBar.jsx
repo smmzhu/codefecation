@@ -181,7 +181,7 @@ export default function SearchBar(props) {
               </TouchableOpacity>
 
             </View>
-            <CardList data = {subData} navigation = {props.navigation}/>            
+            <CardList userLoc={props.userLoc} data = {subData} navigation = {props.navigation}/>            
           <Image source={ploopLogo} style = {styles.logoView}/>
         </View>
       </View>
@@ -191,7 +191,7 @@ export default function SearchBar(props) {
 function CardList(props){
   return(
     <View >
-      {props.data.map((item) => {return item ? <ToiletCard key = {item.bathroomID} toilet={item} navigation = {props.navigation}/> : null})}
+      {props.data.map((item) => {return item ? <ToiletCard userLoc={props.userLoc} key = {item.bathroomID} toilet={item} navigation = {props.navigation}/> : null})}
     </View>
   )
 }

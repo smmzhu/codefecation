@@ -27,7 +27,7 @@ const MiniInfoBox = (props) => {
   useEffect(() => {
     if (props.activeFlag){flyInFromBottom(); props.setActiveFlag(false);};
   }, [props.activeFlag, props.toilet]);
-  
+  // console.log(props.userLoc);
   return (
     <Animated.View style={{
       transform: [{
@@ -62,6 +62,7 @@ const MiniInfoBox = (props) => {
         onPress={() => props.navigation.navigate('Bathroom', {
           bathroomID: props.toilet.bathroomID,
           coords: props.toilet.coords,
+          userLoc: props.userLocation,
           name: props.toilet.name,
           tags: props.toilet.tags,
           ratings: props.toilet.ratings,

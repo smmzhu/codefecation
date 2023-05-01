@@ -15,6 +15,7 @@ const ToiletCard = (props) => {
                 bathroomID: props.toilet.bathroomID,
                 coords: props.toilet.coords,
                 name: props.toilet.name,
+                userLoc: props.userLoc,
                 tags: props.toilet.tags,
                 ratings: props.toilet.ratings,
                 reviews: props.toilet.reviews,

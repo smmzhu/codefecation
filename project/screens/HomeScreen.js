@@ -48,7 +48,7 @@ function HomeScreen({ navigation }) {
     const logOut = () => {
       navigation.navigate('Login');
     }
-
+    
     return (
       
         <SafeAreaView style={stylesMap.container}>
@@ -70,12 +70,12 @@ function HomeScreen({ navigation }) {
           />
           </View>
           <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
-          <MiniInfoBox toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+          <MiniInfoBox userLocation={userLoc} toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
 
           {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
           <StatusBar style="auto" />
           {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}
-          <SlidingPanel color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
+          <SlidingPanel userLoc={userLoc} color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
 
           </SlidingPanel>
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}/>

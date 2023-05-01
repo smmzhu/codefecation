@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Button, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
@@ -10,9 +10,14 @@ import Tag from '../components/Tag.jsx';
 import BathroomVerif from '../components/BathroomVerif.jsx';
 
 const BathroomScreen = ({ route, navigation }) => {
-    const {bathroomID, coords, name, tags, ratings, reviews, status, hours} = route.params; //assume that bathroom ratings is a json
+    const {bathroomID, coords, name, tags, ratings, reviews, status, hours, userLoc} = route.params; //assume that bathroom ratings is a json
     const [open, changeopen] = useState(true);
-
+    const initialCoords = userLoc.latitude + "," + userLoc.longitude;
+    const finalCoords = coords.lat + "," + coords.long;
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${initialCoords}&destination=${finalCoords}`;
+    function openMap() {
+      Linking.openURL(url);
+    }
     function isTimeInRange(time, range) {
       const [start, end] = range.split(' - ');
     
@@ -56,6 +61,21 @@ const BathroomScreen = ({ route, navigation }) => {
       var strTime = hours + ':' + minutes + ampm;
       return strTime;
     }
+    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of the earth in km
+      const dLat = deg2rad(lat2 - lat1);
+      const dLon = deg2rad(lon2 - lon1);
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const d = R * c; // Distance in km
+      return d;
+    }
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+    const distance = getDistanceFromLatLonInKm(userLoc.latitude, userLoc.longitude, coords.lat, coords.long);
     useEffect(() => {
       const time = new Date();
       if (isTimeInRange(time, hours) === false) {
@@ -70,6 +90,7 @@ const BathroomScreen = ({ route, navigation }) => {
     <View style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.title}>{name}</Text>
+            <Text style = {styles.body}>Distance: {distance.toFixed(2)} km</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                     onPress={() => navigation.navigate('RateBathroom', {
@@ -128,6 +149,12 @@ const BathroomScreen = ({ route, navigation }) => {
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Map</Text>
+                <TouchableOpacity
+                  style={styles.returnButton}
+                  onPress={openMap}
+                >
+                  <Text style={styles.mapButtonText}>Open in Maps</Text>
+                </TouchableOpacity>
                 <View style={styles.map}>
                   <ShowMap longitude={coords.long} latitude={coords.lat} />
                 </View>

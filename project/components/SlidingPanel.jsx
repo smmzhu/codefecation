@@ -33,7 +33,7 @@ export default function SlidingPanel(props) {
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
             <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
-              <SearchBar bathroomList = {props.bathroomList} refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
+              <SearchBar userLoc={props.userLoc} bathroomList = {props.bathroomList} refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
                 <StatusBar style="auto" />
             </View>
         </SlidingUpPanel>
