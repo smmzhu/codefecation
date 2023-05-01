@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@expo-google-fonts/comfortaa": "^0.2.3",
+    "expo-linear-gradient": "^12.1.2"
+  }
+}
