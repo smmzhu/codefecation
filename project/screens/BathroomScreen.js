@@ -118,24 +118,27 @@ const BathroomScreen = ({ route, navigation }) => {
     >
       <SafeAreaView style={styles.megaConatiner}>
         <View style={styles.reviewBox}>
-          <View style={{height:'7%', width:'25%', paddingLeft:'0%',}}>
-            <PaperButton
+          <View style={{height:'7%', width:'100%', paddingLeft:'5%',alignContent:'flex-start', flex:'row', justifyContent:'center', }}>
+            <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-start", resizeMode: "contain", marginBottom: 5, marginRight: 15}}>
+              <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
+            </PaperButton>
+            {/* <PaperButton
               style={{
-                width: '100%',
-                height: '100%',
+                width: '8%',
+                height: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
-                alignSelf: 'center',
+                // alignSelf: 'center',
                 backgroundColor: '#7D77FF',
               }}
                 labelStyle={styles.text}
                 mode="contained" 
                 onPress={() => navigation.goBack()}
             >
-              {sign}
+              {sign} */}
               {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/>       */}
-            </PaperButton>
+            {/* </PaperButton> */}
           </View>
           <ScrollView>
 
@@ -146,8 +149,8 @@ const BathroomScreen = ({ route, navigation }) => {
                 <PaperButton
                   style={{
                     flex:1,
-                    width: '30%',
-                    height: '90%',
+                    width: '35%',
+                    height: 50,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
@@ -334,7 +337,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
         fontFamily: "Comfortaa",
-        width: '65%',
+        width: '55%',
         flexWrap: 'wrap',
         textAlign: 'left',
       },

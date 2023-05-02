@@ -222,7 +222,6 @@ const CreateBathroomPage = ({navigation, route}) => {
     }
   }
   const scrollViewRef = useRef();
-  let chubfat = '<';
   return (
     <>
       <LinearGradient 
@@ -234,23 +233,10 @@ const CreateBathroomPage = ({navigation, route}) => {
         <SafeAreaView style={styles.container1}>
           
             <View style={styles.Box}>
-              <View style={{height:'5%', width:'15%', paddingLeft:'5%',flexDirection:'row',alignContent:'space-between'}}>
-                <PaperButton
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    backgroundColor: '#7D77FF',
-                  }}
-                  labelStyle={styles.text}
-                  mode="contained"
-                  onPress={() => navigation.goBack()}
-                >    
-                {chubfat}   
+              <View style={{height:'7%', width:'100%', paddingLeft:'5%',alignContent:'flex-start', flex:'row', justifyContent:'center', }}>
+                <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-start", resizeMode: "contain", marginBottom: 5, marginRight: 15}}>
+                  <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
                 </PaperButton>
-                {/* <Image source={require('../assets/returnButton.png')} style={{ position:'absolute',top: 60, left: 20, width: 20, height: 20}}/> */}
               </View>
               <ScrollView style={styles.container1} ref = {scrollViewRef}>
                 <View style={styles.container} >
@@ -390,7 +376,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // background: 'rgb(255,148,130)',
     // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
-  }, 
+  },
+  logoView: {
+    width: 40,
+    height: 40,
+    // marginBottom: 0,
+    // marginTop: 0,
+    margin: 5,
+    resizeMode: 'contain',
+   }, 
   text: {
     width: 250,
     fontSize: 18,

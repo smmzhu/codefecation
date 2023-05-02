@@ -1,8 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Rating from './Rating.jsx';
+import * as Font from 'expo-font';
 
 const RevSummary = ({reviewSummary}) => {
+  async function loadFonts() {
+    await Font.loadAsync({
+      'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
+    });
+  };
+
+  function componentDidMount() {
+    this.loadFonts();
+  };
+
   return (
     <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -34,10 +45,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Comfortaa',
     marginBottom: 10,
   },
   text: {
     fontSize: 16,
+    fontFamily: 'Comfortaa',
     marginTop: 0,
   },
 });

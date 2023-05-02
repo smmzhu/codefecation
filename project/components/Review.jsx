@@ -1,8 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Rating from './Rating.jsx';
+import * as Font from 'expo-font';
 
 const Review = ({review}) => {
+  async function loadFonts() {
+    await Font.loadAsync({
+      'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
+    });
+  };
+
+  function componentDidMount() {
+    this.loadFonts();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -35,12 +46,14 @@ const styles = StyleSheet.create({
   userID: {
     fontWeight: 'bold',
     marginBottom: 5,
+    fontFamily: 'Comfortaa',
   },
   topContainer: {
     flexDirection: 'row',
   },
   text: {
     fontSize: 16,
+    fontFamily: 'Comfortaa',
   },
 });
 
