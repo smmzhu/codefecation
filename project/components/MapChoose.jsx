@@ -36,8 +36,8 @@ const MapChoose = (props) => {
           // longitude: -119.848945,
           latitude: props.defaultPos.latitude,
           longitude: props.defaultPos.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.0922/13,
+          longitudeDelta: 0.0421/13,
         }}
       >
         {selectedLocation && (
@@ -50,7 +50,7 @@ const MapChoose = (props) => {
             <TouchableOpacity 
             style={styles.Marker}
             onPress={handleConfirmLocation}>
-                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+                <Image source={require('../assets/marker.png')} style={{width: 100, height: 100}}/>
             </TouchableOpacity>
           </Marker>
         )}

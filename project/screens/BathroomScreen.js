@@ -191,6 +191,7 @@ const BathroomScreen = ({ route, navigation }) => {
                 </View>
 
                 <View style={styles.section}>
+                  {status.validBathroom ?  null : <BathroomVerif bathroomID={bathroomID}/>}
                   {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
                   <Text style={styles.sectionTitle}>Overall</Text>
                   <Rating Rating = {ratings.overallRating}/>
