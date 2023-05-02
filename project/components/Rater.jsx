@@ -51,7 +51,7 @@ export default function Rater(props) {
 const styles = StyleSheet.create({
     container: {
       // flex: 1,
-      padding: 20,
+      padding: 0,
       // marginHorizontal: 50,
       // marginVertical: 50,
       justifyContent: 'center',
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     customRatingBarStyle: {
       justifyContent: 'center',
       flexDirection: 'row',
-      marginTop: 30, // was 30
+      marginTop: 10, // was 30
     },
     starImageStyle: {
       width: 40,

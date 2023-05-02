@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
@@ -8,6 +8,10 @@ import Review from '../components/Review.jsx';
 import ShowMap from '../components/ShowMap.jsx';
 import Tag from '../components/Tag.jsx';
 import BathroomVerif from '../components/BathroomVerif.jsx';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button as PaperButton } from "react-native-paper";
+import { TextInput as PaperTextInput } from "react-native-paper";
+import * as Font from 'expo-font';
 
 const BathroomScreen = ({ route, navigation }) => {
     const {bathroomID, coords, name, tags, ratings, reviews, status, hours, userLoc} = route.params; //assume that bathroom ratings is a json
@@ -18,6 +22,15 @@ const BathroomScreen = ({ route, navigation }) => {
     function openMap() {
       Linking.openURL(url);
     }
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
+      });
+    };
+  
+    function componentDidMount() {
+      this.loadFonts();
+    };  
     function isTimeInRange(time, range) {
       const [start, end] = range.split(' - ');
     
@@ -83,118 +96,174 @@ const BathroomScreen = ({ route, navigation }) => {
         changeopen(false);
       }
     }, []);
-
+    let sign = '<';
     return (
-    <SafeAreaView>
-    <ScrollView>
-    <View style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.title}>{name}</Text>
-            <Text style = {styles.body}>Distance: {distance.toFixed(2)} km</Text>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate('RateBathroom', {
-                      bathroomID: bathroomID,
-                      name: name, 
-                      ratings: ratings, 
-                    })}
-                    style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>{"Leave a Review!"}</Text>
-                </TouchableOpacity>
-            </View>
+    <LinearGradient 
+      colors={['#FF9482', '#7D77FF']} 
+      start={{ x: 0.2, y: 0.2}} 
+      end={{ x: 1, y: 1}}
+      style={styles.containerView}
+      >
+      <SafeAreaView>
+        <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
+          <PaperButton
+            style={{
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              alignSelf: 'center',
+            }}
+              labelStyle={styles.text}
+              mode="contained" 
+              onPress={() => navigation.goBack()}
+          >
+            {sign}
+            {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/>       */}
+          </PaperButton>
         </View>
-        <View style={styles.body}>
-          <Text style={styles.sectionTitle}>Hours</Text>
-            <View style={styles.hoursection}>
-              <Text style={styles.text}>{hours}</Text>
+        <ScrollView>
+
+          <View style={styles.container}>
+
+            
+
+            <View style={styles.header}>
+              <Text style={styles.title}>{name}</Text>
+                <PaperButton
+                  style={{
+                    flex:1,
+                    width: '50%',
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                  }}
+                  labelStyle={styles.text}
+                  mode="contained" 
+                  onPress={() => navigation.navigate('RateBathroom', {
+                    bathroomID: bathroomID,
+                    name: name, 
+                    ratings: ratings, 
+                  })}
+                >
+                  Review!   
+                </PaperButton>
+            </View>
+
+            <View style={styles.body}>
+              <Text style = {styles.distance}>{distance.toFixed(2)} km</Text>
+
+              <View style={styles.hoursection}>
                 {open && (
                   <View style={styles.opentag}>
-                    <Text>open</Text>
+                    <Text style={styles.tagText}>open</Text>
                   </View>
                 )}
                 {!open && (
                   <View style={styles.closedtag}>
-                    <Text>closed</Text>
+                    <Text style={styles.tagText}>closed</Text>
                   </View>
                 )}
-            </View>
-            <View style={styles.section}>
-                {status.validBathroom ?  <Text>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>}
+                <Text style={styles.statusText}>{hours}</Text>  
+              </View>
+              
+              <View style={styles.tagsContainer}>
+                <Text style={styles.sectionTitle}>Tags: </Text>
+                  {tags.map((tag) => (
+                    <Tag key={tag} tag={tag} />
+                  ))}
+              </View>
+
+              <View style={styles.section}>
+                {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
                 <Text style={styles.sectionTitle}>Overall Rating</Text>
                 <Rating Rating = {ratings.overallRating}/>
-            </View>
-            <View style={styles.tagsContainer}>
-                <Text style={styles.sectionTitle}>Tags:</Text>
-                {tags.map((tag) => (
-                  <Tag key={tag} tag={tag} />
-                ))}
-            </View>
-            <View style={styles.section}>
+              </View>
+
+              <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Cleanliness Rating</Text>
-                {/* REPLACE WITH REAL CLEANLINESS RATING */}
-                <Rating Rating = {ratings.cleanRating}/>
-            </View>
-            <View style={styles.section}>
+                  <Rating Rating = {ratings.cleanRating}/>
+              </View>
+
+              <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Boujeeness Rating</Text>
-                {/* REPLACE WITH REAL BOUJEE RATING */}
                 <Rating Rating = {ratings.boujeeRating}/>
-            </View>
-            <View style={styles.section}>
+              </View>
+              
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Location</Text>
+                  <PaperButton
+                    style={{
+                      width: 200,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 10,
+                      alignSelf: 'left',
+                    }}
+                    labelStyle={styles.text}
+                    mode="contained" 
+                    onPress={openMap}
+                  >
+                    Open in Maps
+                  </PaperButton>
+                  <View style={styles.map}>
+                    <ShowMap longitude={coords.long} latitude={coords.lat} />
+                  </View>
+              </View>
+
+              <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Reviews</Text>
                 <Text style={styles.text}>
-                  <View style = {{padding: 10}}>
-                    {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
-                  </View>
-                </Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Map</Text>
-                <TouchableOpacity
-                  style={styles.returnButton}
-                  onPress={openMap}
-                >
-                  <Text style={styles.mapButtonText}>Open in Maps</Text>
-                </TouchableOpacity>
-                <View style={styles.map}>
-                  <ShowMap longitude={coords.long} latitude={coords.lat} />
+                <View style = {{padding: 10}}>
+                  {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
                 </View>
+                </Text>
+              </View>
+              
             </View>
-        </View>
-        <TouchableOpacity
-          style={styles.returnButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.returnButtonText}>Return</Text>
-        </TouchableOpacity>
-      </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
       </SafeAreaView>
-    // <View style={styles.container}>
-    //   <Text style={styles.text}>{name}</Text>
-    //     <View style={styles.rater}>
-    //         <Rater Rating = {ratings}/>
-    //     </View>
-    //     <View style={{marginTop: 10}}>
-    //         <Button title="Go back" onPress={() => navigation.goBack()} />
-    //     </View>
-    // </View>
+    </LinearGradient>
   );
 };
 
 export default BathroomScreen;
 
 const styles = StyleSheet.create({
-    container: {
+      containerView: {
         flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "center",
+        alignItems: "center",
+      }, 
+      text: {
+        width: 50,
+        fontSize: 18,
+        // lineHeight: 21,
+        textAlign: "center",
+        fontFamily: "Comfortaa",
+      },
+      container: {
+        padding: 0,
+        flex: 1,
+      },
+      distance:{
+        fontSize: 16,
+        fontFamily: "Comfortaa",
       },
       header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         width: '100%',
         paddingHorizontal: 20,
-        backgroundColor: '#f5f5f5',
-        paddingVertical: 60,
+        paddingTop: 10,
       },
       buttonContainer: {
         borderColor: 'gray',
@@ -206,6 +275,7 @@ const styles = StyleSheet.create({
      buttonText: {
         color: 'black',
         fontSize: 15,
+        fontFamily: "Comfortaa",
       },
       body: {
         flex: 1,
@@ -218,7 +288,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 5,
-        width: '60%',
+        fontFamily: "Comfortaa",
+        width: '50%',
         flexWrap: 'wrap',
         textAlign: 'left',
       },
@@ -228,11 +299,19 @@ const styles = StyleSheet.create({
       sectionTitle: {
         fontSize: 20,
         fontWeight: 'bold',
+        fontFamily: "Comfortaa",
         marginBottom: 10,
       },
       text: {
         fontSize: 16,
         marginBottom: 10,
+        fontFamily: "Comfortaa",
+      },
+      statusText:{
+        padding: 10,
+        fontSize: 16,
+        marginBottom: 10,
+        fontFamily: "Comfortaa",
       },
       review: {
         borderWidth: 1,
@@ -242,6 +321,7 @@ const styles = StyleSheet.create({
       },
       reviewText: {
         fontSize: 16,
+        fontFamily: "Comfortaa",
       },
     ratings: {
         marginTop: 20,
@@ -260,6 +340,7 @@ const styles = StyleSheet.create({
       },
     tagText: {
         fontSize: 16,
+        fontFamily: "Comfortaa",
       },
     returnButton: {
       marginTop: 20,
@@ -274,12 +355,13 @@ const styles = StyleSheet.create({
       color: 'white',
       fontWeight: 'bold',
       fontSize: 16,
+      fontFamily: "Comfortaa",
     },
     opentag: {
       marginTop: 0,
       alignSelf: 'center',
       paddingVertical: 10,
-      paddingHorizontal: 20,
+      paddingHorizontal: 25,
       backgroundColor: 'green',
       borderRadius: 5,
       opacity: 1,
@@ -296,11 +378,9 @@ const styles = StyleSheet.create({
     hoursection: {
       flex: 1,
       flexDirection: 'row',
-      padding: 20,
+      alignItems: 'center',
       
-    },
-    text: {
-      padding: 20,
-      fontSize: 16,
+      padding: 0,
+      
     },
 });

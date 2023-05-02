@@ -66,33 +66,14 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '95%',
+    height: '100%',
     marginBottom: 20,
-  },
-  buttonContainer: {
-    flex: 0,
-    width: '80%',
-    alignItems: 'center',
   },
   tagText: {
     fontSize: 16,
   },
   Marker: { 
   },
-  returnButton: {
-    marginTop: 0,
-    alignSelf: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#F5A623',
-    borderRadius: 5,
-    opacity: 1,
-  },
-  returnButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
-  }
 });
 
 export default MapChoose;

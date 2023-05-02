@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, SafeAreaView, Alert, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
 import firebase from '../database/firebase';
 import {addReview} from '../database/databaseFuncs';
 import { getAuth } from "firebase/auth";
 import uuid from 'react-native-uuid';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button as PaperButton } from "react-native-paper";
+import { TextInput as PaperTextInput } from "react-native-paper";
+import * as Font from 'expo-font';
 
 const BathroomReviewScreen = ({route, navigation}) => {  
   const {bathroomID, name, ratings} = route.params;
@@ -14,6 +18,16 @@ const BathroomReviewScreen = ({route, navigation}) => {
   const [boujeenessRating, setBoujeenessRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [showCongratulatoryModal, setShowCongratulatoryModal] = useState(false); // added state variable for showing congratulatory modal
+  
+  async function loadFonts() {
+    await Font.loadAsync({
+      'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
+    });
+  };
+
+  function componentDidMount() {
+    this.loadFonts();
+  };
 
   const handleOverallRatingChange = (rating) => {
     setOverallRating(rating);
@@ -110,66 +124,136 @@ const BathroomReviewScreen = ({route, navigation}) => {
       Alert.alert(output);
     }
   }
-
+  let sign='<';
   return (
     <>
-    <View style={styles.container}>
-      <Pressable onPress = {Keyboard.dismiss}>
-      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
-        <ScrollView>
-          <View style={styles.container}>
-            <Text style={styles.title}>Write a Review</Text>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingLabel}>Overall Rating:</Text>
-              <Rater onRatingChange={handleOverallRatingChange}/>
-            </View>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingLabel}>Cleanliness Rating:</Text>
-              <Rater onRatingChange={handleCleanlinessRatingChange}/>
-            </View>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingLabel}>Boujeeness Rating:</Text>
-              <Rater onRatingChange={handleBoujeenessRatingChange}/>
-            </View>
-            <Text style={styles.ratingLabel}>Review (optional):</Text>
-            <TextInput
-                editable
-                style={styles.reviewInput}
-                placeholder="Write your review here..."
-                multiline={true}
-                numberOfLines={15}
-                maxLength={500}
-                onChangeText={setReviewText}
-                value={reviewText}
-            />
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={check}
-              // disabled={!overallRating || !cleanlinessRating || !boujeenessRating}
-            >
-              <Text style={styles.submitButtonText}>Submit Review</Text>
-            </TouchableOpacity>
-            {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
-          </View>
-          <TouchableOpacity
-            style={styles.returnButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.returnButtonText}>Return</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
-      </Pressable>
-    </View>
+      <LinearGradient 
+        colors={['#FF9482', '#7D77FF']} 
+        start={{ x: 0.2, y: 0.2}} 
+        end={{ x: 1, y: 1}}
+        style={styles.containerView}
+      >
+        <SafeAreaView style={styles.container}>
+          <Pressable onPress = {Keyboard.dismiss}>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
+              <View style={styles.container}>
+                <View style={{height:'10%', width:'25%', paddingLeft:'0%',}}>
+                  <PaperButton
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 10,
+                      // alignSelf: 'center',
+                    }}
+                    labelStyle={styles.text}
+                    mode="contained" 
+                    onPress={() => navigation.goBack()}
+                  >
+                    {sign}
+                    {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/> */}
+                  </PaperButton>      
+                </View>                      
+                <Text style={styles.title}>Write a Review</Text>
+                <View style={styles.reviewBox}>
+                  <LinearGradient 
+                    colors={['#FF9482', '#7D77FF']} 
+                    start={{ x: 0.2, y: 0.2}} 
+                    end={{ x: 1, y: 1}}
+                    style={styles.reviewBox}
+                  >
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Overall:</Text>
+                      <Rater onRatingChange={handleOverallRatingChange}/>
+                    </View>
+
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Cleanliness:</Text>
+                      <Rater onRatingChange={handleCleanlinessRatingChange}/>
+                    </View>
+
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Boujeeness:</Text>
+                      <Rater onRatingChange={handleBoujeenessRatingChange}/>
+                    </View>
+                    <Text style={styles.ratingLabel}>Review (optional):</Text>
+                    <TextInput
+                        editable
+                        style={styles.reviewInput}
+                        placeholder="Write your review here..."
+                        multiline={true}
+                        numberOfLines={15}
+                        maxLength={500}
+                        onChangeText={setReviewText}
+                        value={reviewText}
+                    />
+                  </LinearGradient>
+                </View>
+                <PaperButton
+                  style={{
+                    width: 300,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                  }}
+                  labelStyle={styles.text}
+                  mode="contained" 
+                  onPress={check}
+                >
+                  Submit Review
+                </PaperButton>
+                {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
+              </View>
+            </KeyboardAvoidingView>
+          </Pressable>
+        </SafeAreaView>
+      </LinearGradient>
     </>
   );
 };
 
 const styles = {
-  container: {
+  containerView: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    padding: 5,
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "center",
+    alignItems: "center",
+    // background: 'rgb(255,148,130)',
+    // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
+  }, 
+  text: {
+    width: 250,
+    fontSize: 18,
+    // lineHeight: 21,
+    textAlign: "center",
+    fontFamily: "Comfortaa",
+  },
+  reviewBox: {
+    // flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    width:'100%',
+    borderRadius: 10,
+    marginVertical: 0,
+    marginHorizontal: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 99,
+  },
+  container: {
+    width: '100%',
+    // height: '100%',
+    // backgroundColor: '#F5F5F5',
+    padding: '7%',
   },
   title: {
     fontSize: 24,
@@ -178,12 +262,14 @@ const styles = {
     marginTop: 50,
   },
   ratingContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 10,
   },
   ratingLabel: {
     fontSize: 16,
+    fontFamily: 'Comfortaa',
     marginRight: 10,
   },
   reviewInput: {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, Text, Alert, Button, StyleSheet, Pressable, Keyboard, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, Text, Alert, Image, Button, StyleSheet, Pressable, Keyboard, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal';
 import MapChoose from '../components/MapChoose';
@@ -11,6 +11,11 @@ import { getAuth } from "firebase/auth";
 import uuid from 'react-native-uuid';
 import {Dimensions} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button as PaperButton } from "react-native-paper";
+import { TextInput as PaperTextInput } from "react-native-paper";
+import * as Font from 'expo-font';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -35,6 +40,15 @@ const CreateBathroomPage = ({navigation, route}) => {
   const [review, setReview] = useState('');
   const [showCongratulatoryModal, setShowCongratulatoryModal] = useState(false); // added state variable for showing congratulatory modal
   const [scrollHeight, setScrollHeight] = useState(0);
+  async function loadFonts() {
+    await Font.loadAsync({
+      'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
+    });
+  };
+
+  function componentDidMount() {
+    this.loadFonts();
+  };
 
   const handleNameChange = (name) => {
     setName(name);
@@ -151,18 +165,6 @@ const CreateBathroomPage = ({navigation, route}) => {
   };
 
   const handleSubmit = () => {
-    // Handle submitting the form
-    // console.log('Name:', name);
-    // console.log('Address:', address);
-    // console.log('Longitude:', longitude);
-    // console.log('Latitude:', latitude);
-    // let hours = time1+'-'+time2;
-    // console.log('Hours:', hours);
-    // console.log('Tags:', tags);
-    // console.log('Overall Rating:', overallRating);
-    // console.log('Cleanliness Rating:', cleanlinessRating);
-    // console.log('Boujeeness Rating:', boujeenessRating);
-    // console.log('Review:', review);
     setShowCongratulatoryModal(true); // show the congratulatory modal
     dbFunc();
     
@@ -220,120 +222,195 @@ const CreateBathroomPage = ({navigation, route}) => {
     }
   }
   const scrollViewRef = useRef();
-
+  let chubfat = '<';
   return (
     <>
-    <ScrollView style={styles.container1} ref = {scrollViewRef}>
-    <View style={styles.container} >
-    <Pressable onPress={Keyboard.dismiss}>
-      <Text style={styles.title}>Request a Bathroom Page</Text>
-      <Text style={styles.tagLabel}>Name:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Name (Ex. San Miguel Floor 1 Bathroom 1427)"
-        onChangeText={handleNameChange}
-        value={name}
-      />
-      <Text style={styles.tagLabel}>Address:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Address"
-        onChangeText={handleAddressChange}
-        value={address}
-      />
-      <View style={styles.inputContainer}>
-        {/* CHANGE IT TO A MAP THAT THE USER CAN DRAG A POINT ON TOP OF INSTEAD */}
-        
-        <Text style={styles.tagLabel}>Choose your location:</Text>
-        <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
-      </View>
-      <Text style={styles.tagLabel}>Choose the hours:</Text>
-      <View style={styles.timeContainer}>
-      <DateTimePicker
-            testID='time1'
-            value={date1}
-            mode='time'
-            is24Hour={false}
-            display='default'
-            onChange={timeChange1}
-      />
-      <Text>to</Text>
-      <DateTimePicker
-            testID='time2'
-            value={date2}
-            mode='time'
-            is24Hour={false}
-            display='default'
-            onChange={timeChange2}
-      />
-      </View>
-      <Text style={styles.tagLabel}>Tags:</Text>
-      <View style={styles.tagContainer}>
-        {renderTagButton('Male')}
-        {renderTagButton('Female')}
-        {renderTagButton('Non-gendered')}
-        {renderTagButton('Family Bathroom')}
-        {renderTagButton('Baby-Friendly')}
-        {renderTagButton('ADA Accessible')}
-        {renderTagButton('Smells good')}
-        {renderTagButton('Pay per Use')}
-        {renderTagButton('Customer-Only')}
-        {renderTagButton('Portable Bathroom')}
-        {renderTagButton('High-Tech')}
-      </View>
-      <Text style={styles.subTitle}>Your initial review!</Text>
-      <Text style={styles.tagLabel}>Rating:</Text>
-      <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Overall Rating:</Text>
-            <Rater onRatingChange={handleOverallRatingChange}/>
+      <LinearGradient 
+        colors={['#FF9482', '#7D77FF']} 
+        start={{ x: 0.2, y: 0.2}} 
+        end={{ x: 1, y: 1}}
+        style={styles.containerView}
+      >
+        <SafeAreaView style={styles.container1}>
+          <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
+            <PaperButton
+              style={{
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                //alignSelf: 'left',
+              }}
+              labelStyle={styles.text}
+              mode="contained"
+              onPress={() => navigation.goBack()}
+            >    
+            {chubfat}   
+            </PaperButton>
+            {/* <Image source={require('../assets/returnButton.png')} style={{ position:'absolute',top: 60, left: 20, width: 20, height: 20}}/> */}
           </View>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Cleanliness Rating:</Text>
-            <Rater onRatingChange={handleCleanlinessRatingChange}/>
-          </View>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Boujeeness Rating:</Text>
-            <Rater onRatingChange={handleBoujeenessRatingChange}/>
-          </View>
-      
-      <Text style={styles.tagLabel}>Review: (optional)</Text>
-      <TextInput
-        style={styles.reviewInput}
-        placeholder="Write your review here..."
-        multiline={true}
-        numberOfLines={15}
-        maxLength={500}
-        onChangeText={handleReviewChange}
-        value={review}
-      />
-      
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={check}
-      > 
-        <Text style={styles.submitButtonText}>Submit</Text>
-      </TouchableOpacity>
-      {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
+          <ScrollView style={styles.container1} ref = {scrollViewRef}>
+            <View style={styles.container} >
+              <Pressable onPress={Keyboard.dismiss}>
+
+                <Text style={styles.title}>Request a Bathroom Page</Text>
+                <Text style={styles.tagLabel}>Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Name (Ex. San Miguel Floor 1 Bathroom 1427)"
+                  onChangeText={handleNameChange}
+                  value={name}
+                />
+                <Text style={styles.tagLabel}>Address:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Address"
+                  onChangeText={handleAddressChange}
+                  value={address}
+                />
+
+                <View style={styles.inputContainer}>                
+                  <Text style={styles.tagLabel}>Choose your location:</Text>
+                  <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                </View>
+
+                <Text style={styles.tagLabel}>Hours of Operation:</Text>
+                <View style={styles.timeContainer}>
+                  <DateTimePicker
+                    testID='time1'
+                    value={date1}
+                    mode='time'
+                    is24Hour={false}
+                    display='default'
+                    onChange={timeChange1}
+                  />
+                  <Text>to</Text>
+                  <DateTimePicker
+                    testID='time2'
+                    value={date2}
+                    mode='time'
+                    is24Hour={false}
+                    display='default'
+                    onChange={timeChange2}
+                  />
+                </View>
+
+                <Text style={styles.tagLabel}>Tags:</Text>
+
+                <View style={styles.tagContainer}>
+                  {renderTagButton('Male')}
+                  {renderTagButton('Female')}
+                  {renderTagButton('Non-gendered')}
+                  {renderTagButton('Family Bathroom')}
+                  {renderTagButton('Baby-Friendly')}
+                  {renderTagButton('ADA Accessible')}
+                  {renderTagButton('Smells good')}
+                  {renderTagButton('Pay per Use')}
+                  {renderTagButton('Customer-Only')}
+                  {renderTagButton('Portable Bathroom')}
+                  {renderTagButton('High-Tech')}
+                </View>
+
+                <Text style={styles.subTitle}>Your initial review!</Text>
+                <View style={styles.reviewBox}>
+                  <LinearGradient 
+                    colors={['#FF9482', '#7D77FF']} 
+                    start={{ x: 0.2, y: 0.2}} 
+                    end={{ x: 1, y: 1}}
+                    style={styles.reviewBox}
+                  >
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Overall:</Text>
+                      <Rater onRatingChange={handleOverallRatingChange}/>
+                    </View>
+
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Cleanliness:</Text>
+                      <Rater onRatingChange={handleCleanlinessRatingChange}/>
+                    </View>
+
+                    <View style={styles.ratingContainer}>
+                      <Text style={styles.ratingLabel}>Boujeeness:</Text>
+                      <Rater onRatingChange={handleBoujeenessRatingChange}/>
+                    </View>
+
+                    <Text style={styles.tagLabel}>Review: (optional)</Text>
+                    <TextInput
+                      style={styles.reviewInput}
+                      placeholder="Write your review here..."
+                      multiline={true}
+                      numberOfLines={15}
+                      maxLength={500}
+                      onChangeText={handleReviewChange}
+                      value={review}
+                    />
+                  </LinearGradient>
+                </View>
+                <PaperButton
+                  style={{
+                    width: 300,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                  }}
+                  labelStyle={styles.text}
+                  mode="contained" 
+                  onPress={check}
+                >
+                  Submit
+                </PaperButton>
+                {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
+              </Pressable>
+            </View>
   
-      <View style={{marginTop: 10}}>
-      <TouchableOpacity
-          style={styles.returnButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.returnButtonText}>Return</Text>
-        </TouchableOpacity>
-        </View>
-        
-      </Pressable>
-    </View>
-    </ScrollView>
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
-    </KeyboardAvoidingView>
+          </ScrollView>
+
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
+          </KeyboardAvoidingView>
+
+        </SafeAreaView>
+      </LinearGradient>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  containerView: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "center",
+    alignItems: "center",
+    // background: 'rgb(255,148,130)',
+    // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
+  }, 
+  text: {
+    width: 250,
+    fontSize: 18,
+    // lineHeight: 21,
+    textAlign: "center",
+    fontFamily: "Comfortaa",
+  },
+  reviewBox: {
+    // flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    
+    borderRadius: 10,
+    marginVertical: 0,
+    marginHorizontal: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 99,
+  },
   container1: {
     // flex: 1,
     // padding: 0,
@@ -342,12 +419,13 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     flex: 1,
     height: '100%',
+    width: '98%',
   },
   container: {
     flex: 1,
-    padding: 45,
-    paddingLeft: 20,
-    backgroundColor: '#fff',
+    padding: '7%',
+    //paddingLeft: 20,
+    // backgroundColor: '#fff',
     // alignItems: 'left',
     // justifyContent: 'center',
   },
@@ -355,6 +433,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: "Comfortaa",
     marginBottom: 20,
     // alignItems: 'center',
   },
@@ -362,6 +441,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: "Comfortaa",
     marginBottom: 20,
     marginTop: 20,
     // alignItems: 'center',
@@ -372,6 +452,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 10,
     paddingHorizontal: 10,
+    fontFamily: "Comfortaa",
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -382,16 +463,18 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    marginBottom: 20,
-    height : '70%',
+    fontFamily: "Comfortaa",
+    height : '100%',
   },
   inputHalf: {
+    fontFamily: "Comfortaa",
     flex: 1,
     width: '45%',
   },
   tagLabel: {
     flex: 0,
     fontWeight: 'bold',
+    fontFamily: "Comfortaa",
     marginBottom: 5,
   },
   tagButton: {
@@ -415,11 +498,12 @@ const styles = StyleSheet.create({
   },
   tagButtonSelected: {
     flex: 0,
-    backgroundColor: '#007aff',
-    borderColor: '#007aff',
+    backgroundColor: '#7D77FF',
+    borderColor: '#7D77FF',
     },
   tagText: {
     flex: 0,
+    fontFamily: "Comfortaa",
     fontSize: 12,
   },
   tagTextSelected: {
@@ -432,13 +516,15 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flex: 1,
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 10,
   },
   ratingLabel: {
     flex: 1,
     fontSize: 16,
+    fontFamily: "Comfortaa",
     marginRight: 10,
   },
   reviewInput: {
@@ -452,6 +538,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     minHeight: 150,
     fontSize: 16,
+    fontFamily: "Comfortaa",
     lineHeight: 24,
   },
   submitButton: {
@@ -466,6 +553,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: "Comfortaa",
     fontSize: 16,
   },
   returnButton: {
@@ -482,6 +570,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: "Comfortaa",
     fontSize: 16,
   },
   timeContainer:{
