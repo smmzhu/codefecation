@@ -15,6 +15,23 @@ import ploopName from '../assets/ploopName.png';
 import addToiletButton from '../assets/addToiletButton.png';
 import { LinearGradient } from 'expo-linear-gradient'
 
+const nullToilet = {
+  bathroomID: "",
+  coords: {
+    geohash: 0,
+    lat: 0,
+    long: 0,
+  },
+  name: "",
+  address: "",
+  hours: "1:00AM - 1:00PM",
+  tags: [],
+  ratings: [],
+  reviewSummary: "",
+  reviews: [],
+  status: "",
+}
+
 function HomeScreen({ navigation }) {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
 
@@ -98,13 +115,11 @@ function HomeScreen({ navigation }) {
             </LinearGradient>
           <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
           </ScrollView>
-          <MiniInfoBox userLocation={userLoc} toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
-
+          <MiniInfoBox userLocation={userLoc} toilet = {lastPtInfo == 'none' ? nullToilet : lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
           {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
           <StatusBar style="auto" />
           {/* <StatusBar refreshFlag={refreshFlag} style="auto" /> */}
           <SlidingPanel userLoc={userLoc} color = '#9f8170' navigation = {navigation} bathroomList={bathroomList}>
-
           </SlidingPanel>
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}/>
         </View>

@@ -99,13 +99,14 @@ const BathroomScreen = ({ route, navigation }) => {
         //console.log("closed");
         changeopen(false);
       }
-      const db = firebase.firestore();
-      db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
-        if (docSnapshot.exists) {
-          const bathroomData = docSnapshot.data();
-          setNumRev(bathroomData.reviews.length);  
-        }
-      })
+      // const db = firebase.firestore();
+      // db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
+      //   if (docSnapshot.exists) {
+      //     const bathroomData = docSnapshot.data();
+      //     setNumRev(bathroomData.reviews.length);  
+      //   }
+      // })
+      setNumRev(reviews.length);
     }, []);
     let sign = '<';
     return (

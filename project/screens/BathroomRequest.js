@@ -167,7 +167,7 @@ const CreateBathroomPage = ({navigation, route}) => {
   const handleSubmit = () => {
     setShowCongratulatoryModal(true); // show the congratulatory modal
     dbFunc();
-    
+ 
   }
   
   const renderTagButton = (tag, index) => {
@@ -231,8 +231,7 @@ const CreateBathroomPage = ({navigation, route}) => {
         end={{ x: 1, y: 1}}
         style={styles.containerView}
       >
-        <SafeAreaView style={styles.container1}>
-          
+        <SafeAreaView style={styles.container1}>          
             <View style={styles.Box}>
               <View style={{height:'5%', width:'15%', paddingLeft:'5%',flexDirection:'row',alignContent:'space-between'}}>
                 <PaperButton
@@ -369,12 +368,10 @@ const CreateBathroomPage = ({navigation, route}) => {
                     {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
                   </Pressable>
                 </View>
-              
             </ScrollView>
           </View>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
           </KeyboardAvoidingView>
-
         </SafeAreaView>
       </LinearGradient>
     </>
