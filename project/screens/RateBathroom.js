@@ -146,7 +146,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 10,
-                      // alignSelf: 'center',
+                      backgroundColor: '#7D77FF',
                     }}
                     labelStyle={styles.text}
                     mode="contained" 
@@ -190,6 +190,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
                       alignItems: 'center',
                       borderRadius: 10,
                       alignSelf: 'center',
+                      backgroundColor: '#7D77FF',
                     }}
                     labelStyle={styles.text}
                     mode="contained" 

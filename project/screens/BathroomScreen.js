@@ -118,7 +118,7 @@ const BathroomScreen = ({ route, navigation }) => {
     >
       <SafeAreaView style={styles.megaConatiner}>
         <View style={styles.reviewBox}>
-          <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
+          <View style={{height:'7%', width:'25%', paddingLeft:'0%',}}>
             <PaperButton
               style={{
                 width: '100%',
@@ -127,6 +127,7 @@ const BathroomScreen = ({ route, navigation }) => {
                 alignItems: 'center',
                 borderRadius: 10,
                 alignSelf: 'center',
+                backgroundColor: '#7D77FF',
               }}
                 labelStyle={styles.text}
                 mode="contained" 
@@ -141,31 +142,32 @@ const BathroomScreen = ({ route, navigation }) => {
             <View style={styles.container}>
             
               <View style={styles.header}>
-              {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
-                  <PaperButton
-                    style={{
-                      flex:1,
-                      width: '50%',
-                      height: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 10,
-                      alignSelf: 'center',
-                    }}
-                    labelStyle={styles.text}
-                    mode="contained" 
-                    onPress={() => navigation.navigate('RateBathroom', {
-                      bathroomID: bathroomID,
-                      name: name, 
-                      ratings: ratings, 
-                    })}
-                  >
-                    Review!   
-                  </PaperButton>
+                {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
+                <PaperButton
+                  style={{
+                    flex:1,
+                    width: '30%',
+                    height: '90%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                    backgroundColor: '#7D77FF',
+                  }}
+                  labelStyle={styles.text}
+                  mode="contained" 
+                  onPress={() => navigation.navigate('RateBathroom', {
+                    bathroomID: bathroomID,
+                    name: name, 
+                    ratings: ratings, 
+                  })}
+                >
+                  Review!   
+                </PaperButton>
               </View>
 
               <View style={styles.body}>
-                <Text style = {styles.distance}>{distance.toFixed(2)} km - {address}</Text>
+                <Text style = {styles.distance}>{address} - {distance.toFixed(2)} km</Text>
 
                 <View style={styles.hoursection}>
                   {open && (
@@ -214,8 +216,9 @@ const BathroomScreen = ({ route, navigation }) => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 10,
-                        marginLeft: 50,
+                        marginLeft: 43,
                         alignSelf: 'left',
+                        backgroundColor: '#7D77FF',
                       }}
                       labelStyle={styles.text}
                       mode="contained" 
@@ -301,9 +304,10 @@ const styles = StyleSheet.create({
       header: {
         flexDirection: 'row',
         alignItems: 'center',
-        // justifyContent: 'space-between',
+        justifyContent: 'center',
+        //justifyContent: 'space-between',
         width: '100%',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         paddingTop: 10,
       },
       buttonContainer: {
@@ -330,7 +334,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
         fontFamily: "Comfortaa",
-        width: '50%',
+        width: '65%',
         flexWrap: 'wrap',
         textAlign: 'left',
       },
@@ -379,7 +383,7 @@ const styles = StyleSheet.create({
     tag: {
         paddingVertical: 5,
         paddingHorizontal: 10,
-        backgroundColor: '#ddd',
+        backgroundColor: '#7D77FF',
         borderRadius: 10,
         marginRight: 10,
         marginBottom: 10,
@@ -408,7 +412,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       paddingVertical: 10,
       paddingHorizontal: 25,
-      backgroundColor: 'green',
+      backgroundColor: '#66ffc2',
       borderRadius: 5,
       opacity: 1,
     },
@@ -417,7 +421,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       paddingVertical: 10,
       paddingHorizontal: 20,
-      backgroundColor: 'red',
+      backgroundColor: '#ff9999',
       borderRadius: 5,
       opacity: 1,
     },

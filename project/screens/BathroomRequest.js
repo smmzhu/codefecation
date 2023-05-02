@@ -242,7 +242,7 @@ const CreateBathroomPage = ({navigation, route}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
-                    //alignSelf: 'left',
+                    backgroundColor: '#7D77FF',
                   }}
                   labelStyle={styles.text}
                   mode="contained"
@@ -358,6 +358,7 @@ const CreateBathroomPage = ({navigation, route}) => {
                         borderRadius: 10,
                         alignSelf: 'center',
                         marginTop: 10,
+                        backgroundColor: '#7D77FF',
                       }}
                       labelStyle={styles.text}
                       mode="contained" 
