@@ -119,25 +119,29 @@ const BathroomScreen = ({ route, navigation }) => {
     >
       <SafeAreaView style={styles.megaConatiner}>
         <View style={styles.reviewBox}>
-          <View style={{height:'7%', width:'25%', paddingLeft:'0%',}}>
-            <PaperButton
+            <View style={{height:'7%', width:'100%', paddingLeft:'2%', marginTop: '3%', flexDirection:'row'}}>
+                <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-end", resizeMode: "contain"}}>
+                  <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
+                </PaperButton>
+            </View>
+            {/* <PaperButton
               style={{
-                width: '100%',
-                height: '100%',
+                width: '8%',
+                height: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
-                alignSelf: 'center',
+                // alignSelf: 'center',
                 backgroundColor: '#7D77FF',
               }}
                 labelStyle={styles.text}
                 mode="contained" 
                 onPress={() => navigation.goBack()}
             >
-              {sign}
+              {sign} */}
               {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/>       */}
-            </PaperButton>
-          </View>
+            {/* </PaperButton> */}
+
           <ScrollView>
 
             <View style={styles.container}>
@@ -147,8 +151,9 @@ const BathroomScreen = ({ route, navigation }) => {
                 <PaperButton
                   style={{
                     flex:1,
-                    width: '30%',
-                    height: '90%',
+                    flexGrow: 1,
+                    width: '100%',
+                    height: 50,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
@@ -219,6 +224,7 @@ const BathroomScreen = ({ route, navigation }) => {
                         alignItems: 'center',
                         borderRadius: 10,
                         marginLeft: 43,
+                        marginBottom: 20,
                         alignSelf: 'left',
                         backgroundColor: '#7D77FF',
                       }}
@@ -289,7 +295,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
       }, 
       text: {
-        width: 50,
+        width: '100%',
         fontSize: 18,
         // lineHeight: 21,
         textAlign: "center",
@@ -309,7 +315,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         //justifyContent: 'space-between',
         width: '100%',
-        paddingHorizontal: 10,
+        paddingRight: 10,
+        paddingLeft: 20,
         paddingTop: 10,
       },
       buttonContainer: {
@@ -331,12 +338,31 @@ const styles = StyleSheet.create({
       footer: {
         padding: 20,
       },
+      logoView: {
+        width: 30,
+        height: 30,
+        // marginBottom: 0,
+        // marginTop: 0
+        resizeMode: 'contain',
+      }, 
+      map:{
+        width: '85%',
+        height: 200,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+      },
       title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 5,
         fontFamily: "Comfortaa",
-        width: '65%',
+        width: '60%',
         flexWrap: 'wrap',
         textAlign: 'left',
       },
@@ -360,8 +386,9 @@ const styles = StyleSheet.create({
       statusText:{
         padding: 10,
         fontSize: 16,
-        marginBottom: 10,
         fontFamily: "Comfortaa",
+        alignSelf: 'center',
+
       },
       review: {
         borderWidth: 1,
@@ -431,8 +458,6 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      
-      padding: 0,
-      
+      paddingTop: 10,
     },
 });

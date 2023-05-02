@@ -10,8 +10,8 @@ const ShowMap = ({ longitude, latitude }) => {
         region={{
           longitude: longitude,
           latitude: latitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.0922/13,
+          longitudeDelta: 0.0421/13,
         }}
       >
         <Marker
@@ -25,8 +25,8 @@ const ShowMap = ({ longitude, latitude }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
-    width: 200,
+    height: '100%',
+    width: '100%',
     borderRadius: 10,
     overflow: 'hidden',
   },
