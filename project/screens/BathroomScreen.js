@@ -16,7 +16,7 @@ import * as Font from 'expo-font';
 import firebase from '../database/firebase';
 
 const BathroomScreen = ({ route, navigation }) => {
-    const {bathroomID, coords, name, tags, ratings, reviewSummary, reviews, status, hours, userLoc} = route.params; //assume that bathroom ratings is a json
+    const {bathroomID, coords, name, address, hours, tags, reviewSummary, ratings, reviews, status, userLoc} = route.params; //assume that bathroom ratings is a json
     const [open, changeopen] = useState(true);
     const [numRev, setNumRev] = useState(0);
 
@@ -114,128 +114,133 @@ const BathroomScreen = ({ route, navigation }) => {
       start={{ x: 0.2, y: 0.2}} 
       end={{ x: 1, y: 1}}
       style={styles.containerView}
-      >
-      <SafeAreaView>
-        <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
-          <PaperButton
-            style={{
-              width: '100%',
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-              alignSelf: 'center',
-            }}
-              labelStyle={styles.text}
-              mode="contained" 
-              onPress={() => navigation.goBack()}
-          >
-            {sign}
-            {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/>       */}
-          </PaperButton>
-        </View>
-        <ScrollView>
-          <View style={styles.container}>
-            <View style={styles.header}>
+
+    >
+      <SafeAreaView style={styles.megaConatiner}>
+        <View style={styles.reviewBox}>
+          <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
+            <PaperButton
+              style={{
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                alignSelf: 'center',
+              }}
+                labelStyle={styles.text}
+                mode="contained" 
+                onPress={() => navigation.goBack()}
+            >
+              {sign}
+              {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/>       */}
+            </PaperButton>
+          </View>
+          <ScrollView>
+
+            <View style={styles.container}>
+            
+              <View style={styles.header}>
               {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
-                <PaperButton
-                  style={{
-                    flex:1,
-                    width: '50%',
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    alignSelf: 'center',
-                  }}
-                  labelStyle={styles.text}
-                  mode="contained" 
-                  onPress={() => navigation.navigate('RateBathroom', {
-                    bathroomID: bathroomID,
-                    name: name, 
-                    ratings: ratings, 
-                  })}
-                >
-                  Review!   
-                </PaperButton>
-            </View>
-
-            <View style={styles.body}>
-              <Text style = {styles.distance}>{distance.toFixed(2)} km</Text>
-
-              <View style={styles.hoursection}>
-                {open && (
-                  <View style={styles.opentag}>
-                    <Text style={styles.tagText}>open</Text>
-                  </View>
-                )}
-                {!open && (
-                  <View style={styles.closedtag}>
-                    <Text style={styles.tagText}>closed</Text>
-                  </View>
-                )}
-                <Text style={styles.statusText}>{hours}</Text>  
-              </View>
-              
-              <View style={styles.tagsContainer}>
-                <Text style={styles.sectionTitle}>Tags: </Text>
-                  {tags.map((tag) => (
-                    <Tag key={tag} tag={tag} />
-                  ))}
-              </View>
-
-              <View style={styles.section}>
-                {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
-                <Text style={styles.sectionTitle}>Overall Rating</Text>
-                <Rating Rating = {ratings.overallRating}/>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Cleanliness Rating</Text>
-                  <Rating Rating = {ratings.cleanRating}/>
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Boujeeness Rating</Text>
-                <Rating Rating = {ratings.boujeeRating}/>
-              </View>
-              <View style={styles.section}>
-              {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Location</Text>
                   <PaperButton
                     style={{
-                      width: 200,
+                      flex:1,
+                      width: '50%',
                       height: 50,
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 10,
-                      alignSelf: 'left',
+                      alignSelf: 'center',
                     }}
                     labelStyle={styles.text}
                     mode="contained" 
-                    onPress={openMap}
+                    onPress={() => navigation.navigate('RateBathroom', {
+                      bathroomID: bathroomID,
+                      name: name, 
+                      ratings: ratings, 
+                    })}
                   >
-                    Open in Maps
+                    Review!   
                   </PaperButton>
-                  <View style={styles.map}>
-                    <ShowMap longitude={coords.long} latitude={coords.lat} />
-                  </View>
               </View>
 
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Reviews ({numRev})</Text>
-                <Text style={styles.text}>
-                <View style = {{padding: 10}}>
-                  {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
+              <View style={styles.body}>
+                <Text style = {styles.distance}>{distance.toFixed(2)} km - {address}</Text>
+
+                <View style={styles.hoursection}>
+                  {open && (
+                    <View style={styles.opentag}>
+                      <Text style={styles.tagText}>open</Text>
+                    </View>
+                  )}
+                  {!open && (
+                    <View style={styles.closedtag}>
+                      <Text style={styles.tagText}>closed</Text>
+                    </View>
+                  )}
+                  <Text style={styles.statusText}>{hours}</Text>  
                 </View>
-                </Text>
+                
+                <View style={styles.tagsContainer}>
+                    {tags.map((tag) => (
+                      <Tag key={tag} tag={tag} />
+                    ))}
+                </View>
+
+                <View style={styles.section}>
+                  {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
+                  <Text style={styles.sectionTitle}>Overall</Text>
+                  <Rating Rating = {ratings.overallRating}/>
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Cleanliness</Text>
+                    <Rating Rating = {ratings.cleanRating}/>
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Boujeeness</Text>
+                  <Rating Rating = {ratings.boujeeRating}/>
+                </View>
+                <View style={styles.section}>
+                {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
+                </View>
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Location</Text>
+                    <PaperButton
+                      style={{
+                        width: 200,
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 10,
+                        marginLeft: 50,
+                        alignSelf: 'left',
+                      }}
+                      labelStyle={styles.text}
+                      mode="contained" 
+                      onPress={openMap}
+                    >
+                      Open in Maps
+                    </PaperButton>
+                    <View style={styles.map}>
+                      <ShowMap longitude={coords.long} latitude={coords.lat} />
+                    </View>
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Reviews</Text>
+                  <Text style={styles.text}>
+                  <View style = {{padding: 0}}>
+                    {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
+                  </View>
+                  </Text>
+                </View>
+                
               </View>
-              
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -244,6 +249,33 @@ const BathroomScreen = ({ route, navigation }) => {
 export default BathroomScreen;
 
 const styles = StyleSheet.create({
+      megaConatiner: {
+        flex: 1,
+        justifyContent:'flex-start',
+        height: '100%',
+        width: '90%',
+      },
+      reviewBox: {
+        // flexDirection: 'row',
+        paddingVertical: 0,
+        paddingHorizontal: 5,
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        marginVertical: 0,
+        marginHorizontal: 0,
+        width: '100%',
+        height: '100%',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 99,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
       containerView: {
         flex: 1,
         display: "flex",
@@ -304,6 +336,9 @@ const styles = StyleSheet.create({
       },
       section: {
         marginBottom: 20,
+        alignItems: 'center',
+        // marginTop: 10,
+        // marginBottom: 10,
       },
       sectionTitle: {
         fontSize: 20,
@@ -337,7 +372,9 @@ const styles = StyleSheet.create({
     },
     tagsContainer: {
         flexDirection: 'row',
-        marginBottom: 20,
+        flexWrap: 'wrap',
+        marginBottom: 10,
+        marginTop: 20,
       },
     tag: {
         paddingVertical: 5,
