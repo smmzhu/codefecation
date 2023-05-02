@@ -4,6 +4,7 @@ import ToiletCard from './ToiletCard.jsx';
 import Tag from './Tag.jsx';
 import TagSearchSelector from "./TagSearchSelector.jsx";
 import ploopLogo from '../assets/ploopIcon.png';
+import {Button as PaperButton} from 'react-native-paper';
 
 // const TOILETS = [
 //     {
@@ -163,22 +164,36 @@ export default function SearchBar(props) {
         <View onLayout = {onLayout}>
           <View style={styles.inputBar}>
               <KeyboardAvoidingView behavior="position" style={styles.container}>
-                <TextInput
+                {/* <TextInput
                   style={styles.textInput}
                   placeholder="Search Here..."
                   lightTheme
                   round
                   value={searchValue}
-                  //onChangeText={(text) => this.searchFunction(text)}
                   onChangeText={(text)=>updateSearchValue(text)}
                   autoCorrect={false}
-                />
+                /> */}
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.text}
+                    placeholder="Search Here..."
+                    value={searchValue}
+                    onChangeText={(text)=>updateSearchValue(text)}
+                    autoCorrect={false}
+                  />   
+                </View>
               </KeyboardAvoidingView>
               <TagSearchSelector getTagList={getTagList}/>
-
-              <TouchableOpacity style={styles.button} onPress={() =>{searchFunction(searchValue,tagList)}}>
+              <PaperButton 
+                style={styles.button} 
+                labelStyle={styles.text}
+                mode="contained" 
+                onPress={() =>{searchFunction(searchValue,tagList)}}>
                 <Text>Search</Text>
-              </TouchableOpacity>
+              </PaperButton>
+              {/* <TouchableOpacity style={styles.button} onPress={() =>{searchFunction(searchValue,tagList)}}>
+                <Text>Search</Text>
+              </TouchableOpacity> */}
 
             </View>
             <CardList userLoc={props.userLoc} data = {subData} navigation = {props.navigation}/>            
@@ -202,10 +217,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flex: 1,
     width: '90%',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   inputBar: {
     flexDirection: 'row',
     height: 80,
+    width: 330,
   },
   logoView: {
     width: 200,
@@ -214,15 +232,6 @@ const styles = StyleSheet.create({
     marginTop: 75,
     alignSelf: "center",
     resizeMode: 'stretch',
-  },
-  textInput: {
-    width: '50%',
-    height: 80,
-    backgroundColor: 'white',
-    borderColor: '#79443b',
-    borderWidth: 10,
-    borderRadius: 10,
-    textAlign: 'center',
   },
   flatList: { 
     width: '100%',
@@ -235,15 +244,29 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#79443b',
-    width: '20%',
-    height: '100%',
+    alignSelf: 'center',
+    width: 75,
+    height: '80%',
     borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 10,
-},
-
+    justifyContent: 'center',
+  },
+  inputView:{
+    width:"100%",
+    backgroundColor:"rgba(255, 255, 255, 0.3)", 
+    borderRadius:22,
+    height:60,
+    justifyContent:"center",
+    alignItems:"center",
+    dropShadow: 10,
+    // borderColor: "#FFF",
+    // borderWidth: 2,
+  },
+  text: {
+    width: 250,
+    fontSize: 18,
+    // lineHeight: 21,
+    textAlign: "center",
+    fontFamily: "Comfortaa",
+  },
 });
 // export default SearchBar;

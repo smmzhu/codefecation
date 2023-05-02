@@ -4,6 +4,7 @@ import { StyleSheet,KeyboardAvoidingView, Text, View } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import { useWindowDimensions } from 'react-native';
 import SearchBar from './SearchBar';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SlidingPanel(props) {
     const {height, width} = useWindowDimensions();
@@ -32,10 +33,15 @@ export default function SlidingPanel(props) {
           width = {width}
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
-            <View style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}>
+            <LinearGradient 
+            colors={['#6b70fe', 'white']} 
+            start={{ x: 0.5, y: 1}} 
+            end={{ x: 0.5, y: -0.5}}
+            style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}
+            >
               <SearchBar userLoc={props.userLoc} bathroomList = {props.bathroomList} refreshFlag={props.refreshFlag} navigation = {props.navigation} style={styles.searchBar} toiletListSize={getNumToiletCards} setHeight = {setHeightt}/>
                 <StatusBar style="auto" />
-            </View>
+            </LinearGradient>
         </SlidingUpPanel>
     );
 }   

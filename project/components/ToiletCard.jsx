@@ -22,29 +22,15 @@ const ToiletCard = (props) => {
                 status: props.toilet.status,
                 hours: props.toilet.hours,
             })}>
-                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+                <Image source={require('../assets/toiletIcon.png')} style={{width: 50, height: 50}}/>
                 <Text>{props.toilet.name}</Text>
-                {/* <Button 
-                    title={props.toilet.name}
-                    color={'#79443b'}
-                    onPress={() => props.navigation.navigate('Bathroom', {
-                        coords: props.toilet.coords,
-                        name: props.toilet.name,
-                        tags: props.toilet.tags,
-                        ratings: props.toilet.ratings,
-                        reviews: props.toilet.reviews,
-                    })}/> */}
-
                 <View style={styles.tagContainer}>
                     {props.toilet.tags.map((tag) => (
                         <Tag tag={tag} key={tag}/>
                         ))}
                 </View>
-                {/* onPress={() => console.log(props.toilet.name) } */}
                 <Text style={{width: 100}}>Location = {props.toilet.address}</Text>
-                {/* <Text style={{width: 100}}>Rating = {props.toilet.rating}</Text>    */}
                 <Rating Rating = {props.toilet.ratings.overallRating}/>
-                {/*FIX THIS^*/}
             </TouchableOpacity>
     );
 };
@@ -53,13 +39,16 @@ const ToiletCard = (props) => {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        backgroundColor: '#cdb79e',
-        borderColor: 'black',
-        borderWidth: 10,
+        backgroundColor: '#rgba(255,255,255,0.5)',
         borderRadius: 10,
-        margin: 5,
+        margin: 7,
         alignItems: 'center',
         justifyContent: 'center',
+    
+        shadowOffset: {width: -2, height: 4},  
+        shadowColor: '#171717',  
+        shadowOpacity: 0.2,  
+        shadowRadius: 3,          
     },
     location:{
         fontSize: 15,

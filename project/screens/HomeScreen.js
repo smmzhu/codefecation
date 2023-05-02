@@ -35,6 +35,18 @@ function HomeScreen({ navigation }) {
       setTimeout(() => {
         setRefreshing(false);
       }, 2000);
+      setCurrPtInfoActive("none");
+      setLastPtInfo("none");
+      setActiveFlag(false);
+      setBathroomList([]);
+      (async () => {
+        const locObj = await userLocation();
+        setUserLoc({latitude: locObj.latitude, longitude: locObj.longitude});
+        const db = await firebase.firestore();
+        await kNearestToilets(db, 7, [locObj.latitude, locObj.longitude], 5*1000).then((res) => {
+          setBathroomList(res);
+        });
+      })()
     }, []);
 
     useEffect(
@@ -76,7 +88,7 @@ function HomeScreen({ navigation }) {
               <Image source={backButton} style={styles.logoView}/>
             </PaperButton>
             <Image source = {ploopName} style = {styles.nameView}/>
-            <PaperButton onPress={()=>console.log("finisht hsi")} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-end", resizeMode: "contain", margin: 1, marginBottom: 5, flexGrow: 2}} >
+            <PaperButton onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-end", resizeMode: "contain", margin: 1, marginBottom: 5, flexGrow: 2}} >
               <Image source={addToiletButton} style={styles.logoView}/>
             </PaperButton>
             {/* <Button 
