@@ -3,15 +3,18 @@ import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
+import RevSummary from '../components/RevSummary.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Review from '../components/Review.jsx';
 import ShowMap from '../components/ShowMap.jsx';
 import Tag from '../components/Tag.jsx';
 import BathroomVerif from '../components/BathroomVerif.jsx';
+import firebase from '../database/firebase';
 
 const BathroomScreen = ({ route, navigation }) => {
-    const {bathroomID, coords, name, tags, ratings, reviews, status, hours} = route.params; //assume that bathroom ratings is a json
+    const {bathroomID, coords, name, tags, ratings, reviewSummary, reviews, status, hours} = route.params; //assume that bathroom ratings is a json
     const [open, changeopen] = useState(true);
+    const [numRev, setNumRev] = useState(0);
 
     function isTimeInRange(time, range) {
       const [start, end] = range.split(' - ');
@@ -62,6 +65,13 @@ const BathroomScreen = ({ route, navigation }) => {
         //console.log("closed");
         changeopen(false);
       }
+      const db = firebase.firestore();
+      db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          const bathroomData = docSnapshot.data();
+          setNumRev(bathroomData.reviews.length);  
+        }
+      })
     }, []);
 
     return (
@@ -69,7 +79,7 @@ const BathroomScreen = ({ route, navigation }) => {
     <ScrollView>
     <View style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.title}>{name}</Text>
+            {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                     onPress={() => navigation.navigate('RateBathroom', {
@@ -83,9 +93,9 @@ const BathroomScreen = ({ route, navigation }) => {
             </View>
         </View>
         <View style={styles.body}>
+          {status.validBathroom ?  null : <BathroomVerif bathroomID={bathroomID}/>}
           <Text style={styles.sectionTitle}>Hours</Text>
             <View style={styles.hoursection}>
-              <Text style={styles.text}>{hours}</Text>
                 {open && (
                   <View style={styles.opentag}>
                     <Text>open</Text>
@@ -96,9 +106,9 @@ const BathroomScreen = ({ route, navigation }) => {
                     <Text>closed</Text>
                   </View>
                 )}
+                <Text style={styles.text}>{hours}</Text>
             </View>
             <View style={styles.section}>
-                {status.validBathroom ?  <Text>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>}
                 <Text style={styles.sectionTitle}>Overall Rating</Text>
                 <Rating Rating = {ratings.overallRating}/>
             </View>
@@ -119,7 +129,10 @@ const BathroomScreen = ({ route, navigation }) => {
                 <Rating Rating = {ratings.boujeeRating}/>
             </View>
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Reviews</Text>
+            {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Reviews ({numRev})</Text>
                 <Text style={styles.text}>
                   <View style = {{padding: 10}}>
                     {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
