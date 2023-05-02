@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { Pressable, StyleSheet, Modal, Text,TouchableOpacity, View, SafeAreaView} from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
+import {LinearGradient} from 'expo-linear-gradient';
 
 export default function TagSearchSelector(props) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -36,19 +38,21 @@ export default function TagSearchSelector(props) {
             style={buttonStyles}
             onPress={() => handleTagPress(tag)}
           >
-            <Text style={[styles.tagText, selected ? styles.tagTextSelected : null]}>{tag}</Text>
+            <Text style={[styles.tagText, selected ? styles.tagTextSelected : null, styles.font]}>{tag}</Text>
           </Pressable>
         );
       }
     
     return(
-        <SafeAreaView style={StyleSheet.container}>
-            <TouchableOpacity
-            style={styles.button}
-                onPress={() => setModalVisible(true)}
+        <View style={StyleSheet.container}>
+            <PaperButton
+              style={styles.button}
+              labelStyle={styles.text}
+              mode="contained" 
+              onPress={() => setModalVisible(true)}
             >
-                <Text>sort by tags</Text>
-            </TouchableOpacity>
+              Sort by
+            </PaperButton>
             <Modal
                 animationType="slide"
                 visible={modalVisible}
@@ -57,9 +61,15 @@ export default function TagSearchSelector(props) {
                 }}
                 transparent={true}
             >
-                <View style={styles.modal}>
-                    <Text>Choose your desired tags</Text>
-                    <View style={styles.tagContainer}>
+                <LinearGradient 
+                  colors={['#FF9482', '#7D77FF']} 
+                  start={{ x: 0.2, y: 0.2}} 
+                  end={{ x: 1, y: 1}}
+                  style={styles.modal}
+                >
+                    <Text style = {styles.bigFont}>Choose your desired tags</Text>
+                    <View
+                    style={styles.tagContainer}>
                         {renderTagButton('Male')}
                         {renderTagButton('Female')}
                         {renderTagButton('Non-gendered')}
@@ -76,11 +86,11 @@ export default function TagSearchSelector(props) {
                         style={styles.exitButton}
                         onPress={() => {handleSubmit(), setModalVisible(false)}}
                     >
-                        <Text>Done</Text>
+                        <Text style = {styles.bigFont}>Done</Text>
                     </TouchableOpacity>
-                </View>
+                </LinearGradient>
             </Modal>
-        </SafeAreaView>
+        </View>
     );
 
 };
@@ -98,46 +108,47 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#cdb79e',
         borderRadius: 20,
-        borderWidth: 10,
-        borderColor: 'black',
         padding: 10,
         height: '45%',
         width: '80%',
         position: 'absolute',
         top: '27.5%',
-        left: '10%'
+        left: '10%',
     },
     button: {
-        alignItems: 'center',
-        backgroundColor: '#79443b',
-        width: '80%', //100 
-        height: '100%',
+        alignSelf: 'center',
+        width: 75,
+        height: '80%',
         borderRadius: 10,
-        borderColor: 'black',
-        borderWidth: 10,
         justifyContent: 'center',
+        flex: 1,
+        margin: 10,
     },
     exitButton: {
         alignItems: 'center',
-        backgroundColor: '#79443b',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         width: 100,
         height: '15%',
         borderRadius: 10,
-        borderColor: 'black',
-        borderWidth: 10,
         justifyContent: 'center',
+    },
+    bigFont: {
+      fontFamily: "Comfortaa",
+      fontSize: 20,
+    },
+    font: {
+      fontFamily: "Comfortaa",
+      fontSize: 16,
     },
     tagButton: {
         flex: 0,
-        borderWidth: 1,
-        borderColor: '#ccc',
         borderRadius: 5,
         paddingVertical: 5,
         paddingHorizontal: 8,
         marginRight: 5,
         marginBottom: 5,
-        minWidth: '40%', // set minWidth equal to or greater than tag's width
-        maxWidth: '40%', // set a max width for the tag button
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        width:'48%',
       },
       tagContainer: {
         flex: 1,
@@ -160,5 +171,12 @@ const styles = StyleSheet.create({
       tagButtonFirst: {
         flex: 0,
         marginLeft: 10,
+      },
+      text: {
+        width: 250,
+        fontSize: 18,
+        // lineHeight: 21,
+        textAlign: "center",
+        fontFamily: "Comfortaa",
       },
 });

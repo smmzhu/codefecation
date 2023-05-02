@@ -92,7 +92,7 @@ useEffect(() => {
                           }}
           >
             <View style={styles.Marker}>
-                <Image source={require('../assets/marker.png')} style={{width: 50, height: 50}}/>
+                <Image source={require('../assets/marker.png')} style={{width: 100, height: 100}}/>
             </View>
           </Marker>
         ))}
@@ -106,6 +106,7 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 1,
   },
   map: {
     width: '100%',
