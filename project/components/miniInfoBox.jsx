@@ -66,6 +66,7 @@ const MiniInfoBox = (props) => {
           name: props.toilet.name,
           tags: props.toilet.tags,
           ratings: props.toilet.ratings,
+          reviewSummary: props.toilet.reviewSummary,
           reviews: props.toilet.reviews,
           status: props.toilet.status,
           hours: props.toilet.hours,

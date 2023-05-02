@@ -177,7 +177,7 @@ export default function SearchBar(props) {
               <TagSearchSelector getTagList={getTagList}/>
 
               <TouchableOpacity style={styles.button} onPress={() =>{searchFunction(searchValue,tagList)}}>
-                <Text>Search</Text>
+                <Text>search</Text>
               </TouchableOpacity>
 
             </View>
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   textInput: {
-    width: '50%',
+    width: '90%',
     height: 80,
     backgroundColor: 'white',
     borderColor: '#79443b',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#79443b',
-    width: '20%',
+    width: '25%',
     height: '100%',
     borderRadius: 10,
     borderColor: 'black',

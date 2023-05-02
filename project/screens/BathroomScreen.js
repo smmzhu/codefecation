@@ -3,6 +3,7 @@ import { View, Text, Image, Button, TouchableOpacity, ScrollView, Linking } from
 import { StyleSheet } from 'react-native';
 import Rater from '../components/Rater.jsx';
 import Rating from '../components/Rating.jsx';
+import RevSummary from '../components/RevSummary.jsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Review from '../components/Review.jsx';
 import ShowMap from '../components/ShowMap.jsx';
@@ -12,10 +13,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Button as PaperButton } from "react-native-paper";
 import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
+import firebase from '../database/firebase';
 
 const BathroomScreen = ({ route, navigation }) => {
-    const {bathroomID, coords, name, tags, ratings, reviews, status, hours, userLoc} = route.params; //assume that bathroom ratings is a json
+    const {bathroomID, coords, name, tags, ratings, reviewSummary, reviews, status, hours, userLoc} = route.params; //assume that bathroom ratings is a json
     const [open, changeopen] = useState(true);
+    const [numRev, setNumRev] = useState(0);
+
     const initialCoords = userLoc.latitude + "," + userLoc.longitude;
     const finalCoords = coords.lat + "," + coords.long;
     const url = `https://www.google.com/maps/dir/?api=1&origin=${initialCoords}&destination=${finalCoords}`;
@@ -95,6 +99,13 @@ const BathroomScreen = ({ route, navigation }) => {
         //console.log("closed");
         changeopen(false);
       }
+      const db = firebase.firestore();
+      db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          const bathroomData = docSnapshot.data();
+          setNumRev(bathroomData.reviews.length);  
+        }
+      })
     }, []);
     let sign = '<';
     return (
@@ -124,13 +135,9 @@ const BathroomScreen = ({ route, navigation }) => {
           </PaperButton>
         </View>
         <ScrollView>
-
           <View style={styles.container}>
-
-            
-
             <View style={styles.header}>
-              <Text style={styles.title}>{name}</Text>
+              {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
                 <PaperButton
                   style={{
                     flex:1,
@@ -192,7 +199,9 @@ const BathroomScreen = ({ route, navigation }) => {
                 <Text style={styles.sectionTitle}>Boujeeness Rating</Text>
                 <Rating Rating = {ratings.boujeeRating}/>
               </View>
-              
+              <View style={styles.section}>
+              {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
+              </View>
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Location</Text>
                   <PaperButton
@@ -216,7 +225,7 @@ const BathroomScreen = ({ route, navigation }) => {
               </View>
 
               <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Reviews</Text>
+                <Text style={styles.sectionTitle}>Reviews ({numRev})</Text>
                 <Text style={styles.text}>
                 <View style = {{padding: 10}}>
                   {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
