@@ -1,7 +1,9 @@
 import firebase from '../database/firebase';
 import {Alert, fetch} from 'react-native';
 import axios from 'axios';
+// import Config from 'react-native-config';
 // import { generatePrompt } from './api/openai';
+// import env from '../../config/env.js';
 
 const getBathroomFromDB = async (db, bathroomID) => { //type signature: {db: DB object, bathroomID: string} => bathroomObject
     return await db.collection("bathrooms").doc(bathroomID).get()
@@ -145,7 +147,8 @@ function generatePrompt(reviewTexts) {
 async function getReviewSummary(inputRevs) {
   console.log("inputRevs in getReviewSummary: ", inputRevs);
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  // const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = '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';
   // const apiURL = 'https://api.openai.com/v1/engines/davinci/completions';
   const apiURL = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
 
@@ -171,6 +174,7 @@ async function getReviewSummary(inputRevs) {
       presence_penalty: 0,
     });
     const data = response.data.choices[0].text;
+    data = data.replace(/(^\s+|\s+$)/g,'').replace(/(\s+|\n+)/g,' ');
     console.log("OPENAI DATA: ", data);
     return data;
     // if (!response.ok) {
@@ -280,7 +284,7 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
       console.log("inputRevs", inputRevs);
 
       // getReviewSummary from OpenAI
-      let revSummary = "This is a review summary.";
+      let revSummary = "";
       if (inputRevs.length > 0 && inputRevs.length%3 == 0) {
         revSummary = await getReviewSummary(inputRevs);
       }
