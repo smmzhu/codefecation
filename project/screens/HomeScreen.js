@@ -10,6 +10,23 @@ import firebase from '../database/firebase';
 import {getBathroomFromDB} from '../database/databaseFuncs';
 import kNearestToilets from '../database/geoquerying.js';
 
+const nullToilet = {
+  bathroomID: "",
+  coords: {
+    geohash: 0,
+    lat: 0,
+    long: 0,
+  },
+  name: "",
+  address: "",
+  hours: "1:00AM - 1:00PM",
+  tags: [],
+  ratings: [],
+  reviewSummary: "",
+  reviews: [],
+  status: "",
+}
+
 function HomeScreen({ navigation }) {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
 
@@ -70,7 +87,7 @@ function HomeScreen({ navigation }) {
           />
           </View>
           <Map bathroomList = {bathroomList} userLoc = {userLoc} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} lastPtInfo = {lastPtInfo} setLastPtInfo = {setLastPtInfo}/>
-          <MiniInfoBox userLocation={userLoc} toilet = {lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
+          <MiniInfoBox userLocation={userLoc} toilet = {lastPtInfo == 'none' ? nullToilet : lastPtInfo} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>
 
           {/*<MiniInfoBox tags={lastPtInfo.tags} name = {lastPtInfo.name} isActive = {currPtInfoActive != "none"} setCurrPtInfoActive = {setCurrPtInfoActive} activeFlag = {activeFlag} setActiveFlag = {setActiveFlag} navigation = {navigation}/>*/}
           <StatusBar style="auto" />

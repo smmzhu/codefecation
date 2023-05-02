@@ -167,7 +167,7 @@ const CreateBathroomPage = ({navigation, route}) => {
   const handleSubmit = () => {
     setShowCongratulatoryModal(true); // show the congratulatory modal
     dbFunc();
-    
+ 
   }
   
   const renderTagButton = (tag, index) => {
@@ -272,7 +272,7 @@ const CreateBathroomPage = ({navigation, route}) => {
 
                 <View style={styles.inputContainer}>                
                   <Text style={styles.tagLabel}>Choose your location:</Text>
-                  <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                  <MapChoose setLatitude = {handleLatitudeChange} setLongitude = {handleLongitudeChange} defaultPos = {userLoc}/>
                 </View>
 
                 <Text style={styles.tagLabel}>Hours of Operation:</Text>
