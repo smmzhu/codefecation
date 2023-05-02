@@ -135,9 +135,10 @@ const BathroomReviewScreen = ({route, navigation}) => {
       >
         <SafeAreaView style={styles.container}>
           <Pressable onPress = {Keyboard.dismiss}>
-            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
-              <View style={styles.container}>
-                <View style={{height:'10%', width:'25%', paddingLeft:'0%',}}>
+          
+            <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
+              <View style={styles.reviewBox}>
+                <View style={{height:'7%', width:'5%', paddingLeft:'0%',}}>
                   <PaperButton
                     style={{
                       width: '100%',
@@ -155,14 +156,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
                     {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/> */}
                   </PaperButton>      
                 </View>                      
-                <Text style={styles.title}>Write a Review</Text>
-                <View style={styles.reviewBox}>
-                  <LinearGradient 
-                    colors={['#FF9482', '#7D77FF']} 
-                    start={{ x: 0.2, y: 0.2}} 
-                    end={{ x: 1, y: 1}}
-                    style={styles.reviewBox}
-                  >
+                <Text style={styles.title}>Write a Review</Text>                
                     <View style={styles.ratingContainer}>
                       <Text style={styles.ratingLabel}>Overall:</Text>
                       <Rater onRatingChange={handleOverallRatingChange}/>
@@ -187,24 +181,22 @@ const BathroomReviewScreen = ({route, navigation}) => {
                         maxLength={500}
                         onChangeText={setReviewText}
                         value={reviewText}
-                    />
-                  </LinearGradient>
-                </View>
-                <PaperButton
-                  style={{
-                    width: 300,
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    alignSelf: 'center',
-                  }}
-                  labelStyle={styles.text}
-                  mode="contained" 
-                  onPress={check}
-                >
-                  Submit Review
-                </PaperButton>
+                    />                
+                  <PaperButton
+                    style={{
+                      width: 300,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 10,
+                      alignSelf: 'center',
+                    }}
+                    labelStyle={styles.text}
+                    mode="contained" 
+                    onPress={check}
+                  >
+                    Submit Review
+                  </PaperButton>
                 {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
               </View>
             </KeyboardAvoidingView>
@@ -235,9 +227,10 @@ const styles = {
   reviewBox: {
     // flexDirection: 'row',
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 25,
     width:'100%',
-    borderRadius: 10,
+    height:'100%',
+    borderRadius: 25,
     marginVertical: 0,
     marginHorizontal: 0,
     shadowColor: '#000',
@@ -248,12 +241,15 @@ const styles = {
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 99,
+    backgroundColor: 'white',
   },
   container: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
     // height: '100%',
     // backgroundColor: '#F5F5F5',
-    padding: '7%',
+    padding: '0%',
   },
   title: {
     fontSize: 24,
@@ -265,7 +261,7 @@ const styles = {
     // flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 5,
   },
   ratingLabel: {
     fontSize: 16,

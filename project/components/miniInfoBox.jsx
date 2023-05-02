@@ -64,6 +64,7 @@ const MiniInfoBox = (props) => {
           coords: props.toilet.coords,
           userLoc: props.userLocation,
           name: props.toilet.name,
+          address: props.toilet.address,
           tags: props.toilet.tags,
           ratings: props.toilet.ratings,
           reviews: props.toilet.reviews,

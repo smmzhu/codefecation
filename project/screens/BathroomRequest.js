@@ -232,142 +232,145 @@ const CreateBathroomPage = ({navigation, route}) => {
         style={styles.containerView}
       >
         <SafeAreaView style={styles.container1}>
-          <View style={{height:'7%', width:'25%', paddingLeft:'5%',}}>
-            <PaperButton
-              style={{
-                width: '100%',
-                height: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                //alignSelf: 'left',
-              }}
-              labelStyle={styles.text}
-              mode="contained"
-              onPress={() => navigation.goBack()}
-            >    
-            {chubfat}   
-            </PaperButton>
-            {/* <Image source={require('../assets/returnButton.png')} style={{ position:'absolute',top: 60, left: 20, width: 20, height: 20}}/> */}
-          </View>
-          <ScrollView style={styles.container1} ref = {scrollViewRef}>
-            <View style={styles.container} >
-              <Pressable onPress={Keyboard.dismiss}>
-
-                <Text style={styles.title}>Request a Bathroom Page</Text>
-                <Text style={styles.tagLabel}>Name:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Name (Ex. San Miguel Floor 1 Bathroom 1427)"
-                  onChangeText={handleNameChange}
-                  value={name}
-                />
-                <Text style={styles.tagLabel}>Address:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Address"
-                  onChangeText={handleAddressChange}
-                  value={address}
-                />
-
-                <View style={styles.inputContainer}>                
-                  <Text style={styles.tagLabel}>Choose your location:</Text>
-                  <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
-                </View>
-
-                <Text style={styles.tagLabel}>Hours of Operation:</Text>
-                <View style={styles.timeContainer}>
-                  <DateTimePicker
-                    testID='time1'
-                    value={date1}
-                    mode='time'
-                    is24Hour={false}
-                    display='default'
-                    onChange={timeChange1}
-                  />
-                  <Text>to</Text>
-                  <DateTimePicker
-                    testID='time2'
-                    value={date2}
-                    mode='time'
-                    is24Hour={false}
-                    display='default'
-                    onChange={timeChange2}
-                  />
-                </View>
-
-                <Text style={styles.tagLabel}>Tags:</Text>
-
-                <View style={styles.tagContainer}>
-                  {renderTagButton('Male')}
-                  {renderTagButton('Female')}
-                  {renderTagButton('Non-gendered')}
-                  {renderTagButton('Family Bathroom')}
-                  {renderTagButton('Baby-Friendly')}
-                  {renderTagButton('ADA Accessible')}
-                  {renderTagButton('Smells good')}
-                  {renderTagButton('Pay per Use')}
-                  {renderTagButton('Customer-Only')}
-                  {renderTagButton('Portable Bathroom')}
-                  {renderTagButton('High-Tech')}
-                </View>
-
-                <Text style={styles.subTitle}>Your initial review!</Text>
-                <View style={styles.reviewBox}>
-                  <LinearGradient 
-                    colors={['#FF9482', '#7D77FF']} 
-                    start={{ x: 0.2, y: 0.2}} 
-                    end={{ x: 1, y: 1}}
-                    style={styles.reviewBox}
-                  >
-                    <View style={styles.ratingContainer}>
-                      <Text style={styles.ratingLabel}>Overall:</Text>
-                      <Rater onRatingChange={handleOverallRatingChange}/>
-                    </View>
-
-                    <View style={styles.ratingContainer}>
-                      <Text style={styles.ratingLabel}>Cleanliness:</Text>
-                      <Rater onRatingChange={handleCleanlinessRatingChange}/>
-                    </View>
-
-                    <View style={styles.ratingContainer}>
-                      <Text style={styles.ratingLabel}>Boujeeness:</Text>
-                      <Rater onRatingChange={handleBoujeenessRatingChange}/>
-                    </View>
-
-                    <Text style={styles.tagLabel}>Review: (optional)</Text>
-                    <TextInput
-                      style={styles.reviewInput}
-                      placeholder="Write your review here..."
-                      multiline={true}
-                      numberOfLines={15}
-                      maxLength={500}
-                      onChangeText={handleReviewChange}
-                      value={review}
-                    />
-                  </LinearGradient>
-                </View>
+          
+            <View style={styles.Box}>
+              <View style={{height:'5%', width:'15%', paddingLeft:'5%',flexDirection:'row',alignContent:'space-between'}}>
                 <PaperButton
                   style={{
-                    width: 300,
-                    height: 50,
+                    width: '100%',
+                    height: '100%',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
-                    alignSelf: 'center',
+                    //alignSelf: 'left',
                   }}
                   labelStyle={styles.text}
-                  mode="contained" 
-                  onPress={check}
-                >
-                  Submit
+                  mode="contained"
+                  onPress={() => navigation.goBack()}
+                >    
+                {chubfat}   
                 </PaperButton>
-                {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
-              </Pressable>
-            </View>
-  
-          </ScrollView>
+                {/* <Image source={require('../assets/returnButton.png')} style={{ position:'absolute',top: 60, left: 20, width: 20, height: 20}}/> */}
+              </View>
+              <ScrollView style={styles.container1} ref = {scrollViewRef}>
+                <View style={styles.container} >
+                  <Pressable onPress={Keyboard.dismiss}>
 
+                    <Text style={styles.title}>Request a Bathroom</Text>
+                    <Text style={styles.tagLabel}>Name:</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Name (Ex. San Miguel Floor 1 Bathroom 1427)"
+                      onChangeText={handleNameChange}
+                      value={name}
+                    />
+                    <Text style={styles.tagLabel}>Address:</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Address"
+                      onChangeText={handleAddressChange}
+                      value={address}
+                    />
+
+                    <View style={styles.inputContainer}>                
+                      <Text style={styles.tagLabel}>Choose your location:</Text>
+                      <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                    </View>
+
+                    <Text style={styles.tagLabel}>Hours of Operation:</Text>
+                    <View style={styles.timeContainer}>
+                      <DateTimePicker
+                        testID='time1'
+                        value={date1}
+                        mode='time'
+                        is24Hour={false}
+                        display='default'
+                        onChange={timeChange1}
+                      />
+                      <Text>  -  </Text>
+                      <DateTimePicker
+                        testID='time2'
+                        value={date2}
+                        mode='time'
+                        is24Hour={false}
+                        display='default'
+                        onChange={timeChange2}
+                      />
+                    </View>
+
+                    <Text style={styles.tagLabel}>Tags:</Text>
+
+                    <View style={styles.tagContainer}>
+                      {renderTagButton('Male')}
+                      {renderTagButton('Female')}
+                      {renderTagButton('Non-gendered')}
+                      {renderTagButton('Family Bathroom')}
+                      {renderTagButton('Baby-Friendly')}
+                      {renderTagButton('ADA Accessible')}
+                      {renderTagButton('Smells good')}
+                      {renderTagButton('Pay per Use')}
+                      {renderTagButton('Customer-Only')}
+                      {renderTagButton('Portable Bathroom')}
+                      {renderTagButton('High-Tech')}
+                    </View>
+
+                    <Text style={styles.subTitle}>Your initial review!</Text>
+                      <View style={styles.reviewBox}>
+                          <LinearGradient 
+                            colors={['#EEEEEE', '#DDDDDD']} 
+                            start={{ x: 0.2, y: 0.2}} 
+                            end={{ x: 1, y: 1}}
+                            style={styles.reviewBox}
+                          >
+                          <View style={styles.ratingContainer}>
+                            <Text style={styles.ratingLabel}>Overall:</Text>
+                            <Rater onRatingChange={handleOverallRatingChange}/>
+                          </View>
+
+                          <View style={styles.ratingContainer}>
+                            <Text style={styles.ratingLabel}>Cleanliness:</Text>
+                            <Rater onRatingChange={handleCleanlinessRatingChange}/>
+                          </View>
+
+                          <View style={styles.ratingContainer}>
+                            <Text style={styles.ratingLabel}>Boujeeness:</Text>
+                            <Rater onRatingChange={handleBoujeenessRatingChange}/>
+                          </View>
+
+                          <Text style={styles.tagLabel}>Review: (optional)</Text>
+                          <TextInput
+                            style={styles.reviewInput}
+                            placeholder="Write your review here..."
+                            multiline={true}
+                            numberOfLines={15}
+                            maxLength={500}
+                            onChangeText={handleReviewChange}
+                            value={review}
+                          />
+                      </LinearGradient>
+                    </View> 
+                    <PaperButton
+                      style={{
+                        width: 300,
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 10,
+                        alignSelf: 'center',
+                        marginTop: 10,
+                      }}
+                      labelStyle={styles.text}
+                      mode="contained" 
+                      onPress={check}
+                    >
+                      Submit
+                    </PaperButton>
+                    {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
+                  </Pressable>
+                </View>
+              
+            </ScrollView>
+          </View>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
           </KeyboardAvoidingView>
 
@@ -394,14 +397,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Comfortaa",
   },
-  reviewBox: {
+  Box: {
     // flexDirection: 'row',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    
-    borderRadius: 10,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    backgroundColor: '#fff',
+    borderRadius: 25,
     marginVertical: 0,
     marginHorizontal: 0,
+    width: '100%',
+    height: '100%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -410,6 +415,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 99,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewBox: {
+    borderRadius: 25,
   },
   container1: {
     // flex: 1,
@@ -419,11 +429,11 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     flex: 1,
     height: '100%',
-    width: '98%',
+    width: '90%',
   },
   container: {
     flex: 1,
-    padding: '7%',
+    padding: '3%',
     //paddingLeft: 20,
     // backgroundColor: '#fff',
     // alignItems: 'left',
@@ -459,7 +469,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // borderRadius: 5,
     // padding: 10,
-    // marginBottom: 10,
+    marginBottom: 20,
   },
   inputContainer: {
     flex: 1,
@@ -480,6 +490,8 @@ const styles = StyleSheet.create({
   tagButton: {
     flex: 0,
     borderWidth: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
     borderColor: '#ccc',
     borderRadius: 5,
     paddingVertical: 5,
@@ -492,8 +504,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 10,
-    color: 'black',
+    marginBottom: 0,
+    marginTop: 20,
     justifyContent: 'flex-start', // align the tags to the left
   },
   tagButtonSelected: {
@@ -532,6 +544,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     marginBottom: 20,
+    marginHorizontal: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -578,6 +591,9 @@ const styles = StyleSheet.create({
     alignContent:'center',
     flexDirection:'row',
     justifyContent:'center',
+    alignItems:'center',
+    marginBottom: 20,
+    marginTop: 20,
   },
 });
 
