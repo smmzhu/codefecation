@@ -99,9 +99,9 @@ function HomeScreen({ navigation }) {
               colors={['#6b70fe', '#a7a9fe']} 
               start={{ x: 0.5, y: 1.2}} 
               end={{ x: 0.5, y: 0}}
-              style={{backgroundColor: "transparent", flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, height: 100}}
+              style={{backgroundColor: "transparent", flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20, height: 100}}
             >
-            <PaperButton onPress={createTwoButtonAlert} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-end", resizeMode: "contain", marginBottom: 5, marginRight: 15}}>
+            <PaperButton onPress={createTwoButtonAlert} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-end", resizeMode: "contain", marginRight: 15}}>
               <Image source={backButton} style={styles.logoView2}/>
             </PaperButton>
             <Image source = {ploopName} style = {styles.nameView}/>
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
       resizeMode: 'contain',
      },
      logoView2: {
-      width: 10,
-      height: 10,
+      width: 30,
+      height: 30,
       // marginBottom: 0,
       // marginTop: 0,
       margin: 0,
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
       height: 40,
       marginBottom: 5,
       marginTop: 0,
+      marginLeft: 8,
       resizeMode: "contain",
       alignSelf: "flex-end",
       flexGrow: 3,
