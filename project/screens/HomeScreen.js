@@ -102,7 +102,7 @@ function HomeScreen({ navigation }) {
               style={{backgroundColor: "transparent", flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, height: 100}}
             >
             <PaperButton onPress={createTwoButtonAlert} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-end", resizeMode: "contain", marginBottom: 5, marginRight: 15}}>
-              <Image source={backButton} style={styles.logoView}/>
+              <Image source={backButton} style={styles.logoView2}/>
             </PaperButton>
             <Image source = {ploopName} style = {styles.nameView}/>
             <PaperButton onPress={() => {navigation.navigate('BathroomRequest', {navigation: navigation, userLoc: userLoc})}} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-end", resizeMode: "contain", margin: 1, marginBottom: 5, flexGrow: 2}} >
@@ -143,9 +143,17 @@ const styles = StyleSheet.create({
       margin: 5,
       resizeMode: 'contain',
      },
+     logoView2: {
+      width: 10,
+      height: 10,
+      // marginBottom: 0,
+      // marginTop: 0,
+      margin: 0,
+      resizeMode: 'contain',
+     },
      nameView:{
-      width: 30,
-      height: 50,
+      width: 20,
+      height: 40,
       marginBottom: 5,
       marginTop: 0,
       resizeMode: "contain",

@@ -259,7 +259,9 @@ const CreateBathroomPage = ({navigation, route}) => {
 
                     <View style={styles.inputContainer}>                
                       <Text style={styles.tagLabel}>Choose your location:</Text>
-                      <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                        <View style={styles.map}>
+                          <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                        </View>
                     </View>
 
                     <Text style={styles.tagLabel}>Hours of Operation:</Text>
@@ -302,7 +304,7 @@ const CreateBathroomPage = ({navigation, route}) => {
                     <Text style={styles.subTitle}>Your initial review!</Text>
                       <View style={styles.reviewBox}>
                           <LinearGradient 
-                            colors={['#EEEEEE', '#DDDDDD']} 
+                            colors={['#ffffff', '#ffffff']} 
                             start={{ x: 0.2, y: 0.2}} 
                             end={{ x: 1, y: 1}}
                             style={styles.reviewBox}
@@ -321,8 +323,9 @@ const CreateBathroomPage = ({navigation, route}) => {
                             <Text style={styles.ratingLabel}>Boujeeness:</Text>
                             <Rater onRatingChange={handleBoujeenessRatingChange}/>
                           </View>
-
-                          <Text style={styles.tagLabel}>Review: (optional)</Text>
+                          <View style={styles.ratingContainer}>
+                            <Text style={styles.ratingLabel}>Review: (optional)</Text>
+                          </View>
                           <TextInput
                             style={styles.reviewInput}
                             placeholder="Write your review here..."
@@ -381,6 +384,19 @@ const styles = StyleSheet.create({
     // marginTop: 0
     resizeMode: 'contain',
    }, 
+  map:{
+    alignSelf: 'center',
+    width: '85%',
+    height: 'auto',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
   text: {
     width: 250,
     fontSize: 18,
@@ -411,6 +427,14 @@ const styles = StyleSheet.create({
   },
   reviewBox: {
     borderRadius: 25,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 99,
   },
   container1: {
     // flex: 1,
@@ -529,13 +553,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Comfortaa",
     marginRight: 10,
+
   },
   reviewInput: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 10,
+    padding: 20,
     marginBottom: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,

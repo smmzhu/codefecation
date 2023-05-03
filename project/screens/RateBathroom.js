@@ -135,28 +135,12 @@ const BathroomReviewScreen = ({route, navigation}) => {
         <SafeAreaView style={styles.container}>
           <Pressable onPress = {Keyboard.dismiss}>
           
-            <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 160 :0}>
+            <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
               <View style={styles.reviewBox}>
-                <View style={{height:'7%', width:'100%', paddingLeft:'5%',alignContent:'flex-start', flex:'row', justifyContent:'center', }}>
-                  <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "center", alignSelf: "flex-start", resizeMode: "contain", marginBottom: 5, marginRight: 15}}>
+                <View style={{height:'7%', width:'100%', paddingLeft:0, flexDirection:'row'}}>
+                  <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-start", resizeMode: "contain"}}>
                     <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
                   </PaperButton>
-                  {/* <PaperButton
-                    style={{
-                      width: '8%',
-                      height: '50%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 10,
-                      backgroundColor: '#7D77FF',
-                    }}
-                    labelStyle={styles.text}
-                    mode="contained" 
-                    onPress={() => navigation.goBack()}
-                  >
-                    {sign}
-                    {/* <Image source={require('../assets/returnButton.png')} style={{width: 20, height: 20}}/> */}
-                  {/*</PaperButton>       */}
                 </View>                      
                 <Text style={styles.title}>Write a Review</Text>                
                     <View style={styles.ratingContainer}>
@@ -173,7 +157,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
                       <Text style={styles.ratingLabel}>Boujeeness:</Text>
                       <Rater onRatingChange={handleBoujeenessRatingChange}/>
                     </View>
-                    <Text style={styles.ratingLabel}>Review (optional):</Text>
+                    <Text style={{marginVertical:10, ...styles.ratingLabel}}>Review (optional):</Text>
                     <TextInput
                         editable
                         style={styles.reviewInput}
@@ -227,6 +211,13 @@ const styles = {
     textAlign: "center",
     fontFamily: "Comfortaa",
   },
+  logoView: {
+    width: 30,
+    height: 30,
+    // marginBottom: 0,
+    // marginTop: 0
+    resizeMode: 'contain',
+   }, 
   reviewBox: {
     // flexDirection: 'row',
     paddingVertical: 10,
@@ -259,6 +250,7 @@ const styles = {
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 50,
+    fontFamily: 'Comfortaa',
   },
   ratingContainer: {
     // flexDirection: 'row',
@@ -270,6 +262,7 @@ const styles = {
     fontSize: 16,
     fontFamily: 'Comfortaa',
     marginRight: 10,
+
   },
   reviewInput: {
     backgroundColor: 'white',
@@ -277,7 +270,7 @@ const styles = {
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 10,
     textAlignVertical: 'top',
     minHeight: 150,
     fontSize: 16,
