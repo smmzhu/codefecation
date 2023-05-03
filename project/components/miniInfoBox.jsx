@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, Image} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {Animated} from "react-native";
 import {LogBox} from 'react-native';
@@ -8,6 +8,7 @@ import Rating from './Rating';
 import Tag from './Tag';
 import * as Font from 'expo-font';
 import firebase from '../database/firebase';
+import verif from '../assets/verif.png';
 
 const MiniInfoBox = (props) => {
   const [disp, setDisp] = useState(useRef(new Animated.ValueXY({x: 0, y: 1})).current); //disp = displacement
@@ -145,7 +146,8 @@ const MiniInfoBox = (props) => {
         styles={styles.modal}
       >
         <View style={styles.rowOne}>
-          <Text style={styles.modalText}>{props.toilet.name}</Text>
+          {/* <Text style={styles.modalText}>{props.toilet.name}</Text> */}
+          {props.toilet.status.validBathroom ? <Text style={styles.modalText}>{props.toilet.name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.modalText}>{props.toilet.name}</Text>}
           <View style={styles.hoursection}>
               {open && (
                 <View style={styles.opentag}>
@@ -241,6 +243,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'center',
     paddingHorizontal: 10,
+  },
+  verif: {
+    width: 30,
+    height: 30,
+    alignSelf: 'bottom',
+    justifyContent: 'bottom',
+    resizeMode: 'contain',
+    // backgroundColor: '#7D77FF',
+    marginLeft: 10,
   },
   hoursection: {
     flex: 1,

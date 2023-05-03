@@ -14,6 +14,7 @@ import { Button as PaperButton } from "react-native-paper";
 import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
 import firebase from '../database/firebase';
+import verif from '../assets/verif.png';
 
 const BathroomScreen = ({ route, navigation }) => {
     const {bathroomID, coords, name, address, hours, tags, reviewSummary, ratings, reviews, status, userLoc} = route.params; //assume that bathroom ratings is a json
@@ -147,7 +148,7 @@ const BathroomScreen = ({ route, navigation }) => {
             <View style={styles.container}>
             
               <View style={styles.header}>
-                {status.validBathroom ? <Text style={styles.title}>{name} ✅</Text> : <Text style={styles.title}>{name}</Text>}
+                {status.validBathroom ? <Text style={styles.title}>{name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.title}>{name}</Text>}
                 <PaperButton
                   style={{
                     flex:1,
@@ -345,6 +346,14 @@ const styles = StyleSheet.create({
         // marginTop: 0
         resizeMode: 'contain',
       }, 
+      verif: {
+        width: 30,
+        height: 30,
+        alignSelf: 'bottom',
+        justifyContent: 'bottom',
+        resizeMode: 'contain',
+        // backgroundColor: '#7D77FF',
+      },
       map:{
         width: '100%',
         height: 200,
