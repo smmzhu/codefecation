@@ -173,7 +173,7 @@ async function getReviewSummary(inputRevs) {
       frequency_penalty: 0,
       presence_penalty: 0,
     });
-    const data = response.data.choices[0].text;
+    let data = response.data.choices[0].text;
     data = data.replace(/(^\s+|\s+$)/g,'').replace(/(\s+|\n+)/g,' ');
     console.log("OPENAI DATA: ", data);
     return data;
