@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import firebase from '../database/firebase';
 import {incCount} from '../database/databaseFuncs';
 import { getAuth } from "firebase/auth";
@@ -44,12 +44,10 @@ const BathroomVerif = (props) => {
         <View style={{ flexDirection: 'column', margin: 10, justifyContent:'center', alignItems:'center' }}>
           <View style={{ flexDirection: 'row', justifyContent:'center', alignItems:'center' }}>
             <TouchableOpacity onPress={yesVerif}>
-
-              <Text style={{ fontSize: 38 }}>^</Text>
+              <Image source={require('../assets/yay.png')} style={{ width: 50, height: 50, margin: 20, marginTop: 0}} />
             </TouchableOpacity>
             <TouchableOpacity onPress={noVerif}>
-
-              <Text style={{ fontSize: 30, marginLeft: 10, marginRight:10 }}>v</Text>
+              <Image source={require('../assets/nay.png')} style={{ width: 50, height: 50, margin: 20, marginTop: 0}} />
             </TouchableOpacity>
           </View>
           {isVerified && <Text style={styles.text}>Thanks for judging the restroom!</Text>}

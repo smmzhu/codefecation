@@ -285,7 +285,7 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
 
       // getReviewSummary from OpenAI
       let revSummary = "";
-      if (inputRevs.length > 0 && inputRevs.length%3 == 0) {
+      if (inputRevs.length > 0 && inputRevs.length > 3) {
         revSummary = await getReviewSummary(inputRevs);
       }
       console.log("revSummary", revSummary);
