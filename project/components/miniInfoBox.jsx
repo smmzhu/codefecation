@@ -159,9 +159,9 @@ const MiniInfoBox = (props) => {
               )}
           </View>
           <Pressable
-            style={[styles.button, styles.buttonClose, styles.close]}
+            style={[styles.button, styles.close]}
             onPress={() => {flyOutToBottom(); props.setCurrPtInfoActive("none")}}>
-            <FontAwesome name='times' size={24} color='white' />
+            <FontAwesome name='times' size={30} color='#7D77FF' />
           </Pressable>
         </View>
         
@@ -173,7 +173,7 @@ const MiniInfoBox = (props) => {
 
         <View style={styles.rowThree}>
           <Text style = {styles.distance}>{distance.toFixed(2)} km • {props.toilet.hours}</Text>
-          <Text style={styles.statusText}></Text>
+
         </View>
 
         <View style={styles.rowFour}>
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 0,
     fontFamily: "Comfortaa",
-    maxWidth: '69%',
+    maxWidth: '60%',
     flexWrap: 'wrap',
     alignSelf: 'center',
     paddingHorizontal: 10,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: 'green',
+    backgroundColor: '#66ffc2',
     borderRadius: 5,
     opacity: 1,
   },
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: 'red',
+    backgroundColor: '#ff9999',
     borderRadius: 5,
     opacity: 1,
   },
