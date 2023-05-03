@@ -301,7 +301,7 @@ const CreateBathroomPage = ({navigation, route}) => {
                       {renderTagButton('High-Tech')}
                     </View>
 
-                    <Text style={styles.subTitle}>Your initial review!</Text>
+                    {/* <Text style={styles.subTitle}>Your initial review!</Text> */}
                       <View style={styles.reviewBox}>
                           <LinearGradient 
                             colors={['#ffffff', '#ffffff']} 
@@ -358,9 +358,10 @@ const CreateBathroomPage = ({navigation, route}) => {
                   </Pressable>
                 </View>
             </ScrollView>
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
+            </KeyboardAvoidingView>
           </View>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
-          </KeyboardAvoidingView>
+          
         </SafeAreaView>
       </LinearGradient>
     </>
@@ -386,7 +387,7 @@ const styles = StyleSheet.create({
    }, 
   map:{
     alignSelf: 'center',
-    width: '85%',
+    width: '100%',
     height: 'auto',
     shadowColor: '#000',
     shadowOffset: {
@@ -426,8 +427,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   reviewBox: {
+    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 25,
-    shadowColor: '#000',
+    shadowColor: '#000000',
     shadowOffset: {
       width: 0,
       height: 2,

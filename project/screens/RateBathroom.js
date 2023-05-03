@@ -201,6 +201,8 @@ const styles = {
     flexDirection: "column",
     // justifyContent: "center",
     alignItems: "center",
+
+    
     // background: 'rgb(255,148,130)',
     // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
   }, 
@@ -239,7 +241,7 @@ const styles = {
   },
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyC9ntent: 'center',
     width: '100%',
     // height: '100%',
     // backgroundColor: '#F5F5F5',

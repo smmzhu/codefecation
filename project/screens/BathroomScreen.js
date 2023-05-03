@@ -341,12 +341,12 @@ const styles = StyleSheet.create({
       logoView: {
         width: 30,
         height: 30,
-        // marginBottom: 0,
+        // paddingBottom: 10,
         // marginTop: 0
         resizeMode: 'contain',
       }, 
       map:{
-        width: '85%',
+        width: '100%',
         height: 200,
         shadowColor: '#000',
         shadowOffset: {
