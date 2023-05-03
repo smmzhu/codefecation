@@ -4,6 +4,7 @@ import { useWindowDimensions } from 'react-native';
 import Rating from './Rating';
 import Tag from "./Tag.jsx";
 import {getDistanceFromLatLonInKm, isTimeInRange} from "./ComputationalEarthSciences";
+import verif from '../assets/verif.png';
 
 const ToiletCard = (props) => {
     const {height, width} = useWindowDimensions();
@@ -43,7 +44,8 @@ const ToiletCard = (props) => {
             })}>
                 {/* <Image source={require('../assets/toiletIcon.png')} style={{width: 50, height: 50, alignSelf: "center"}}/> */}
                 <View style = {{flexDirection: 'row', justifyContent: "flex-start", margin: 10}}>
-                    <Text style = {styles.modalText}>{props.toilet.name}</Text>
+                    {/* <Text style = {styles.modalText}>{props.toilet.name}</Text> */}
+                    {props.toilet.status.validBathroom ? <Text style={styles.modalText}>{props.toilet.name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.modalText}>{props.toilet.name}</Text>}
                     {open && (
                         <View style={styles.opentag}>
                         <Text style={styles.tagText}>open</Text>
@@ -108,6 +110,16 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignSelf: 'center',
         paddingHorizontal: 10,
+    },
+    verif: {
+        width: 30,
+        height: 30,
+        alignSelf: 'bottom',
+        justifyContent: 'bottom',
+        resizeMode: 'contain',
+        // backgroundColor: '#7D77FF',
+        paddingLeft: 5,
+        marginLeft: 10,
     },
     opentag: {
         marginTop: 0,
