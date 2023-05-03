@@ -147,7 +147,7 @@ const MiniInfoBox = (props) => {
       >
         <View style={styles.rowOne}>
           {/* <Text style={styles.modalText}>{props.toilet.name}</Text> */}
-          {props.toilet.status.validBathroom ? <Text style={styles.modalText}>{props.toilet.name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.modalText}>{props.toilet.name}</Text>}
+          {props.toilet.status.validBathroom ? <Text style={styles.modalText}>{props.toilet.name}  <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.modalText}>{props.toilet.name}</Text>}
           <View style={styles.hoursection}>
               {open && (
                 <View style={styles.opentag}>
@@ -247,11 +247,12 @@ const styles = StyleSheet.create({
   verif: {
     width: 30,
     height: 30,
-    alignSelf: 'bottom',
-    justifyContent: 'bottom',
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-start',
     resizeMode: 'contain',
     // backgroundColor: '#7D77FF',
-    marginLeft: 10,
+    // marginLeft: 10,
+    // absolutePosition: 'absolute',
   },
   hoursection: {
     flex: 1,
