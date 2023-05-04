@@ -62,10 +62,10 @@ export default function TagSearchSelector(props) {
                 transparent={true}
             >
                 <LinearGradient 
-                  colors={['#FF9482', '#7D77FF']} 
-                  start={{ x: 0.2, y: 0.2}} 
-                  end={{ x: 1, y: 1}}
-                  style={styles.modal}
+                  colors={['#8589ff', '#8589ff']} 
+                  start={{ x: 0.5, y: 1}} 
+                  end={{ x: 0.5, y: 0}}
+                  style = {styles.modal}
                 >
                     <Text style = {styles.bigFont}>Choose your desired tags</Text>
                     <View
@@ -114,6 +114,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '27.5%',
         left: '10%',
+        
+        shadowOffset: {width: -10, height: 10},  
+        shadowColor: '#000000',  
+        shadowOpacity: 1,  
+        shadowRadius: 5,  
     },
     button: {
         alignSelf: 'center',
@@ -161,8 +166,7 @@ const styles = StyleSheet.create({
       },
       tagButtonSelected: {
         flex: 0,
-        backgroundColor: 'brown',
-        borderColor: 'brown',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
       tagTextSelected: {
         flex: 0,
@@ -179,4 +183,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontFamily: "Comfortaa",
       },
+      dropShadow:{
+        shadowOffset: {width: -10, height: 10},  
+        shadowColor: '#000000',  
+        shadowOpacity: 1,  
+        shadowRadius: 5,  
+      }
 });
