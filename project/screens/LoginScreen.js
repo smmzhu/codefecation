@@ -21,7 +21,7 @@ export default class Login extends Component {
       email: '', 
       password: '',
       isLoading: false,
-      fontsLoaded: false
+      fontsLoaded: false,
     }
     this.width = Dimensions.get('window').width;
     this.height = Dimensions.get('window').height;  
@@ -80,7 +80,7 @@ export default class Login extends Component {
           <ActivityIndicator size="large" color="#9E9E9E"/>
         </View>
       )
-    }    
+    }   
     return (
           <LinearGradient 
             colors={['#FF9482', '#7D77FF']} 
@@ -150,7 +150,8 @@ export default class Login extends Component {
               onPress={() => this.props.navigation.navigate('Signup')}>
               Don't have account? Click here to signup
             </Text>          
-          </Pressable>          
+          
+            </Pressable>  
           </LinearGradient>
     );
   }
@@ -222,10 +223,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff'
-  },
-  colorful: {
-    background: 'rgb(255,148,130)',
-    backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
   },
   text: {
     width: 250,
