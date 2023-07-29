@@ -79,9 +79,6 @@ const BathroomReviewScreen = ({route, navigation}) => {
     }
     const displayName = user.displayName;
 
-    // const bathroomID = navigation.getParam('bathroomID');
-    console.log(bathroomID);
-
     const review = {
       reviewID: uuid.v4(),
       userID: userID,
