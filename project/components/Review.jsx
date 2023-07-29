@@ -28,6 +28,8 @@ const Review = ({review}) => {
 const styles = StyleSheet.create({
   container: {
     // flexDirection: 'row',
+    alignSelf: 'center',
+    width: '90%',
     paddingVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Comfortaa',
   },
   topContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   text: {
     fontSize: 16,
