@@ -17,7 +17,7 @@ const Review = ({review}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={styles.userID}>{review.userID}</Text>
+        <Text style={styles.userID}>{review.displayName ? review.displayName : "legacy comment"}</Text>
         <Rating Rating={review.overallRating} size={2} />
       </View>
       <Text style={styles.text}>{review.reviewText}</Text>
