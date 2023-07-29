@@ -255,11 +255,7 @@ const BathroomScreen = ({ route, navigation }) => {
               <View style={styles.component}>
                   <View style={styles.section}>
                     <Text style={styles.revSectionTitle}>Reviews</Text>
-                    <Text style={styles.text}>
-                    <View style = {{padding: 0}}>
-                      {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
-                    </View>
-                    </Text>
+                    {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
                   </View>
               </View>
                 
@@ -412,6 +408,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
       },
       section: {
+        width: '90%',
         marginBottom: 20,
         alignItems: 'center',
         // marginTop: 10,
