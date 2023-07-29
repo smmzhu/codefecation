@@ -225,128 +225,147 @@ const CreateBathroomPage = ({navigation, route}) => {
   return (
     <>
       <LinearGradient 
-        colors={['#FF9482', '#7D77FF']} 
+        colors={['#F0F3FB', '#F0F3FB']} 
         start={{ x: 0.2, y: 0.2}} 
         end={{ x: 1, y: 1}}
         style={styles.containerView}
       >
         <SafeAreaView style={styles.container1}>          
-            <View style={styles.Box}>
+            {/* <View style={styles.Box}> */}
               <View style={{height:'7%', width:'100%', paddingLeft:'2%', marginTop: '3%', flexDirection:'row'}}>
                 <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-end", resizeMode: "contain"}}>
                   <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
                 </PaperButton>
               </View>
               <ScrollView style={styles.container1} ref = {scrollViewRef} showsVerticalScrollIndicator={false}>
-                <View style={styles.container} >
+                {/* <View style={styles.container} > */}
                   <Pressable onPress={Keyboard.dismiss}>
 
-                    <Text style={styles.title}>Request a Bathroom</Text>
-                    <Text style={styles.tagLabel}>Name:</Text>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Name (Ex. San Miguel Floor 1 Bathroom 1427)"
-                      onChangeText={handleNameChange}
-                      value={name}
-                    />
-                    <Text style={styles.tagLabel}>Address:</Text>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Address"
-                      onChangeText={handleAddressChange}
-                      value={address}
-                    />
+                    <View style={styles.component}>
+                      <Text style={styles.title}>Request a Bathroom</Text>
+                      <Text style={styles.tagLabel}>Name:</Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="San Miguel Floor 1 Bathroom 1427"
+                        onChangeText={handleNameChange}
+                        value={name}
+                      />
+                      <Text style={styles.tagLabel}>Address:</Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="1234 Bathroom Street, Santa Barbara, CA 93106"
+                        onChangeText={handleAddressChange}
+                        value={address}
+                      />
+                    </View>
+                    
+                    <View style={styles.component}>
+                      <View style={styles.inputContainer}>                
+                        <Text style={styles.tagLabel}>Choose your location:</Text>
+                          <View style={styles.map}>
+                            <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                          </View>
+                      </View>
+                    </View>
 
-                    <View style={styles.inputContainer}>                
-                      <Text style={styles.tagLabel}>Choose your location:</Text>
-                        <View style={styles.map}>
-                          <MapChoose setLatitude = {setLatitude} setLongitude = {setLongitude} defaultPos = {userLoc}/>
+                    <View style={styles.component}>
+                      <Text style={styles.tagLabel}>Hours of Operation:</Text>
+                      <View style={styles.timeContainer}>
+                        <DateTimePicker
+                          testID='time1'
+                          value={date1}
+                          mode='time'
+                          is24Hour={false}
+                          display='default'
+                          onChange={timeChange1}
+                        />
+                        <Text>  -  </Text>
+                        <DateTimePicker
+                          testID='time2'
+                          value={date2}
+                          mode='time'
+                          is24Hour={false}
+                          display='default'
+                          onChange={timeChange2}
+                        />
+                      </View>
+
+                      <Text style={styles.tagLabel}>Tags:</Text>
+
+                      <View style={styles.tagContainer}>
+                        {renderTagButton('Male')}
+                        {renderTagButton('Female')}
+                        {renderTagButton('Non-gendered')}
+                        {renderTagButton('Family Bathroom')}
+                        {renderTagButton('Baby-Friendly')}
+                        {renderTagButton('ADA Accessible')}
+                        {renderTagButton('Smells good')}
+                        {renderTagButton('Pay per Use')}
+                        {renderTagButton('Customer-Only')}
+                        {renderTagButton('Portable Bathroom')}
+                        {renderTagButton('High-Tech')}
+                      </View>
+                    </View>                    
+
+                    <View style={styles.component}>
+                      {/* <View style={styles.reviewBox}> */}
+                        <LinearGradient 
+                          colors={['#ffffff', '#ffffff']} 
+                          start={{ x: 0.2, y: 0.2}} 
+                          end={{ x: 1, y: 1}}
+                          style={styles.reviewBox}
+                        >
+                        <View style={styles.ratingContainer}>
+                          <Text style={styles.ratingLabel}>Overall:</Text>
+                          <Rater onRatingChange={handleOverallRatingChange}/>
                         </View>
-                    </View>
 
-                    <Text style={styles.tagLabel}>Hours of Operation:</Text>
-                    <View style={styles.timeContainer}>
-                      <DateTimePicker
-                        testID='time1'
-                        value={date1}
-                        mode='time'
-                        is24Hour={false}
-                        display='default'
-                        onChange={timeChange1}
-                      />
-                      <Text>  -  </Text>
-                      <DateTimePicker
-                        testID='time2'
-                        value={date2}
-                        mode='time'
-                        is24Hour={false}
-                        display='default'
-                        onChange={timeChange2}
-                      />
-                    </View>
+                        <View style={styles.ratingContainer}>
+                          <Text style={styles.ratingLabel}>Cleanliness:</Text>
+                          <Rater onRatingChange={handleCleanlinessRatingChange}/>
+                        </View>
 
-                    <Text style={styles.tagLabel}>Tags:</Text>
-
-                    <View style={styles.tagContainer}>
-                      {renderTagButton('Male')}
-                      {renderTagButton('Female')}
-                      {renderTagButton('Non-gendered')}
-                      {renderTagButton('Family Bathroom')}
-                      {renderTagButton('Baby-Friendly')}
-                      {renderTagButton('ADA Accessible')}
-                      {renderTagButton('Smells good')}
-                      {renderTagButton('Pay per Use')}
-                      {renderTagButton('Customer-Only')}
-                      {renderTagButton('Portable Bathroom')}
-                      {renderTagButton('High-Tech')}
+                        <View style={styles.ratingContainer}>
+                          <Text style={styles.ratingLabel}>Boujeeness:</Text>
+                          <Rater onRatingChange={handleBoujeenessRatingChange}/>
+                        </View>
+                        <View style={styles.ratingContainer}>
+                          <Text style={styles.ratingLabel}>Review: (optional)</Text>
+                        </View>
+                        <TextInput
+                          style={styles.reviewInput}
+                          placeholder="Write your review here..."
+                          multiline={true}
+                          numberOfLines={15}
+                          maxLength={500}
+                          onChangeText={handleReviewChange}
+                          value={review}
+                        />
+                        </LinearGradient>
+                      {/* </View>  */}
                     </View>
 
                     {/* <Text style={styles.subTitle}>Your initial review!</Text> */}
-                      <View style={styles.reviewBox}>
-                          <LinearGradient 
-                            colors={['#ffffff', '#ffffff']} 
-                            start={{ x: 0.2, y: 0.2}} 
-                            end={{ x: 1, y: 1}}
-                            style={styles.reviewBox}
-                          >
-                          <View style={styles.ratingContainer}>
-                            <Text style={styles.ratingLabel}>Overall:</Text>
-                            <Rater onRatingChange={handleOverallRatingChange}/>
-                          </View>
-
-                          <View style={styles.ratingContainer}>
-                            <Text style={styles.ratingLabel}>Cleanliness:</Text>
-                            <Rater onRatingChange={handleCleanlinessRatingChange}/>
-                          </View>
-
-                          <View style={styles.ratingContainer}>
-                            <Text style={styles.ratingLabel}>Boujeeness:</Text>
-                            <Rater onRatingChange={handleBoujeenessRatingChange}/>
-                          </View>
-                          <View style={styles.ratingContainer}>
-                            <Text style={styles.ratingLabel}>Review: (optional)</Text>
-                          </View>
-                          <TextInput
-                            style={styles.reviewInput}
-                            placeholder="Write your review here..."
-                            multiline={true}
-                            numberOfLines={15}
-                            maxLength={500}
-                            onChangeText={handleReviewChange}
-                            value={review}
-                          />
-                      </LinearGradient>
-                    </View> 
+                      
                     <PaperButton
                       style={{
-                        width: 300,
+                        // width: 300,
+                        // height: 50,
+                        // justifyContent: 'center',
+                        // alignItems: 'center',
+                        // borderRadius: 10,
+                        // alignSelf: 'center',
+                        // marginTop: 10,
+                        // backgroundColor: '#7D77FF',
+                        flex:1,
+                        flexGrow: 1,
+                        width: '90%',
                         height: 50,
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 10,
                         alignSelf: 'center',
-                        marginTop: 10,
-                        backgroundColor: '#7D77FF',
+                        backgroundColor: '#9A9AFE',
                       }}
                       labelStyle={styles.text}
                       mode="contained" 
@@ -356,11 +375,11 @@ const CreateBathroomPage = ({navigation, route}) => {
                     </PaperButton>
                     {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
                   </Pressable>
-                </View>
+                {/* </View> */}
             </ScrollView>
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 :0}>
             </KeyboardAvoidingView>
-          </View>
+          {/* </View> */}
           
         </SafeAreaView>
       </LinearGradient>
@@ -377,6 +396,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // background: 'rgb(255,148,130)',
     // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
+  },
+  component: {
+    flex: 1,
+    marginLeft: '4%',
+    marginRight: '4%',
+    marginBottom: '5%',
+    width: '90%',
+    height: 'auto',
+    backgroundColor: '#fff',
+    
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 99,
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
   logoView: {
     width: 30,
@@ -404,6 +444,7 @@ const styles = StyleSheet.create({
     // lineHeight: 21,
     textAlign: "center",
     fontFamily: "Comfortaa",
+    color: "#000",
   },
   Box: {
     // flexDirection: 'row',
@@ -446,8 +487,8 @@ const styles = StyleSheet.create({
     // alignItems: 'left',
     // justifyContent: 'center',
     flex: 1,
-    height: '100%',
-    width: '90%',
+    // height: '100%',
+    // width: '90%',
   },
   container: {
     flex: 1,
@@ -458,12 +499,18 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   title: {
-    flex: 1,
-    fontSize: 24,
+    // flex: 1,
+    // fontSize: 24,
+    // fontWeight: 'bold',
+    // fontFamily: "Comfortaa",
+    // marginBottom: 20,
+    fontSize: 20,
     fontWeight: 'bold',
     fontFamily: "Comfortaa",
-    marginBottom: 20,
-    // alignItems: 'center',
+    marginBottom: '2%',
+    marginTop: '4%',
+    marginLeft: '4%',
+    alignSelf: 'left',
   },
   subTitle: {
     flex: 1,
@@ -475,11 +522,10 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   input: {
-    flex: 1,
+    // flex: 1,
     height: 40,
-    width: '100%',
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    width: '90%',
+
     fontFamily: "Comfortaa",
     borderWidth: 1,
     borderColor: '#ccc',
@@ -487,7 +533,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // borderRadius: 5,
     // padding: 10,
-    marginBottom: 20,
+    // marginBottom: 20,
+    marginLeft: '4%',
+    marginVertical: '3%',
+    paddingHorizontal: '2%',
   },
   inputContainer: {
     flex: 1,
@@ -503,7 +552,10 @@ const styles = StyleSheet.create({
     flex: 0,
     fontWeight: 'bold',
     fontFamily: "Comfortaa",
-    marginBottom: 5,
+    // marginBottom: 5,
+    marginLeft: '4%',
+    marginTop: '4%',
+    marginBottom: '2%',
   },
   tagButton: {
     flex: 0,
@@ -522,8 +574,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 0,
-    marginTop: 20,
+    marginTop: '2%',
+    marginLeft: '4%',
+    marginBottom: '2%',
     justifyContent: 'flex-start', // align the tags to the left
   },
   tagButtonSelected: {

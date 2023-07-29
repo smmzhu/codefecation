@@ -75,7 +75,7 @@ useEffect(() => {
       <MapView style={styles.map} 
         region={mapRegion}
       >
-        <Marker coordinate={mapRegion} title='User' >
+        <Marker coordinate={mapRegion} title='Me' >
             <View style={styles.Marker}>
                 <Image source={require('../assets/user.png')} style={{width: 50, height: 50}}/>
             </View>

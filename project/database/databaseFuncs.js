@@ -1,4 +1,4 @@
-import firebase from '../database/firebase';
+import firebase from './firebase';
 import {Alert, fetch} from 'react-native';
 import axios from 'axios';
 // import Config from 'react-native-config';

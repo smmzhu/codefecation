@@ -127,7 +127,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
   return (
     <>
       <LinearGradient 
-        colors={['#FF9482', '#7D77FF']} 
+        colors={['#F0F3FB', '#F0F3FB']} 
         start={{ x: 0.2, y: 0.2}} 
         end={{ x: 1, y: 1}}
         style={styles.containerView}
@@ -136,13 +136,16 @@ const BathroomReviewScreen = ({route, navigation}) => {
           <Pressable onPress = {Keyboard.dismiss}>
           
             <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
-              <View style={styles.reviewBox}>
+              {/* <View style={styles.reviewBox}> */}
                 <View style={{height:'7%', width:'100%', paddingLeft:0, flexDirection:'row'}}>
                   <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-start", resizeMode: "contain"}}>
                     <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
                   </PaperButton>
-                </View>                      
-                <Text style={styles.title}>Write a Review</Text>                
+                </View>
+
+                <View style={styles.component}>
+                  {/* <View style={styles.body}> */}
+                    <Text style={styles.title}>Write a Review</Text>                
                     <View style={styles.ratingContainer}>
                       <Text style={styles.ratingLabel}>Overall:</Text>
                       <Rater onRatingChange={handleOverallRatingChange}/>
@@ -157,35 +160,41 @@ const BathroomReviewScreen = ({route, navigation}) => {
                       <Text style={styles.ratingLabel}>Boujeeness:</Text>
                       <Rater onRatingChange={handleBoujeenessRatingChange}/>
                     </View>
-                    <Text style={{marginVertical:10, ...styles.ratingLabel}}>Review (optional):</Text>
-                    <TextInput
-                        editable
-                        style={styles.reviewInput}
-                        placeholder="Write your review here..."
-                        multiline={true}
-                        numberOfLines={15}
-                        maxLength={500}
-                        onChangeText={setReviewText}
-                        value={reviewText}
-                    />                
+                  {/* </View> */}
+                </View>
+
+
+                <View style={styles.component}>
+                  <Text style={styles.reviewLabel}>Review (optional):</Text>
+                  <TextInput
+                      editable
+                      style={styles.reviewInput}
+                      placeholder="Write your review here..."
+                      multiline={true}
+                      numberOfLines={15}
+                      maxLength={500}
+                      onChangeText={setReviewText}
+                      value={reviewText}
+                  /> 
+                </View>
                   <PaperButton
                     style={{
-                      width: 300,
-                      height: 50,
+                      // width: '80%',
+                      // height: '5%',
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 10,
                       alignSelf: 'center',
-                      backgroundColor: '#7D77FF',
+                      backgroundColor: '#9A9AFE',
                     }}
-                    labelStyle={styles.text}
+                    labelStyle={styles.subText}
                     mode="contained" 
                     onPress={check}
                   >
                     Submit Review
                   </PaperButton>
                 {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
-              </View>
+              {/* </View> */}
             </KeyboardAvoidingView>
           </Pressable>
         </SafeAreaView>
@@ -201,11 +210,42 @@ const styles = {
     flexDirection: "column",
     // justifyContent: "center",
     alignItems: "center",
-
-    
     // background: 'rgb(255,148,130)',
     // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
   }, 
+  component: {
+    flex: 1,
+    marginLeft: '4%',
+    marginRight: '4%',
+    marginBottom: '5%',
+    width: '90%',
+    height: 'auto',
+    backgroundColor: '#fff',
+    marginHorizontal: '5%',
+    paddingHorizontal: '5%',
+    
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 99,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  body: {
+    flex: 1,
+    padding: '24%',
+  },
+  subText: {
+    fontSize: 16,
+    marginBottom: 10,
+    fontFamily: "Comfortaa",
+    color: "#000",
+  },
   text: {
     width: 250,
     fontSize: 18,
@@ -228,7 +268,7 @@ const styles = {
     height:'100%',
     borderRadius: 25,
     marginVertical: 0,
-    marginHorizontal: 0,
+    marginHorizontal: 50,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -243,40 +283,56 @@ const styles = {
     alignItems: 'center',
     justifyC9ntent: 'center',
     width: '100%',
+    // width: '100%',
     // height: '100%',
     // backgroundColor: '#F5F5F5',
-    padding: '0%',
+    // padding: '0%',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    marginTop: 50,
+    // marginBottom: 20,
+    // marginTop: '5%',
     fontFamily: 'Comfortaa',
+    alignSelf: 'left',
+    marginBottom: '3%',
   },
   ratingContainer: {
     // flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 5,
+    // marginTop: 5,
+  },
+  reviewLabel: {
+    fontSize: 16,
+    fontFamily: 'Comfortaa',
+    // marginBottom: '2%',
+    alignSelf: 'left',
+    marginVertical: 10,
+    // marginRight: '80%',
+    // paddingRight: '80%',
   },
   ratingLabel: {
     fontSize: 16,
     fontFamily: 'Comfortaa',
-    marginRight: 10,
-
+    // marginBottom: '2%',
+    alignSelf: 'left',
   },
   reviewInput: {
     backgroundColor: 'white',
-    padding: 10,
-    marginBottom: 20,
+    fontFamily: 'Comfortaa',
+    fontSize: 16,
+    lineHeight: 24,
+    minHeight: '30%',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
+
+    padding: '3%',
+    marginBottom: '3%',
+    
     textAlignVertical: 'top',
-    minHeight: 150,
-    fontSize: 16,
-    lineHeight: 24,
+    width: 315,
   },
   submitButton: {
     backgroundColor: '#F5A623',

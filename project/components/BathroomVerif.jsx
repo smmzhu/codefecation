@@ -66,9 +66,13 @@ const styles = StyleSheet.create({
   
   },
   Box: {
-    width: '100%',
+    marginLeft: '4%',
+    marginRight: '4%',
+    marginBottom: '5%',
+    width: '90%',
     height: 'auto',
     backgroundColor: '#fff',
+    
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
@@ -80,6 +84,5 @@ const styles = StyleSheet.create({
     elevation: 99,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
   },
 });

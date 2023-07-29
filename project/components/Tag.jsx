@@ -13,11 +13,10 @@ const styles = StyleSheet.create({
       tag: {
         paddingVertical: 5,
         paddingHorizontal: 10,
-        backgroundColor: '#ddd',
         borderRadius: 10,
         marginRight: 7,
         marginBottom: 5,
-        backgroundColor:'#7D77FF',
+        backgroundColor:'#9A9AFE',
       },
       text: {
         fontSize: 14,
