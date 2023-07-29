@@ -48,12 +48,12 @@ const ToiletCard = (props) => {
                     {props.toilet.status.validBathroom ? <Text style={styles.modalText}>{props.toilet.name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.modalText}>{props.toilet.name}</Text>}
                     {open && (
                         <View style={styles.opentag}>
-                        <Text style={styles.tagText}>open</Text>
+                        <Text style={styles.tagText}>Open</Text>
                         </View>
                     )}
                     {!open && (
                         <View style={styles.closedtag}>
-                        <Text style={styles.tagText}>closed</Text>
+                        <Text style={styles.tagText}>Closed</Text>
                         </View>
                     )}
                 </View>
@@ -77,7 +77,7 @@ const ToiletCard = (props) => {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        backgroundColor: '#rgba(255,255,255,0.5)',
+        backgroundColor: '#FFFFFF',
         borderRadius: 10,
         margin: 7,
         justifyContent: 'center',

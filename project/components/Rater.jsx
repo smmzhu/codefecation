@@ -32,18 +32,7 @@ export default function Rater(props) {
   
     return (
       <SafeAreaView style={styles.container}>
-        {/* <Text style={styles.textStyle}> Please Rate Us!</Text> */}
         <CustomRaterBar /> 
-        {/* <Text style={styles.textStyle}>
-            {defaultRating + ' / ' + maxRating.length}
-        </Text> */}
-        {/* <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.buttonStyle}
-          onPress={() => alert(defaultRating)}
-        >
-          <Text>Get Selected Value</Text>
-        </TouchableOpacity> */}
       </SafeAreaView>
     );
 }
@@ -52,15 +41,12 @@ const styles = StyleSheet.create({
     container: {
       // flex: 1,
       padding: 0,
+      marginLeft: '18%',
+      marginRight: '18%',
       // marginHorizontal: 50,
       // marginVertical: 50,
       justifyContent: 'center',
       // alignItems: 'center',
-    },
-    textStyle: {
-      textAlign: 'center',
-      fontSize: 23,
-      marginTop: 20, // 20
     },
     customRatingBarStyle: {
       justifyContent: 'center',
@@ -72,12 +58,4 @@ const styles = StyleSheet.create({
       height: 40,
       resizeMode: 'cover'
     },
-    buttonStyle: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 30,
-      padding: 15,
-      backgroundColor: 'green',
-      borderRadius: 10,
-    }
 });

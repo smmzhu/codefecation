@@ -27,20 +27,27 @@ const RevSummary = ({reviewSummary}) => {
 const styles = StyleSheet.create({
   container: {
     // flexDirection: 'row',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    marginLeft: '2%',
+    marginRight: '4%',
+    marginBottom: '5%',
+    width: '90%',
+    height: 'auto',
+
+    paddingVertical: '3%',
+    paddingHorizontal: '4%',
     backgroundColor: '#fff',
+    
     borderRadius: 10,
-    marginVertical: 5,
-    marginHorizontal: 0,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 5,
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 99,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 20,
@@ -51,7 +58,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: 'Comfortaa',
-    marginTop: 0,
   },
 });
 

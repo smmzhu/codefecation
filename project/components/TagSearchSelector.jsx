@@ -62,12 +62,12 @@ export default function TagSearchSelector(props) {
                 transparent={true}
             >
                 <LinearGradient 
-                  colors={['#8589ff', '#8589ff']} 
-                  start={{ x: 0.5, y: 1}} 
-                  end={{ x: 0.5, y: 0}}
-                  style = {styles.modal}
+                  colors={['#F8F8F8', '#F8F8F8']} 
+                  start={{ x: 0.2, y: 0.2}} 
+                  end={{ x: 1, y: 1}}
+                  style={styles.modal}
                 >
-                    <Text style = {styles.bigFont}>Choose your desired tags</Text>
+                    <Text style = {styles.bigFont}>Choose tags: </Text>
                     <View
                     style={styles.tagContainer}>
                         {renderTagButton('Male')}
@@ -128,11 +128,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         margin: 10,
+        
+        backgroundColor: '#FFFFFF',
+        shadowOffset: {width: -2, height: 4},  
+        shadowColor: '#171717',  
+        shadowOpacity: 0.1,  
+        shadowRadius: 1,
     },
     exitButton: {
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        width: 100,
+        backgroundColor: '#9A9AFE',
+        width: '50%',
         height: '15%',
         borderRadius: 10,
         justifyContent: 'center',
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         marginRight: 5,
         marginBottom: 5,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: '#FFFFFF',
         width:'48%',
       },
       tagContainer: {
@@ -166,11 +172,11 @@ const styles = StyleSheet.create({
       },
       tagButtonSelected: {
         flex: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        },
+        backgroundColor: '#9A9AFE',
+      },
       tagTextSelected: {
         flex: 0,
-        color: '#fff',
+        color: '#000',
       },
       tagButtonFirst: {
         flex: 0,
@@ -182,6 +188,7 @@ const styles = StyleSheet.create({
         // lineHeight: 21,
         textAlign: "center",
         fontFamily: "Comfortaa",
+        color: "#C7C7C7",
       },
       dropShadow:{
         shadowOffset: {width: -10, height: 10},  

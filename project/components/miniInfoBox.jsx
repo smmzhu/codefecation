@@ -151,12 +151,12 @@ const MiniInfoBox = (props) => {
           <View style={styles.hoursection}>
               {open && (
                 <View style={styles.opentag}>
-                  <Text style={styles.tagText}>open</Text>
+                  <Text style={styles.tagText}>Open</Text>
                 </View>
               )}
               {!open && (
                 <View style={styles.closedtag}>
-                  <Text style={styles.tagText}>closed</Text>
+                  <Text style={styles.tagText}>Closed</Text>
                 </View>
               )}
           </View>

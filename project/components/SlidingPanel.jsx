@@ -34,7 +34,7 @@ export default function SlidingPanel(props) {
           draggableRange = {{top:heightt,bottom:100}}
           backgroundColor='white'>
             <LinearGradient 
-            colors={['#6b70fe', 'white']} 
+            colors={['#F0F3FB', '#F0F3FB']} 
             start={{ x: 0.5, y: 1}} 
             end={{ x: 0.5, y: -0.5}}
             style={{flex: 1, backgroundColor: props.color, alignItems: 'center', justifyContent: 'center',}}

@@ -112,19 +112,19 @@ const BathroomScreen = ({ route, navigation }) => {
     let sign = '<';
     return (
     <LinearGradient 
-      colors={['#FF9482', '#7D77FF']} 
+      colors={['#F0F3FB', '#F0F3FB']} 
       start={{ x: 0.2, y: 0.2}} 
       end={{ x: 1, y: 1}}
       style={styles.containerView}
 
     >
       <SafeAreaView style={styles.megaConatiner}>
-        <View style={styles.reviewBox}>
-            <View style={{height:'7%', width:'100%', paddingLeft:'2%', marginTop: '3%', flexDirection:'row'}}>
-                <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-end", resizeMode: "contain"}}>
-                  <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
-                </PaperButton>
-            </View>
+        {/* <View style={styles.reviewBox}> */}
+          <View style={{height:'7%', width:'100%', paddingLeft:'2%', marginTop: '3%', flexDirection:'row'}}>
+              <PaperButton onPress={() => navigation.goBack()} style = {{backgroundColor:"transparent", height: 50, width: 50, justifyContent: "flex-start", alignSelf: "flex-end", resizeMode: "contain"}}>
+                <Image source={require('../assets/backButton.png')} style={styles.logoView}/>
+              </PaperButton>
+          </View>
             {/* <PaperButton
               style={{
                 width: '8%',
@@ -145,91 +145,101 @@ const BathroomScreen = ({ route, navigation }) => {
 
           <ScrollView>
 
-            <View style={styles.container}>
-            
-              <View style={styles.header}>
-                {status.validBathroom ? <Text style={styles.title}>{name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.title}>{name}</Text>}
-                <PaperButton
-                  style={{
-                    flex:1,
-                    flexGrow: 1,
-                    width: '100%',
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    alignSelf: 'center',
-                    backgroundColor: '#7D77FF',
-                  }}
-                  labelStyle={styles.text}
-                  mode="contained" 
-                  onPress={() => navigation.navigate('RateBathroom', {
-                    bathroomID: bathroomID,
-                    name: name, 
-                    ratings: ratings, 
-                  })}
-                >
-                  Review!   
-                </PaperButton>
+            {/* <View style={styles.container}> */}
+                <View style={styles.component}>
+                  <View style={styles.header}>
+                      {status.validBathroom ? <Text style={styles.title}>{name} <Image source={verif} style={styles.verif}/> </Text> : <Text style={styles.title}>{name}</Text>}
+                      <PaperButton
+                        style={{
+                          flex:1,
+                          flexGrow: 1,
+                          width: '100%',
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 10,
+                          alignSelf: 'center',
+                          backgroundColor: '#9A9AFE',
+                        }}
+                        labelStyle={styles.text}
+                        mode="contained" 
+                        onPress={() => navigation.navigate('RateBathroom', {
+                          bathroomID: bathroomID,
+                          name: name, 
+                          ratings: ratings, 
+                        })}
+                      >
+                        Review!   
+                      </PaperButton>
+                  </View>
+
+                  <View style={styles.body}>
+                    <Text style = {styles.distance}>{address} - {distance.toFixed(2)} km</Text>
+
+                    <View style={styles.hoursection}>
+                      {open && (
+                        <View style={styles.opentag}>
+                          <Text style={styles.tagText}>Open</Text>
+                        </View>
+                      )}
+                      {!open && (
+                        <View style={styles.closedtag}>
+                          <Text style={styles.tagText}>Closed</Text>
+                        </View>
+                      )}
+                      <Text style={styles.statusText}>{hours}</Text>  
+                    </View>
+                    
+                    <View style={styles.tagsContainer}>
+                        {tags.map((tag) => (
+                          <Tag key={tag} tag={tag} />
+                        ))}
+                    </View>
+                  </View>
+                </View> 
+                {/* first component */}
+                
+                {status.validBathroom ?  null : <BathroomVerif bathroomID={bathroomID}/>}
+
+                <View style={styles.component}>
+                  <View style={styles.body}>
+                    <View style={styles.section}>
+                      {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
+                      <Text style={styles.sectionTitle}>Overall</Text>
+                      <Rating Rating = {ratings.overallRating}/>
+                    </View>
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Cleanliness</Text>
+                        <Rating Rating = {ratings.cleanRating}/>
+                    </View>
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Boujeeness</Text>
+                      <Rating Rating = {ratings.boujeeRating}/>
+                    </View>
+                  </View>
+                </View>
+              {/* second component */}
+
+              <View style={styles.revSection}>
+              {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
               </View>
 
-              <View style={styles.body}>
-                <Text style = {styles.distance}>{address} - {distance.toFixed(2)} km</Text>
-
-                <View style={styles.hoursection}>
-                  {open && (
-                    <View style={styles.opentag}>
-                      <Text style={styles.tagText}>open</Text>
-                    </View>
-                  )}
-                  {!open && (
-                    <View style={styles.closedtag}>
-                      <Text style={styles.tagText}>closed</Text>
-                    </View>
-                  )}
-                  <Text style={styles.statusText}>{hours}</Text>  
-                </View>
-                
-                <View style={styles.tagsContainer}>
-                    {tags.map((tag) => (
-                      <Tag key={tag} tag={tag} />
-                    ))}
-                </View>
-
-                <View style={styles.section}>
-                  {status.validBathroom ?  null : <BathroomVerif bathroomID={bathroomID}/>}
-                  {/* {status.validBathroom ?  <Text style={styles.sectionTitle}>Verified!</Text> : <BathroomVerif bathroomID={bathroomID}/>} */}
-                  <Text style={styles.sectionTitle}>Overall</Text>
-                  <Rating Rating = {ratings.overallRating}/>
-                </View>
-
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Cleanliness</Text>
-                    <Rating Rating = {ratings.cleanRating}/>
-                </View>
-
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Boujeeness</Text>
-                  <Rating Rating = {ratings.boujeeRating}/>
-                </View>
-                <View style={styles.section}>
-                {reviewSummary ?  <RevSummary reviewSummary = {reviewSummary}/> : <RevSummary reviewSummary = "Sorry! It appears there's no summary for this restroom yet :("/>}
-                </View>
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Location</Text>
+              <View style={styles.component}>
+                {/* <View style={styles.section}> */}
+                  <Text style={styles.locSectionTitle}>Location</Text>
                     <PaperButton
                       style={{
-                        width: 200,
-                        height: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        marginLeft: 43,
-                        marginBottom: 20,
-                        alignSelf: 'left',
-                        backgroundColor: '#7D77FF',
+                          flex:1,
+                          flexGrow: 1,
+                          width: 'auto',
+                          height: 'auto',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 10,
+                          alignSelf: 'center',
+                          backgroundColor: '#9A9AFE',
                       }}
-                      labelStyle={styles.text}
+                      labelStyle={styles.locText}
                       mode="contained" 
                       onPress={openMap}
                     >
@@ -238,21 +248,24 @@ const BathroomScreen = ({ route, navigation }) => {
                     <View style={styles.map}>
                       <ShowMap longitude={coords.long} latitude={coords.lat} />
                     </View>
-                </View>
-
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Reviews</Text>
-                  <Text style={styles.text}>
-                  <View style = {{padding: 0}}>
-                    {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
-                  </View>
-                  </Text>
-                </View>
-                
+                {/* </View> */}
               </View>
-            </View>
+              {/* third component */}
+
+              <View style={styles.component}>
+                  <View style={styles.section}>
+                    <Text style={styles.revSectionTitle}>Reviews</Text>
+                    <Text style={styles.text}>
+                    <View style = {{padding: 0}}>
+                      {reviews.map((eachReview)=>(<Review review = {eachReview} key = {eachReview.reviewID}/> ))}
+                    </View>
+                    </Text>
+                  </View>
+              </View>
+                
+            {/* </View> */}
           </ScrollView>
-        </View>
+        {/* </View> */}
       </SafeAreaView>
     </LinearGradient>
   );
@@ -265,7 +278,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:'flex-start',
         height: '100%',
-        width: '90%',
+        width: '100%',
+        backgroundColor: '#F0F3FB',
       },
       reviewBox: {
         // flexDirection: 'row',
@@ -294,11 +308,33 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         // justifyContent: "center",
         alignItems: "center",
-      }, 
+      },
+      component: {
+        flex: 1,
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginBottom: '5%',
+        width: '90%',
+        height: 'auto',
+        backgroundColor: '#fff',
+        
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 99,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
       text: {
         width: '100%',
         fontSize: 18,
         // lineHeight: 21,
+        color: "#000",
         textAlign: "center",
         fontFamily: "Comfortaa",
       },
@@ -381,16 +417,34 @@ const styles = StyleSheet.create({
         // marginTop: 10,
         // marginBottom: 10,
       },
+      revSection: {
+        alignItems: 'center',
+      },
       sectionTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily: "Comfortaa",
         marginBottom: 10,
       },
-      text: {
+      locSectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: "Comfortaa",
+        marginBottom: '2%',
+        marginTop: '4%',
+      },
+      revSectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: "Comfortaa",
+        marginBottom: '4%',
+        marginTop: '4%',
+      },
+      locText: {
         fontSize: 16,
         marginBottom: 10,
         fontFamily: "Comfortaa",
+        color: "#000",
       },
       statusText:{
         padding: 10,
