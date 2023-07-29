@@ -54,16 +54,14 @@ const BathroomReviewScreen = ({route, navigation}) => {
     const db = firebase.firestore();
     const auth = getAuth();
     const user = auth.currentUser;
-    let email = "";
+    let userID = "";
     if (user !== null) {
-      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
-      email = user.email;
+      userID = user.uid;
     }
-    email = email.substring(0, email.indexOf('@'));
     db.collection("bathrooms").doc(bathroomID).get().then((docSnapshot) => {
       if (docSnapshot.exists) {
         const bathroomData = docSnapshot.data();
-        const existingReview = bathroomData.reviews.find(review => review.userID === email);
+        const existingReview = bathroomData.reviews.find(review => review.userID === userID);
         if (existingReview) {
           createTwoButtonAlert();
           return;
@@ -75,25 +73,25 @@ const BathroomReviewScreen = ({route, navigation}) => {
     const db = await firebase.firestore();
     const auth = getAuth();
     const user = auth.currentUser;
-    let email = "";
+    let userID = "";
     if (user !== null) {
-      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
-      email = user.email;
+      userID = user.uid;
     }
-    email = email.substring(0, email.indexOf('@'));
+    const displayName = user.displayName;
 
     // const bathroomID = navigation.getParam('bathroomID');
     console.log(bathroomID);
 
     const review = {
       reviewID: uuid.v4(),
-      userID: email,
+      userID: userID,
+      displayName: displayName,
       overallRating: overallRating,
       cleanRating: cleanlinessRating,
       boujeeRating: boujeenessRating,
       reviewText: reviewText,
     }
-    addReview(db, email, bathroomID, review).then(console.log("Review Logged.")).catch((err)=>{console.log(err)});
+    addReview(db, userID, bathroomID, review).then(console.log("Review Logged.")).catch((err)=>{console.log(err)});
     setShowCongratulatoryModal(true);
   }
 

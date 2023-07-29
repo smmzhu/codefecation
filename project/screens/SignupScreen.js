@@ -10,7 +10,6 @@ export default class Signup extends Component {
     super();
     this.state = { 
       displayName: '',
-      username: '',
       email: '', 
       password: '',
       rePassword: '',
@@ -23,7 +22,7 @@ export default class Signup extends Component {
     this.setState(state);
   }
   registerUser = () => {
-    if(this.state.displayName === '' || this.state.email === '' || this.state.password === '' || this.state.rePassword === '' || this.state.username === '') {
+    if(this.state.displayName === '' || this.state.email === '' || this.state.password === '' || this.state.rePassword === '') {
       Alert.alert('Enter details to signup!')
     } 
     else if (this.state.password !== this.state.rePassword) {
@@ -38,12 +37,6 @@ export default class Signup extends Component {
     else if (this.state.displayName.length > 25) {
       Alert.alert('Name should be at most 25 characters.')
     }
-    else if (this.state.username.length < 4) {
-      Alert.alert('Username should be at least 4 characters.')
-    }
-    else if (this.state.username.length > 25) {
-      Alert.alert('Username should be at most 25 characters.')
-    }
     else {
       this.setState({
         isLoading: true,
@@ -54,13 +47,11 @@ export default class Signup extends Component {
       .then((res) => {
         res.user.updateProfile({
           displayName: this.state.displayName,
-          username: this.state.username
         })
         // console.log('User registered successfully!')
         this.setState({
           isLoading: false,
           displayName: '',
-          username: '',
           email: '', 
           password: '',
           rePassword: ''
@@ -104,14 +95,6 @@ export default class Signup extends Component {
               placeholder="Name"
               value={this.state.displayName}
               onChangeText={(val) => this.updateInputVal(val, 'displayName')}
-            />      
-          </View>
-          <View style={styles.inputStyle}>
-            <TextInput
-              style={styles.text}
-              placeholder="Username"
-              value={this.state.username}
-              onChangeText={(val) => this.updateInputVal(val, 'username')}
             />      
           </View>
           <View style={styles.inputStyle}>
