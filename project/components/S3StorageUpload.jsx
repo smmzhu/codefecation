@@ -15,35 +15,6 @@ import awsconfig from '../src/aws-exports';
 import { Button as PaperButton } from 'react-native-paper';
 Amplify.configure(awsconfig);
 
-function AuthAWS() {
-  // To derive necessary data from the provider
-  const {
-    token, // the token you get from the provider
-    domainOrProviderName, // Either the domain of the provider(e.g. accounts.your-openid-provider.com) or the provider name, for now the library only supports 'google', 'facebook', 'amazon', 'developer'
-    expiresIn, // the time in ms which describes how long the token could live
-    user,  // the user object you defined, e.g. { username, email, phone_number }
-    identity_id // Optional, the identity id specified by the provider
-  } = getFromProvider(); // arbitrary function
-
-  Auth.federatedSignIn(
-    domain,
-    {
-        token,
-        identity_id, // Optional
-        expires_at: expiresIn * 1000 + new Date().getTime() // the expiration timestamp
-    },
-    user
-  ).then(cred => {
-      // If success, you will get the AWS credentials
-      console.log(cred);
-      return Auth.currentAuthenticatedUser();
-  }).then(user => {
-      // If success, the user object you passed in Auth.federatedSignIn
-      console.log(user);
-  }).catch(e => {
-      console.log(e)
-  });
-}
 
 const S3StorageUpload = forwardRef((props, ref) => {
   
@@ -65,7 +36,6 @@ const S3StorageUpload = forwardRef((props, ref) => {
         delete res.type;
         delete res.uri;
         const temp = [...asset, res];
-        console.log(temp);
         setAsset(temp);
       }
       else{
@@ -109,7 +79,7 @@ const S3StorageUpload = forwardRef((props, ref) => {
             setisLoading(false);
             keyList.push(res.key);
             Storage.get(res.key)
-              .then(result => console.log("ins result"))//console.log(result))
+              // .then(result => console.log(result))
               .catch(err => {
                 setProgressText('Upload Error');
                 console.log(err);
@@ -121,7 +91,6 @@ const S3StorageUpload = forwardRef((props, ref) => {
             console.log(err);
           });
       }
-      // console.log(keyList);
       return keyList;
     }
   }));
@@ -138,7 +107,6 @@ const S3StorageUpload = forwardRef((props, ref) => {
       >
         Upload {asset.length != 0 ? 'Another ' : ''}Image
       </PaperButton>
-      {console.log(asset.length)}
       {asset.map((item, index)=>
         (<View key = {item.assets[0].uri}>
           {item.assets[0].type.split('/')[0] === 'image' ? (

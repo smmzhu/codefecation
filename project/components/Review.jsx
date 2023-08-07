@@ -27,7 +27,7 @@ const Review = ({review}) => {
           const temp = await Storage.get(imgKey);
           return temp;
         })
-      ).then((data) => {console.log(data); return data}).catch((err) => console.log(err));
+      ).then((data) => {return data}).catch((err) => console.log(err));
       setImages(rowImages);
     }
     fetchKeys();
@@ -41,9 +41,8 @@ const Review = ({review}) => {
         <Rating Rating={review.overallRating} size={2} />
       </View>
       <Text style={styles.text}>{review.reviewText}</Text>
-      {console.log(images)}
       <View style={styles.rowImages}>
-        {images.map((image) => {return (<Image source={{uri:image}} style = {{height: 100, width: 100, margin: 5}}/>)})}
+        {images.map((image) => {return (<Image source={{uri:image}} style = {{height: 100, width: 100, margin: 5}} key = {image}/>)})}
       </View>
     </View>
   );
