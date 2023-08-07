@@ -118,7 +118,6 @@ const BathroomReviewScreen = ({route, navigation}) => {
     }
     if(output==''){
       imgKeys = await ref.current.uploadResource();
-      console.log(imgKeys);
       submitReview();
       return true;
     }else{
