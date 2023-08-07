@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, SafeAreaView, Alert, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
 import Rater from '../components/Rater';
 import CongratulatoryModal from '../components/CongratulatoryModal'; //yarn add react-native-confetti-cannon
@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Button as PaperButton } from "react-native-paper";
 import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
+import S3StorageUpload from '../components/S3StorageUpload.jsx';
 
 const BathroomReviewScreen = ({route, navigation}) => {  
   const {bathroomID, name, ratings} = route.params;
@@ -19,6 +20,9 @@ const BathroomReviewScreen = ({route, navigation}) => {
   const [reviewText, setReviewText] = useState('');
   const [showCongratulatoryModal, setShowCongratulatoryModal] = useState(false); // added state variable for showing congratulatory modal
   
+  const ref = useRef();
+  let imgKeys = [];
+
   async function loadFonts() {
     await Font.loadAsync({
       'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
@@ -87,20 +91,21 @@ const BathroomReviewScreen = ({route, navigation}) => {
       cleanRating: cleanlinessRating,
       boujeeRating: boujeenessRating,
       reviewText: reviewText,
+      imgKeys: imgKeys,
     }
     addReview(db, userID, bathroomID, review).then(console.log("Review Logged.")).catch((err)=>{console.log(err)});
     setShowCongratulatoryModal(true);
   }
 
-  const submitReview = () => {
+  const submitReview = async () => {
     // Submit the review to the server or local storage
     // console.log('Overall Rating:', overallRating);
     // console.log('Cleanliness Rating:', cleanlinessRating);
     // console.log('Boujeeness Rating:', boujeenessRating);
     // console.log('Review Text:', reviewText);
-    dbFunc();
+    await dbFunc();
   };
-  const check= () => {
+  const check= async () => {
     let output = "";
     if(!overallRating){
       output += "Overall rating\n";
@@ -112,11 +117,15 @@ const BathroomReviewScreen = ({route, navigation}) => {
       output += "Boujeeness rating\n";
     }
     if(output==''){
+      imgKeys = await ref.current.uploadResource();
+      console.log(imgKeys);
       submitReview();
+      return true;
     }else{
       output = "Please finish the following:\n" + output;
       output = output.slice(0, output.length-1);
       Alert.alert(output);
+      return false;
     }
   }
   return (
@@ -128,7 +137,7 @@ const BathroomReviewScreen = ({route, navigation}) => {
         style={styles.containerView}
       >
         <SafeAreaView style={styles.container}>
-          <Pressable onPress = {Keyboard.dismiss}>
+          
           
             <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={Platform.OS === 'ios' ? 40 :0}>
               {/* <View style={styles.reviewBox}> */}
@@ -138,6 +147,8 @@ const BathroomReviewScreen = ({route, navigation}) => {
                   </PaperButton>
                 </View>
 
+                <ScrollView>
+                <Pressable onPress = {Keyboard.dismiss} style = {{flex:1}}>
                 <View style={styles.component}>
                   {/* <View style={styles.body}> */}
                     <Text style={styles.title}>Write a Review</Text>                
@@ -166,32 +177,37 @@ const BathroomReviewScreen = ({route, navigation}) => {
                       style={styles.reviewInput}
                       placeholder="Write your review here..."
                       multiline={true}
+                      minHeight={144}
+                      maxHeight={36*15}
                       numberOfLines={15}
                       maxLength={500}
                       onChangeText={setReviewText}
                       value={reviewText}
                   /> 
                 </View>
-                  <PaperButton
-                    style={{
-                      // width: '80%',
-                      // height: '5%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 10,
-                      alignSelf: 'center',
-                      backgroundColor: '#9A9AFE',
-                    }}
-                    labelStyle={styles.subText}
-                    mode="contained" 
-                    onPress={check}
-                  >
-                    Submit Review
-                  </PaperButton>
+                <S3StorageUpload ref={ref}/>
+                <PaperButton
+                  style={{
+                    // width: '80%',
+                    // height: '5%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                    backgroundColor: '#9A9AFE',
+                  }}
+                  labelStyle={styles.subText}
+                  mode="contained" 
+                  onPress={check}
+                >
+                  Submit Review
+                </PaperButton>
+                </Pressable>
+                </ScrollView>
+
                 {showCongratulatoryModal && <CongratulatoryModal navigation={navigation}/>}
               {/* </View> */}
             </KeyboardAvoidingView>
-          </Pressable>
         </SafeAreaView>
       </LinearGradient>
     </>
@@ -209,10 +225,11 @@ const styles = {
     // backgroundImage: 'linear-gradient(90deg, rgba(255,148,130,1) 0%, rgba(125,119,255,1) 100%)'
   }, 
   component: {
-    flex: 1,
+    display: "inline",
     marginLeft: '4%',
     marginRight: '4%',
     marginBottom: '5%',
+    marginTop: '5%',
     width: '90%',
     height: 'auto',
     backgroundColor: '#fff',
@@ -276,7 +293,7 @@ const styles = {
   },
   container: {
     alignItems: 'center',
-    justifyC9ntent: 'center',
+    justifyContent: 'center',
     width: '100%',
     // width: '100%',
     // height: '100%',
@@ -287,7 +304,7 @@ const styles = {
     fontSize: 24,
     fontWeight: 'bold',
     // marginBottom: 20,
-    // marginTop: '5%',
+    marginTop: '5%',
     fontFamily: 'Comfortaa',
     alignSelf: 'left',
     marginBottom: '3%',
@@ -354,7 +371,11 @@ const styles = {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-  }
+  },
+  scrollView: {
+    flex: 1,
+    flexDirection: 'column',
+  },
 };
 
 export default BathroomReviewScreen;

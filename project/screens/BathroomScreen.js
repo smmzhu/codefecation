@@ -15,8 +15,13 @@ import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
 import firebase from '../database/firebase';
 import verif from '../assets/verif.png';
+import awsconfig from '../src/aws-exports';
+import Amplify from '@aws-amplify/core';
+import {Storage} from 'aws-amplify';
+Amplify.configure(awsconfig);
 
 const BathroomScreen = ({ route, navigation }) => {
+  
     const {bathroomID, coords, name, address, hours, tags, reviewSummary, ratings, reviews, status, userLoc} = route.params; //assume that bathroom ratings is a json
     const [open, changeopen] = useState(true);
     const [numRev, setNumRev] = useState(0);
@@ -109,6 +114,8 @@ const BathroomScreen = ({ route, navigation }) => {
       // })
       setNumRev(reviews.length);
     }, []);
+
+
     let sign = '<';
     return (
     <LinearGradient 
