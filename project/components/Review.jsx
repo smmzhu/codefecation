@@ -1,9 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import Rating from './Rating.jsx';
 import * as Font from 'expo-font';
+import awsconfig from '../src/aws-exports';
+import Amplify from '@aws-amplify/core';
+import {Storage} from 'aws-amplify';
+Amplify.configure(awsconfig);
 
 const Review = ({review}) => {
+  const [images, setImages] = useState([]);
   async function loadFonts() {
     await Font.loadAsync({
       'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
@@ -14,6 +19,21 @@ const Review = ({review}) => {
     this.loadFonts();
   };
 
+  useEffect(() => {
+    async function fetchKeys() {
+      if (!review.imgKeys) review.imgKeys = [];
+      const rowImages = await Promise.all(
+        review.imgKeys.map(async (imgKey) => {
+          const temp = await Storage.get(imgKey);
+          return temp;
+        })
+      ).then((data) => {console.log(data); return data}).catch((err) => console.log(err));
+      setImages(rowImages);
+    }
+    fetchKeys();
+  }, []);
+
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -21,6 +41,10 @@ const Review = ({review}) => {
         <Rating Rating={review.overallRating} size={2} />
       </View>
       <Text style={styles.text}>{review.reviewText}</Text>
+      {console.log(images)}
+      <View style={styles.rowImages}>
+        {images.map((image) => {return (<Image source={{uri:image}} style = {{height: 100, width: 100, margin: 5}}/>)})}
+      </View>
     </View>
   );
 };
@@ -56,6 +80,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: 'Comfortaa',
+  },
+  rowImages: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
 });
 

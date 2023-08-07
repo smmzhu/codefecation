@@ -1,0 +1,16 @@
+{
+  "resourceName": "s3ploopstorage35611ca0",
+  "bucketName": "ploop-storage-35611ca0",
+  "policyUUID": "89a66701",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

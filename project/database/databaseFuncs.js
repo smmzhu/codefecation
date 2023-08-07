@@ -163,7 +163,7 @@ const addReview = async (db, userID, bathroomID, review) => { //type signature: 
       // Update the bathroom's review summary
       // const bathroomRef = db.collection("bathrooms").doc(bathroomID);
       bathroomData.reviewSummary = revSummary;
-      await bathroomRef.set(bathroomData, {merge: false});
+      await bathroomRef.set(bathroomData, {merge: true});
       // writeReviewSummary(db, bathroomID);
     }
   }).catch((error) => {
