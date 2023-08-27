@@ -13,6 +13,7 @@ import { Animated } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
 import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
+import ForgotPassword from './ForgotPassword';
 
 export default class Login extends Component {
   constructor() {
@@ -144,7 +145,11 @@ export default class Login extends Component {
             >
               Sign In
             </PaperButton>
-
+            <Text 
+              style={styles.loginText}
+              onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+              Forgot Password?
+            </Text>  
             <Text 
               style={styles.loginText}
               onPress={() => this.props.navigation.navigate('Signup')}>

@@ -17,6 +17,7 @@ import BathroomReviewScreen from './screens/RateBathroom.js';
 import LoginScreen from './screens/LoginScreen.js';
 import SignupScreen from './screens/SignupScreen.js';
 import Dashboard from './screens/Dashboard.js';
+import ForgotPassword from './screens/ForgotPassword.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +29,8 @@ function App() {
           headerShown: false
         }}
         initialRouteName="Login">
-        <Stack.Screen name="Signup" component={SignupScreen} options={{ title: 'Signup' }}/>       
+        <Stack.Screen name="Signup" component={SignupScreen} options={{ title: 'Signup' }}/>    
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: 'ForgotPassword' }}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{title: 'Login', headerLeft: null}}/>
         <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard', headerLeft: null}}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
