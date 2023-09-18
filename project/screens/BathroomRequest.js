@@ -16,6 +16,7 @@ import { Button as PaperButton } from "react-native-paper";
 import { TextInput as PaperTextInput } from "react-native-paper";
 import * as Font from 'expo-font';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import S3StorageUpload from '../components/S3StorageUpload.jsx';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -45,6 +46,9 @@ const CreateBathroomPage = ({navigation, route}) => {
       'Comfortaa': require('../assets/fonts/Comfortaa.ttf'),
     });
   };
+
+  const ref = useRef();
+  let imgKeys = [];
 
   function componentDidMount() {
     this.loadFonts();
@@ -123,12 +127,11 @@ const CreateBathroomPage = ({navigation, route}) => {
 
     const auth = getAuth();
     const user = auth.currentUser;
-    let email = "";
+    let userID = "";
     if (user !== null) {
-      // const displayName = user.displayName; // SAMUEL PLZ IMPLEMENT THIS
-      email = user.email;
+      userID = user.uid;
     }
-    email = email.substring(0, email.indexOf('@'));
+    const displayName = user.displayName;
     let hours = time1+' - '+time2;
     const bathroom = {
       bathroomID: uuid.v4(),
@@ -148,11 +151,13 @@ const CreateBathroomPage = ({navigation, route}) => {
       },
       reviews: [{
         reviewID: uuid.v4(),
-        userID: email,
+        userID: userID,
+        displayName: displayName,
         overallRating: overallRating,
         cleanRating: cleanlinessRating,
         boujeeRating: boujeenessRating,
         reviewText: review,
+        imgKeys: imgKeys,
       }],
       status: {
         validBathroom: false,
@@ -164,10 +169,9 @@ const CreateBathroomPage = ({navigation, route}) => {
     setBathroomToDB(db, bathroom).then(console.log("sucsess")).catch((err)=>{console.log(err)});
   };
 
-  const handleSubmit = () => {
-    setShowCongratulatoryModal(true); // show the congratulatory modal
+  const submitReview = () => {
     dbFunc();
- 
+    setShowCongratulatoryModal(true); // show the congratulatory modal
   }
   
   const renderTagButton = (tag, index) => {
@@ -190,20 +194,8 @@ const CreateBathroomPage = ({navigation, route}) => {
     );
   }
 
-  const check= () => {
+  const check= async () => {
     let output = "";
-    if(!name){
-      output += "Name\n";
-    }
-    if(!address){
-      output += "Address\n";
-    }
-    // if(!longitude){
-    //   output += "Map Location\n";
-    // }
-    if(!tags){
-      output += "Select at least one tag\n";
-    }
     if(!overallRating){
       output += "Overall rating\n";
     }
@@ -214,11 +206,14 @@ const CreateBathroomPage = ({navigation, route}) => {
       output += "Boujeeness rating\n";
     }
     if(output==''){
-      handleSubmit();
+      imgKeys = await ref.current.uploadResource();
+      submitReview();
+      return true;
     }else{
       output = "Please finish the following:\n" + output;
       output = output.slice(0, output.length-1);
       Alert.alert(output);
+      return false;
     }
   }
   const scrollViewRef = useRef();
@@ -347,6 +342,7 @@ const CreateBathroomPage = ({navigation, route}) => {
 
                     {/* <Text style={styles.subTitle}>Your initial review!</Text> */}
                       
+                    <S3StorageUpload ref={ref}/>
                     <PaperButton
                       style={{
                         // width: 300,
